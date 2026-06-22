@@ -1,0 +1,12 @@
+# Stanislav Plotnikov - robots.txt
+# https://splotnikov.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://splotnikov.dev/sitemap.xml
+
+# Disallow admin/dev paths if any
+Disallow: /src/
+Disallow: /.git/
