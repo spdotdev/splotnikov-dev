@@ -15,7 +15,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.3'
-          extensions: mbstring
+          extensions: mbstring, dom, xml
           coverage: none
 
       - name: Install dependencies
@@ -26,3 +26,6 @@ jobs:
 
       - name: Larastan (static analysis)
         run: ./vendor/bin/phpstan analyse --no-progress --memory-limit=512M
+
+      - name: Tests
+        run: ./vendor/bin/phpunit

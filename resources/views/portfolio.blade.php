@@ -1126,10 +1126,10 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">SP</a>
+            <a href="/" class="logo">SP</a>
             <ul class="nav-links">
-                <li><a href="index.html" class="nav-link-home nav-active">Home</a></li>
-                <li><a href="cv.html">CV</a></li>
+                <li><a href="/" class="nav-link-home nav-active">Home</a></li>
+                <li><a href="/cv">CV</a></li>
                 <li><a href="#manifesto">Manifesto</a></li>
                 <li><a href="#proof">Proof</a></li>
                 <li><a href="#toolkit">Toolkit</a></li>
@@ -1362,7 +1362,7 @@
             <blockquote>"I transform legacy technical debt into scalable, high-performance infrastructure by
                 prioritizing ROI over industry trends."</blockquote>
             <div class="hero-buttons">
-                <a href="cv.html" class="btn btn-primary">View / Download CV</a>
+                <a href="/cv" class="btn btn-primary">View / Download CV</a>
                 <a href="https://www.linkedin.com/in/stanislavplotnikov/" class="btn btn-secondary" target="_blank"
                     rel="noopener noreferrer">Connect on LinkedIn</a>
             </div>
@@ -1623,17 +1623,17 @@
                 <div class="footer-col">
                     <h4>Navigate</h4>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="index.html#manifesto">Manifesto</a></li>
-                        <li><a href="index.html#proof">Proof</a></li>
-                        <li><a href="index.html#toolkit">Toolkit</a></li>
-                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#manifesto">Manifesto</a></li>
+                        <li><a href="/#proof">Proof</a></li>
+                        <li><a href="/#toolkit">Toolkit</a></li>
+                        <li><a href="/#contact">Contact</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Connect</h4>
                     <ul>
-                        <li><a href="cv.html">CV / Resume</a></li>
+                        <li><a href="/cv">CV / Resume</a></li>
                         <li><a href="https://linkedin.com/in/splotnikov" target="_blank"
                                 rel="noopener noreferrer">LinkedIn</a></li>
                         <li><a href="https://github.com/spdotdev" target="_blank" rel="noopener noreferrer">GitHub</a>

@@ -17,6 +17,14 @@
             "Spdotdev\\SplotnikovDev\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Spdotdev\\SplotnikovDev\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/phpunit"
+    },
     "extra": {
         "laravel": {
             "providers": [

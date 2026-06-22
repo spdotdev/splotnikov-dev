@@ -1102,14 +1102,14 @@
 <body>
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">SP</a>
+            <a href="/" class="logo">SP</a>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="cv.html" class="nav-active">CV</a></li>
-                <li><a href="index.html#manifesto">Manifesto</a></li>
-                <li><a href="index.html#proof">Proof</a></li>
-                <li><a href="index.html#toolkit">Toolkit</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/cv" class="nav-active">CV</a></li>
+                <li><a href="/#manifesto">Manifesto</a></li>
+                <li><a href="/#proof">Proof</a></li>
+                <li><a href="/#toolkit">Toolkit</a></li>
+                <li><a href="/#contact">Contact</a></li>
                 <li>
                     <button class="theme-toggle no-print" aria-label="Toggle theme">
                         <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
