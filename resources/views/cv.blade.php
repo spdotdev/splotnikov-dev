@@ -1277,9 +1277,9 @@
             </div>
             <div class="cv-right">
                 <div class="cv-photo">
-                    <img src="{{ asset('vendor/splotnikov/profile.png') }}" data-profile-img alt="Stanislav Plotnikov"
+                    <img src="{{ secure_asset('vendor/splotnikov/profile.png') }}" data-profile-img alt="Stanislav Plotnikov"
                         onerror="this.style.display='none'; var p=this.nextElementSibling; if(p) p.style.display='flex';">
-                    <div class="photo-placeholder" style="display:none">Add {{ asset('vendor/splotnikov/profile.png') }} for your photo
+                    <div class="photo-placeholder" style="display:none">Add {{ secure_asset('vendor/splotnikov/profile.png') }} for your photo
                     </div>
                 </div>
                 <div class="cv-sidebar">
@@ -1353,10 +1353,9 @@
     </main>
 
     <script>
-        // Profile image: resolve path for both custom domain (/) and project path (/splotnikov/)
         (function () {
-            var base = location.pathname.indexOf('/splotnikov') === 0 ? '/splotnikov' : '';
-            document.querySelectorAll('img[data-profile-img]').forEach(function (img) { img.src = base + '/{{ asset('vendor/splotnikov/profile.png') }}'; });
+            var src = "{{ secure_asset('vendor/splotnikov/profile.png') }}";
+            document.querySelectorAll('img[data-profile-img]').forEach(function (img) { img.src = src; });
         })();
         // Theme (same as portfolio)
         const themeToggle = document.querySelector('.theme-toggle');

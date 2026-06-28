@@ -1355,7 +1355,7 @@
         </div>
         <div class="hero-content">
             <div class="hero-avatar-wrap">
-                <div class="hero-avatar"><img src="{{ asset('vendor/splotnikov/profile.png') }}" data-profile-img alt="Stanislav Plotnikov"></div>
+                <div class="hero-avatar"><img src="{{ secure_asset('vendor/splotnikov/profile.png') }}" data-profile-img alt="Stanislav Plotnikov"></div>
             </div>
             <h1><span>Stanislav Plotnikov</span></h1>
             <p>Legacy Modernization & Solution Architect</p>
@@ -1658,10 +1658,9 @@
     </footer>
 
     <script>
-        // Profile image: resolve path for both custom domain (/) and project path (/splotnikov/)
         (function () {
-            var base = location.pathname.indexOf('/splotnikov') === 0 ? '/splotnikov' : '';
-            document.querySelectorAll('img[data-profile-img]').forEach(function (img) { img.src = base + '/{{ asset('vendor/splotnikov/profile.png') }}'; });
+            var src = "{{ secure_asset('vendor/splotnikov/profile.png') }}";
+            document.querySelectorAll('img[data-profile-img]').forEach(function (img) { img.src = src; });
         })();
         // Theme Toggle
         const themeToggle = document.querySelector('.theme-toggle');
