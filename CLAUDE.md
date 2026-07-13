@@ -2,14 +2,14 @@
 
 ## What this is
 A Laravel **library package** (not an app) that serves the splotnikov.dev
-portfolio + CV inside the `sd-admin` host app via host-based routing.
+portfolio + CV inside a host app via host-based routing.
 
 ## Constraints
 - The host machine has no PHP/Composer. Run package commands through a
   one-off Docker image (`docker run --rm -v "$PWD":/app -w /app composer:2 ...`)
-  or inside the sd-admin `app` container once installed.
+  or inside the host app's container once installed.
 - Distribution is GitHub VCS + git tags only. No Packagist.
-- Versioned: change behaviour → bump tag (`vX.Y.Z`) → bump `spdotdev/splotnikov-dev` in **sd-admin's own `composer.lock`**, commit + push (never a bare `composer update` run directly on the d051 container — that's invisible to the committed lock and gets silently reverted by the next unrelated deploy). See sd-admin's `CLAUDE.md` ("Updating a vcs-tracked spdotdev/* package").
+- Versioned: change behaviour → bump tag (`vX.Y.Z`) → bump `spdotdev/splotnikov-dev` in the host app's own `composer.lock`, commit + push (never run a bare `composer update` directly on the production server — that's invisible to the committed lock and gets silently reverted by the next unrelated deploy).
 
 ## Layout
 - `src/SplotnikovDevServiceProvider.php` — auto-discovered; loads routes + views, publishes config/assets.
@@ -19,8 +19,8 @@ portfolio + CV inside the `sd-admin` host app via host-based routing.
 - `public/` — assets published to the host's `public/vendor/splotnikov`.
 
 ## Integration / route precedence
-sd-admin's landing route must be host-scoped so it does not shadow this
-package's domain routes. Verified by sd-admin's `SplotnikovSiteTest`.
+The host app's landing route must be host-scoped so it does not shadow this
+package's domain routes. Verified by the host app's `SplotnikovSiteTest`.
 
 ## Deferred
 DigitalOcean provisioning, live deploy, and the DNS A-record cutover.

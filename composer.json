@@ -1,6 +1,6 @@
 {
     "name": "spdotdev/splotnikov-dev",
-    "description": "splotnikov.dev portfolio site, packaged for the sd-admin host app.",
+    "description": "splotnikov.dev portfolio site, packaged as a Laravel library for a host app.",
     "type": "library",
     "license": "proprietary",
     "require": {

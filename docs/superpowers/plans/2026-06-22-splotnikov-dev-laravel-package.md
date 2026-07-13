@@ -2,21 +2,21 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build `spdotdev/splotnikov-dev`, a versioned Laravel package that serves the splotnikov.dev portfolio + CV, and wire it into the `sd-admin` host app via host-based routing.
+**Goal:** Build `spdotdev/splotnikov-dev`, a versioned Laravel package that serves the splotnikov.dev portfolio + CV, and wire it into the `the host app` host app via host-based routing.
 
-**Architecture:** A Composer `library` package (PSR-4 `Spdotdev\SplotnikovDev\`) whose auto-discovered service provider registers a `Route::domain(...)` group rendering two ported HTML pages. sd-admin installs it via a GitHub VCS Composer repository pinned to a git tag; the splotnikov.dev host resolves to the package's routes while sd-admin's own landing stays on its host.
+**Architecture:** A Composer `library` package (PSR-4 `Spdotdev\SplotnikovDev\`) whose auto-discovered service provider registers a `Route::domain(...)` group rendering two ported HTML pages. the host app installs it via a GitHub VCS Composer repository pinned to a git tag; the splotnikov.dev host resolves to the package's routes while the host app's own landing stays on its host.
 
-**Tech Stack:** PHP 8.3+, Laravel 13 (`illuminate/support`), Composer (VCS repo + git tags), Docker (sd-admin's `app` container; one-off `composer:2` image for package-only commands), Pint, Larastan.
+**Tech Stack:** PHP 8.3+, Laravel 13 (`illuminate/support`), Composer (VCS repo + git tags), Docker (the host app's `app` container; one-off `composer:2` image for package-only commands), Pint, Larastan.
 
 **Spec:** `~/splotnikov-dev/docs/superpowers/specs/2026-06-22-splotnikov-dev-laravel-package-design.md`
 
 ## Global Constraints
 
 - The package is **`spdotdev/splotnikov-dev`**, `type: library`, namespace **`Spdotdev\SplotnikovDev\`**, PSR-4 root `src/`.
-- PHP floor **`^8.3`**; framework constraint **`illuminate/support: ^13.0`** (must match sd-admin's resolved Laravel major — verify in Task 6, repin if different).
+- PHP floor **`^8.3`**; framework constraint **`illuminate/support: ^13.0`** (must match the host app's resolved Laravel major — verify in Task 6, repin if different).
 - Distribution is **GitHub VCS + git tags only — no Packagist**. First tag **`v0.1.0`**.
 - The new repo is **public**, owner `spdotdev`.
-- **Host has no PHP/Composer.** Never run `php`/`composer`/`artisan` on the host. Use either sd-admin's container (`make composer cmd="..."`, `make art cmd="..."`, `docker compose exec app ...` from `/home/dev/sd-admin`) or a one-off image: `docker run --rm -v /home/dev/splotnikov-dev:/app -w /app composer:2 <cmd>`.
+- **Host has no PHP/Composer.** Never run `php`/`composer`/`artisan` on the host. Use either the host app's container (`make composer cmd="..."`, `make art cmd="..."`, `docker compose exec app ...` from `/home/dev/<host-app>`) or a one-off image: `docker run --rm -v /home/dev/splotnikov-dev:/app -w /app composer:2 <cmd>`.
 - The existing static repo **`/home/dev/splotnikov` is never modified or committed to** by this plan.
 - Route/view marker string for assertions: **`Stanislav Plotnikov`**.
 - Domain is config-driven: `config('splotnikov-dev.domain')` ← `env('SPLOTNIKOV_DOMAIN', 'splotnikov.dev')`.
@@ -40,7 +40,7 @@
 ```json
 {
     "name": "spdotdev/splotnikov-dev",
-    "description": "splotnikov.dev portfolio site, packaged for the sd-admin host app.",
+    "description": "splotnikov.dev portfolio site, packaged for the the host app host app.",
     "type": "library",
     "license": "proprietary",
     "require": {
@@ -338,10 +338,10 @@ jobs:
 # splotnikov-dev
 
 The splotnikov.dev portfolio + CV, packaged as a Laravel library for the
-`sd-admin` host application. Host-based routing serves the site on the
-configured domain; sd-admin is the single deployed app.
+`the host app` host application. Host-based routing serves the site on the
+configured domain; the host app is the single deployed app.
 
-## Install (in sd-admin)
+## Install (in the host app)
 
 Add the VCS repository and require a tagged version:
 
@@ -368,7 +368,7 @@ SPLOTNIKOV_DOMAIN=splotnikov.dev
 
 ## Upgrading
 
-Bump the git tag here (`vX.Y.Z`), then in sd-admin:
+Bump the git tag here (`vX.Y.Z`), then in the host app:
 
 ```bash
 make composer cmd="update spdotdev/splotnikov-dev"
@@ -377,7 +377,7 @@ make composer cmd="update spdotdev/splotnikov-dev"
 ## Local development override (optional, faster loop)
 
 To edit this package live from a sibling checkout instead of re-tagging,
-mount it into the sd-admin container and point Composer at a path
+mount it into the the host app container and point Composer at a path
 repository (`{ "type": "path", "url": "../splotnikov-dev", "options": { "symlink": true } }`).
 Keep this out of committed config — it is a dev-only convenience.
 ````
@@ -389,14 +389,14 @@ Keep this out of committed config — it is a dev-only convenience.
 
 ## What this is
 A Laravel **library package** (not an app) that serves the splotnikov.dev
-portfolio + CV inside the `sd-admin` host app via host-based routing.
+portfolio + CV inside the `the host app` host app via host-based routing.
 
 ## Constraints
 - The host machine has no PHP/Composer. Run package commands through a
   one-off Docker image (`docker run --rm -v "$PWD":/app -w /app composer:2 ...`)
-  or inside the sd-admin `app` container once installed.
+  or inside the the host app `app` container once installed.
 - Distribution is GitHub VCS + git tags only. No Packagist.
-- Versioned: change behaviour → bump tag (`vX.Y.Z`) → `composer update` in sd-admin.
+- Versioned: change behaviour → bump tag (`vX.Y.Z`) → `composer update` in the host app.
 
 ## Layout
 - `src/SplotnikovDevServiceProvider.php` — auto-discovered; loads routes + views, publishes config/assets.
@@ -406,8 +406,8 @@ portfolio + CV inside the `sd-admin` host app via host-based routing.
 - `public/` — assets published to the host's `public/vendor/splotnikov`.
 
 ## Integration / route precedence
-sd-admin's landing route must be host-scoped so it does not shadow this
-package's domain routes. Verified by sd-admin's `SplotnikovSiteTest`.
+the host app's landing route must be host-scoped so it does not shadow this
+package's domain routes. Verified by the host app's `SplotnikovSiteTest`.
 
 ## Deferred
 DigitalOcean provisioning, live deploy, and the DNS A-record cutover.
@@ -419,11 +419,11 @@ See `docs/cutover-runbook.md`.
 ```markdown
 # splotnikov.dev cutover runbook
 
-Go-live: move splotnikov.dev from GitHub Pages (static repo) to the sd-admin
+Go-live: move splotnikov.dev from GitHub Pages (static repo) to the the host app
 app on the DigitalOcean server. Nothing here is automated yet.
 
-1. Provision `d051` (DigitalOcean). See the `d0-admin` project.
-2. Deploy sd-admin (with `spdotdev/splotnikov-dev` required) to the server.
+1. Provision the server (DigitalOcean).
+2. Deploy the host app (with `spdotdev/splotnikov-dev` required) to the server.
 3. In the **server** `.env` (never git): set `SPLOTNIKOV_DOMAIN=splotnikov.dev`
    and real secrets (`APP_KEY`, `DB_PASSWORD`, `ADMIN_PASSWORD`).
 4. Run `php artisan vendor:publish --tag=splotnikov-dev-assets` on the server.
@@ -474,9 +474,9 @@ Expected: `refs/tags/v0.1.0` listed on the remote.
 
 ---
 
-### Task 6: Wire into sd-admin and verify routing (integration TDD)
+### Task 6: Wire into the host app and verify routing (integration TDD)
 
-**Files (all under `/home/dev/sd-admin`):**
+**Files (all under `/home/dev/<host-app>`):**
 - Create: `tests/Feature/SplotnikovSiteTest.php`
 - Modify: `composer.json` (add `repositories` + `require`)
 - Modify: `routes/web.php` (host-scope the existing landing route)
@@ -484,11 +484,11 @@ Expected: `refs/tags/v0.1.0` listed on the remote.
 
 **Interfaces:**
 - Consumes: package routes `splotnikov.home` (`/`) and `splotnikov.cv` (`/cv`) on host `config('splotnikov-dev.domain')`.
-- Produces: a passing sd-admin test proving the splotnikov.dev host renders the portfolio/CV while sd-admin's own landing still answers on its host.
+- Produces: a passing the host app test proving the splotnikov.dev host renders the portfolio/CV while the host app's own landing still answers on its host.
 
 - [ ] **Step 1: Write the failing feature test**
 
-Create `/home/dev/sd-admin/tests/Feature/SplotnikovSiteTest.php`:
+Create `/home/dev/<host-app>/tests/Feature/SplotnikovSiteTest.php`:
 ```php
 <?php
 
@@ -526,40 +526,40 @@ class SplotnikovSiteTest extends TestCase
 
 - [ ] **Step 2: Run it and confirm it fails (package not installed yet)**
 
-Run (from `/home/dev/sd-admin`): `make art cmd="test --filter=SplotnikovSiteTest"`
+Run (from `/home/dev/<host-app>`): `make art cmd="test --filter=SplotnikovSiteTest"`
 Expected: FAIL — the two splotnikov tests 404 (no route for that host); the landing test may pass.
 
 - [ ] **Step 3: Add the VCS repository and require the package**
 
-Edit `/home/dev/sd-admin/composer.json`: add a top-level `repositories` array and the require line.
+Edit `/home/dev/<host-app>/composer.json`: add a top-level `repositories` array and the require line.
 ```jsonc
 "repositories": [
     { "type": "vcs", "url": "https://github.com/spdotdev/splotnikov-dev" }
 ],
 ```
-Then, from `/home/dev/sd-admin`:
+Then, from `/home/dev/<host-app>`:
 ```bash
 make composer cmd="require spdotdev/splotnikov-dev:^0.1"
 ```
 Expected: Composer resolves `v0.1.0` from GitHub and installs it.
 
-> If Composer reports a platform/version conflict on `illuminate/support`, note sd-admin's Laravel major (`make composer cmd="show laravel/framework | grep versions"`), update the package's `composer.json` constraint accordingly, re-tag (`v0.1.1`), push, and require `^0.1.1`.
+> If Composer reports a platform/version conflict on `illuminate/support`, note the host app's Laravel major (`make composer cmd="show laravel/framework | grep versions"`), update the package's `composer.json` constraint accordingly, re-tag (`v0.1.1`), push, and require `^0.1.1`.
 
 - [ ] **Step 4: Publish the package assets**
 
-Run (from `/home/dev/sd-admin`): `make art cmd="vendor:publish --tag=splotnikov-dev-assets --force"`
+Run (from `/home/dev/<host-app>`): `make art cmd="vendor:publish --tag=splotnikov-dev-assets --force"`
 Expected: `profile.png` (and the other files) copied to `public/vendor/splotnikov/`.
 
-- [ ] **Step 5: Host-scope sd-admin's landing route so it cannot shadow the package**
+- [ ] **Step 5: Host-scope the host app's landing route so it cannot shadow the package**
 
-Edit `/home/dev/sd-admin/routes/web.php` to:
+Edit `/home/dev/<host-app>/routes/web.php` to:
 ```php
 <?php
 
 use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Route;
 
-// Scope the default landing to sd-admin's own host so site packages
+// Scope the default landing to the host app's own host so site packages
 // (e.g. splotnikov-dev) own their domains without being shadowed.
 Route::domain(parse_url((string) config('app.url'), PHP_URL_HOST) ?: 'localhost')
     ->group(function () {
@@ -569,31 +569,31 @@ Route::domain(parse_url((string) config('app.url'), PHP_URL_HOST) ?: 'localhost'
 
 - [ ] **Step 6: Point the dev environment at the splotnikov host**
 
-Append to `/home/dev/sd-admin/.env.example`:
+Append to `/home/dev/<host-app>/.env.example`:
 ```dotenv
 
 # Host that the splotnikov-dev site package answers on.
 SPLOTNIKOV_DOMAIN=splotnikov.dev
 ```
-And ensure the same line exists in `/home/dev/sd-admin/.env`. Then clear config cache:
+And ensure the same line exists in `/home/dev/<host-app>/.env`. Then clear config cache:
 ```bash
 make art cmd="config:clear"
 ```
 
 - [ ] **Step 7: Run the splotnikov tests — expect green**
 
-Run (from `/home/dev/sd-admin`): `make art cmd="test --filter=SplotnikovSiteTest"`
+Run (from `/home/dev/<host-app>`): `make art cmd="test --filter=SplotnikovSiteTest"`
 Expected: PASS (3 tests). If a splotnikov route returns 500, it is almost certainly a Blade-compile error from a CSS at-rule in the ported view — escape the offending `@rule` (`@@rule`) or wrap it in `@verbatim ... @endverbatim` in the package view, re-tag (`v0.1.1`), `make composer cmd="update spdotdev/splotnikov-dev"`, and re-run.
 
-- [ ] **Step 8: Run sd-admin's full suite to confirm no regression**
+- [ ] **Step 8: Run the host app's full suite to confirm no regression**
 
-Run (from `/home/dev/sd-admin`): `make art cmd="test"`
+Run (from `/home/dev/<host-app>`): `make art cmd="test"`
 Expected: PASS — in particular `LandingPageTest` still green (its requests use the default `localhost` host, which the scoped landing route still matches).
 
-- [ ] **Step 9: Keep Pint/Larastan green and commit sd-admin**
+- [ ] **Step 9: Keep Pint/Larastan green and commit the host app**
 
 ```bash
-cd /home/dev/sd-admin
+cd /home/dev/<host-app>
 docker compose exec app ./vendor/bin/pint
 docker compose exec app ./vendor/bin/phpstan analyse --memory-limit=512M
 git add composer.json composer.lock routes/web.php tests/Feature/SplotnikovSiteTest.php .env.example
@@ -608,10 +608,10 @@ Expected: pre-commit hook (Pint + Larastan) passes; commit succeeds. Do not comm
 **Spec coverage:**
 - Versioned package, `type: library`, namespace → Task 1. ✓
 - Content parity (portfolio `/`, CV `/cv`) → Task 2 + Task 3 routes/controller. ✓
-- Extends sd-admin routing via auto-discovered provider + `Route::domain` → Task 3, Task 6. ✓
+- Extends the host app routing via auto-discovered provider + `Route::domain` → Task 3, Task 6. ✓
 - VCS + git tag distribution, no Packagist → Task 5, Task 6 Step 3. ✓
 - Upgrade by version bump → README (Task 4), runbook references. ✓
-- Wire into sd-admin + verify splotnikov.dev routes to template (local) → Task 6. ✓
+- Wire into the host app + verify splotnikov.dev routes to template (local) → Task 6. ✓
 - Route precedence resolution (host-scope landing) → Task 6 Step 5, regression check Step 8. ✓
 - Static repo untouched → Global Constraints; no task writes to `/home/dev/splotnikov`. ✓
 - Deferred (server, deploy, DNS, Packagist, shared packages) → cutover-runbook (Task 4), not implemented. ✓
