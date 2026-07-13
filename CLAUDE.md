@@ -17,6 +17,7 @@ portfolio + CV inside a host app via host-based routing.
 - `resources/views/{portfolio,cv}.blade.php` — ported near-verbatim from the static site (mostly static HTML).
 - `config/splotnikov-dev.php` — `domain` via `SPLOTNIKOV_DOMAIN`.
 - `public/` — assets published to the host's `public/vendor/splotnikov`.
+- `.env.example` — documents env vars this package reads (currently just `SPLOTNIKOV_DOMAIN`); all have safe defaults, so it's optional, not required for install. Copy relevant lines into the host app's own `.env`.
 
 ## Integration / route precedence
 The host app's landing route must be host-scoped so it does not shadow this

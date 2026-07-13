@@ -23,10 +23,25 @@ composer update spdotdev/splotnikov-dev
 php artisan vendor:publish --tag=splotnikov-dev-assets
 ```
 
-Set the host it answers on (defaults to `splotnikov.dev`):
+## Configuration
 
-```dotenv
-SPLOTNIKOV_DOMAIN=splotnikov.dev
+This package is a library, not a standalone app, so it ships no `.env` of
+its own — it reads config from whatever app installs it. See
+[`.env.example`](.env.example) for the full list of variables it supports
+and their defaults; copy the ones you want to override into the **host
+application's** `.env`.
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `SPLOTNIKOV_DOMAIN` | `splotnikov.dev` | Host this package's routes answer on (`Route::domain(...)`). |
+
+Every variable has a safe default baked into `config/splotnikov-dev.php`,
+so the package works out of the box even if none of these are set —
+`.env.example` only documents the overrides available to you. If you want
+the config file itself editable in the host app, publish it:
+
+```bash
+php artisan vendor:publish --tag=splotnikov-dev-config
 ```
 
 ## Upgrading
