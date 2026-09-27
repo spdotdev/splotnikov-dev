@@ -1,5 +1,8 @@
 # splotnikov.dev cutover runbook
 
+> **Historical (cutover done).** Checked 2026-09-27: the site is served by the Laravel
+> package. The steps below are kept as the record of how the cutover was done.
+
 > This file is the splotnikov.dev-specific slice of the cutover to the
 > Laravel-served version of the site. Nothing is live yet — DNS still points
 > at GitHub Pages.
