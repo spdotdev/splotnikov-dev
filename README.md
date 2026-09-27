@@ -4,6 +4,11 @@ The splotnikov.dev portfolio + CV, packaged as a Laravel library for
 inclusion in a host Laravel application. Host-based routing serves the site
 on the configured domain alongside the host app's own routes.
 
+## Requirements
+
+- PHP 8.3+
+- A host app on Laravel 13 (`illuminate/support ^13.0`)
+
 ## Install
 
 Add the VCS repository and require a tagged version:
@@ -22,6 +27,14 @@ Add the VCS repository and require a tagged version:
 composer update spdotdev/splotnikov-dev
 php artisan vendor:publish --tag=splotnikov-dev-assets
 ```
+
+The service provider is auto-discovered. It registers these routes on the
+configured domain: `/` (portfolio), `/cv`, `/robots.txt`, `/sitemap.xml` and
+`/site.webmanifest`. The assets tag copies `public/` to the host's
+`public/vendor/splotnikov`.
+
+The host app's own landing route must be host-scoped, or it will shadow this
+package's `/` route.
 
 ## Configuration
 
@@ -50,7 +63,23 @@ Bump the git tag here (`vX.Y.Z`), then in the host application:
 
 ```bash
 composer update spdotdev/splotnikov-dev
+php artisan vendor:publish --tag=splotnikov-dev-assets --force
 ```
+
+Commit the host app's updated `composer.lock`. `--force` is needed so changed
+assets overwrite the previously published copies.
+
+## Development
+
+```bash
+composer install
+composer test                 # phpunit
+./vendor/bin/pint --test      # code style
+./vendor/bin/phpstan analyse  # static analysis
+```
+
+CI runs the same three checks on PHP 8.3 for pushes to `main` and pull requests.
+`composer audit` runs in the security workflow (same triggers plus weekly).
 
 ## Local development override (optional, faster loop)
 

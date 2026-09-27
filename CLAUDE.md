@@ -13,7 +13,8 @@ portfolio + CV inside a host app via host-based routing.
 
 ## Layout
 - `src/SplotnikovDevServiceProvider.php` — auto-discovered; loads routes + views, publishes config/assets.
-- `routes/web.php` — `Route::domain(config('splotnikov-dev.domain'))` group: `/` and `/cv`.
+- `routes/web.php`: `Route::domain(config('splotnikov-dev.domain'))` group: `/` and `/cv`, plus `/robots.txt`, `/sitemap.xml` and `/site.webmanifest` at root.
+- `src/Http/Controllers/SiteController.php`: renders `splotnikov::portfolio` / `splotnikov::cv` and serves the three root files straight from the package's `public/`.
 - `resources/views/{portfolio,cv}.blade.php` — ported near-verbatim from the static site (mostly static HTML).
 - `config/splotnikov-dev.php` — `domain` via `SPLOTNIKOV_DOMAIN`.
 - `public/` — assets published to the host's `public/vendor/splotnikov`.
@@ -23,6 +24,8 @@ portfolio + CV inside a host app via host-based routing.
 The host app's landing route must be host-scoped so it does not shadow this
 package's domain routes. Verified by the host app's `SplotnikovSiteTest`.
 
-## Deferred
-DigitalOcean provisioning, live deploy, and the DNS A-record cutover.
-See `docs/cutover-runbook.md`.
+## Cutover (done)
+DigitalOcean provisioning, live deploy, and the DNS A-record cutover are done:
+splotnikov.dev is served by the host app from this package (checked 2026-09-27,
+`/` and `/cv` return 200 with `vendor/splotnikov/` assets).
+`docs/cutover-runbook.md` is the record of how it was done.
