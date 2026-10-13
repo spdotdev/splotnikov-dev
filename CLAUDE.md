@@ -29,3 +29,6 @@ DigitalOcean provisioning, live deploy, and the DNS A-record cutover are done:
 splotnikov.dev is served by the host app from this package (checked 2026-09-27,
 `/` and `/cv` return 200 with `vendor/splotnikov/` assets).
 `docs/cutover-runbook.md` is the record of how it was done.
+
+## Deploy (set 2026-10-13, HARD RULE, user decision)
+Production on d051 always runs the latest `main` of this project. When the user asks for a change and it is merged to main, deploy it yourself right away, without asking: push or merge, watch CI and the deploy to the end, and check the server runs that commit. If this project uses tags, deploy the latest tag every time. Anything not in main is local testing and is never deployed. A failing deploy is reported first as broken, with what it blocks. Never open PRs unless asked.
