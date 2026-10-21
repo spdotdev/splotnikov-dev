@@ -1,0 +1,48 @@
+name: Latest dependencies (weekly early warning)
+
+# Runs the normal checks against the NEWEST dependency versions composer.json
+# allows, ignoring composer.lock. It changes nothing, commits nothing and blocks
+# nothing: the normal CI and deploys keep using the committed lock. If a new
+# release (for example a stricter phpstan) would break this repo, this run fails
+# and GitHub emails about the failed scheduled run, before Dependabot proposes
+# that version. Monday 04:00 UTC = 06:00 Amsterdam in summer, 05:00 in winter.
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, dom, xml, pdo, sqlite3, pdo_sqlite, bcmath, intl
+          coverage: none
+
+      - name: Install dependencies
+        # The newest versions composer.json allows, ignoring composer.lock on purpose.
+        run: composer update --no-interaction --prefer-dist --no-progress
+
+      - name: Composer audit (dependency vulnerabilities)
+        run: composer audit --no-interaction
+
+      - name: Pint (style check)
+        run: ./vendor/bin/pint --test
+
+      - name: Larastan (static analysis)
+        run: ./vendor/bin/phpstan analyse --no-progress --memory-limit=1G
+
+      - name: Tests
+        run: ./vendor/bin/phpunit
