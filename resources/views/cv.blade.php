@@ -133,16 +133,24 @@
     if (!window.html2pdf) { window.print(); return; }
     var was = document.documentElement.getAttribute('data-theme');
     document.documentElement.setAttribute('data-theme', 'light');
+    // Render from a fixed box at the top left of the viewport, so html2canvas has no scroll or centering offset to get wrong.
+    var host = document.createElement('div'), mark = document.createElement('div');
+    host.style.cssText = 'position:fixed;left:0;top:0;width:740px;background:#fff;z-index:-1;overflow:visible';
+    el.parentNode.insertBefore(mark, el); host.appendChild(el); document.body.appendChild(host);
     el.classList.add('pdf');
     pdf.disabled = true; pdf.textContent = 'Building PDF…';
     window.html2pdf().set({
       margin: [10, 10, 12, 10], filename: 'Stanislav_Plotnikov_CV.pdf',
       image: { type: 'jpeg', quality: .98 },
-      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: 1100 },
+      html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff', scrollX: 0, scrollY: 0, x: 0, y: 0, width: 740, windowWidth: 740 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'], avoid: ['.job', '.roles > div', '.blk'] }
     }).from(el).save().then(done, done);
-    function done() { el.classList.remove('pdf'); if (was) document.documentElement.setAttribute('data-theme', was); else document.documentElement.removeAttribute('data-theme'); pdf.disabled = false; pdf.textContent = 'Download PDF'; }
+    function done() {
+      el.classList.remove('pdf'); mark.parentNode.insertBefore(el, mark); mark.remove(); host.remove();
+      if (was) document.documentElement.setAttribute('data-theme', was); else document.documentElement.removeAttribute('data-theme');
+      pdf.disabled = false; pdf.textContent = 'Download PDF';
+    }
   };
 })();
 </script>

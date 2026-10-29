@@ -539,8 +539,9 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 @media (max-width:980px){.cv{grid-template-columns:1fr;padding:24px 20px;gap:28px}.roles{grid-template-columns:1fr}.cv-side{order:-1;grid-template-columns:1fr 1fr}.cv-side .blk:first-of-type{grid-column:1/-1}.cv-photo{width:120px;height:120px}}
 @media (max-width:600px){.cv-side{grid-template-columns:1fr}}
 /* the PDF export (html2pdf) and print: always light, no chrome, name and title inside the document */
-.cv.pdf{--panel:#fff;--bg:#fff;--ink:#000;--ink2:#222;--muted:#555;--line:#ddd;--acc:#0f766e;border:0;border-radius:0;padding:0;grid-template-columns:minmax(0,1fr) 210px;gap:28px;font-size:13px}
+.cv.pdf{--panel:#fff;--bg:#fff;--ink:#000;--ink2:#222;--muted:#555;--line:#ddd;--acc:#0f766e;border:0;border-radius:0;padding:0;width:740px;margin:0;grid-template-columns:minmax(0,1fr) 200px;gap:28px;font-size:13px}
 .cv.pdf .cv-print-head,.cv.pdf .cv-print-head p{display:block}
+.cv.pdf .cv-side{order:0;grid-template-columns:1fr;gap:14px}.cv.pdf .cv-side .blk:first-of-type{grid-column:auto}.cv.pdf .roles{grid-template-columns:1fr 1fr}
 .cv-print-head .cv-name{font:500 28px/1.1 Geist,sans-serif;letter-spacing:-.02em;text-transform:none;color:var(--ink);border:0;padding:0;margin:0 0 4px}
 .cv-print-head .cv-title{font-size:14px;color:var(--ink2);margin:0}
 .cv-print-head .cv-availability{font:400 11.5px "Geist Mono",monospace;color:var(--muted);margin:4px 0 18px}
