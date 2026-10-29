@@ -57,7 +57,18 @@ class SiteController
 
     public function sitemap(): Response
     {
-        return $this->staticFile('sitemap.xml', 'application/xml');
+        // The static file plus every article that only exists in sd-cms.
+        $xml = (string) file_get_contents(__DIR__.'/../../../public/sitemap.xml');
+        $extra = '';
+        foreach (Posts::all() as $post) {
+            $loc = 'https://splotnikov.dev/blog/'.$post['slug'];
+            if (! str_contains($xml, '<loc>'.$loc.'</loc>')) {
+                $extra .= "    <url>\n        <loc>".$loc."</loc>\n        <lastmod>".$post['date']."</lastmod>\n        <changefreq>yearly</changefreq>\n        <priority>0.6</priority>\n    </url>\n";
+            }
+        }
+        $xml = str_replace('</urlset>', $extra.'</urlset>', $xml);
+
+        return response($xml, 200, ['Content-Type' => 'application/xml']);
     }
 
     public function webmanifest(): Response

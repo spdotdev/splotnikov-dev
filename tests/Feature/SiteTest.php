@@ -221,4 +221,17 @@ class SiteTest extends TestCase
             return $mail->hasTo('stplotnikov@gmail.com') && $mail->hasReplyTo('test@example.com') && $mail->about === 'Legacy modernization' && str_contains($rendered, 'exports take hours');
         });
     }
+
+    public function test_an_sd_cms_article_maps_to_a_post_and_lands_in_the_sitemap(): void
+    {
+        $article = (object) ['slug' => 'from-cms', 'title' => 'From the CMS', 'summary' => 'Sum', 'body' => "First.\n\n## Head\n\n- one\n- two\n\nLast.", 'tags' => ['PHP', 'News'], 'published_at' => new \DateTimeImmutable('2026-11-02 10:00:00'), 'title_nl' => 'Uit het CMS', 'summary_nl' => null, 'sells' => 'maintenance-retainer'];
+        $post = Posts::fromArticle($article);
+
+        $this->assertSame('from-cms', $post['slug']);
+        $this->assertSame('2026-11-02', $post['date']);
+        $this->assertSame(['First.', '## Head', '- one', '- two', 'Last.'], $post['body']);
+        $this->assertSame(['title' => 'Uit het CMS', 'summary' => 'Sum'], $post['nl']);
+        $this->assertArrayHasKey('strangler-fig-what-the-bridge-taught-me', Posts::all(), 'built-in articles stay without sd-cms');
+        $this->get('http://splotnikov.dev/sitemap.xml')->assertOk()->assertSee('<urlset', false);
+    }
 }
