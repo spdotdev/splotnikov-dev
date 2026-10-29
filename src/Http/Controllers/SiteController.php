@@ -61,6 +61,10 @@ class SiteController
         $xml = (string) file_get_contents(__DIR__.'/../../../public/sitemap.xml');
         $extra = '';
         foreach (Posts::all() as $post) {
+            // Only well-formed slugs and dates reach the XML; the rest is skipped.
+            if (! preg_match('/^[a-z0-9-]+$/', $post['slug']) || ! preg_match('/^\d{4}-\d{2}-\d{2}$/', $post['date'])) {
+                continue;
+            }
             $loc = 'https://splotnikov.dev/blog/'.$post['slug'];
             if (! str_contains($xml, '<loc>'.$loc.'</loc>')) {
                 $extra .= "    <url>\n        <loc>".$loc."</loc>\n        <lastmod>".$post['date']."</lastmod>\n        <changefreq>yearly</changefreq>\n        <priority>0.6</priority>\n    </url>\n";

@@ -50,8 +50,8 @@ $nl = [
     'bl_cta_b1' => 'Neem contact op',
 ];
 foreach (array_values(\Spdotdev\SplotnikovDev\Posts::all()) as $i => $post) {
-    $nl['bl_'.$i.'_t'] = $post['nl']['title'];
-    $nl['bl_'.$i.'_s'] = $post['nl']['summary'];
+    $nl['bl_'.$i.'_t'] = e($post['nl']['title']);
+    $nl['bl_'.$i.'_s'] = e($post['nl']['summary']);
 }
 ?>
 <script>
