@@ -9,6 +9,10 @@ Route::domain(config('splotnikov-dev.domain'))
     ->group(function () {
         Route::get('/', [SiteController::class, 'index'])->name('splotnikov.home');
         Route::get('/cv', [SiteController::class, 'cv'])->name('splotnikov.cv');
+        Route::get('/projects', [SiteController::class, 'projects'])->name('splotnikov.projects');
+        Route::get('/toolkit', [SiteController::class, 'toolkit'])->name('splotnikov.toolkit');
+        Route::get('/blog', [SiteController::class, 'blog'])->name('splotnikov.blog');
+        Route::get('/blog/{slug}', [SiteController::class, 'post'])->where('slug', '[a-z0-9-]+')->name('splotnikov.post');
         Route::get('/contact', [SiteController::class, 'contact'])->name('splotnikov.contact.page');
         Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:6,1')->name('splotnikov.contact');
 

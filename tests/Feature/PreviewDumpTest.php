@@ -19,7 +19,7 @@ class PreviewDumpTest extends TestCase
         }
         is_dir($dir) || mkdir($dir, 0755, true);
 
-        $pages = ['/' => 'index', '/cv' => 'cv', '/contact' => 'contact'];
+        $pages = ['/' => 'index', '/cv' => 'cv', '/contact' => 'contact', '/projects' => 'projects', '/toolkit' => 'toolkit', '/blog' => 'blog', '/blog/strangler-fig-what-the-bridge-taught-me' => 'post'];
         $map = [];
         foreach ($pages as $path => $file) {
             $map['href="http://splotnikov.dev'.$path.'"'] = 'href="'.$file.'.html"';

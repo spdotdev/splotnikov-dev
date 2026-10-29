@@ -4,6 +4,7 @@ namespace Spdotdev\SplotnikovDev\Http\Controllers;
 
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Spdotdev\SplotnikovDev\Posts;
 
 class SiteController
 {
@@ -17,6 +18,30 @@ class SiteController
     {
         // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
         return view('splotnikov::cv');
+    }
+
+    public function projects(): View
+    {
+        // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
+        return view('splotnikov::projects');
+    }
+
+    public function toolkit(): View
+    {
+        // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
+        return view('splotnikov::toolkit');
+    }
+
+    public function blog(): View
+    {
+        // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
+        return view('splotnikov::blog');
+    }
+
+    public function post(string $slug): View
+    {
+        // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
+        return view('splotnikov::post', ['post' => Posts::get($slug)]);
     }
 
     public function contact(): View

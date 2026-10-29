@@ -135,41 +135,29 @@
   if (main && view && side) {
     var esc = function (x) { return String(x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
     var run = function (log, rows) { return { kind: 'run', log: log, rows: rows }; };
-    // Each scene: typed lines [column, text, class]. Column "$" is a prompt, a number is a code line, "" is plain output, a time is a log.
+    // Each scene: typed lines [column, text, class]. Column "$" is a prompt, a number is a code line, "" is plain output. Titles are the headline, the tool after the dot.
     var D = {
-      'netscan': Object.assign(run([
-        ['$', 'lab-scan --network lab --report', 'ac'],
-        ['', 'inventory of my own lab network · 256 addresses · 3 hosts up', ''],
-        ['', 'gw.lab      ssh, dns, https          up to date', 'ok'],
-        ['', 'nas.lab     file sharing, admin ui   admin panel without TLS', 'warn'],
-        ['', 'cam.lab     telnet                   factory firmware, default service', 'bad'],
-        ['', 'report → 1 high, 1 medium, written to lab/2026-10-29.md', ''],
-        ['', 'fix → camera on its own VLAN, admin panel behind TLS, the same evening', 'ok'],
-        ['', 'done · 41 s · next run scheduled weekly', 'ac']
+      'artisan': Object.assign(run([
+        ['$', 'php artisan migrate --force && php artisan test --parallel', 'ac'],
+        ['', 'INFO  Running migrations.', ''],
+        ['', '2026_10_12_000001_add_index_to_bookings_table ........ 212 ms DONE', 'ok'],
+        ['', '2026_10_12_000002_backfill_booking_status ............ 1.8 s DONE', 'ok'],
+        ['', 'PASS  Tests\\Feature\\BookingFlowTest ........... 14 tests', 'ok'],
+        ['', 'PASS  Tests\\Feature\\InvoiceExportTest ......... 9 tests', 'ok'],
+        ['', 'PASS  Tests\\Unit\\PriceCalculatorTest .......... 31 tests', 'ok'],
+        ['', 'Tests: 312 passed (1 048 assertions) · Duration: 41.2 s', 'ok'],
+        ['$', 'vendor/bin/phpunit --filter Booking --coverage-text | tail -3', 'ac'],
+        ['', 'Lines: 94.1% · Methods: 91.7% · Classes: 100%', 'ok'],
+        ['$', 'npx playwright test tests/e2e/booking.spec.ts', 'ac'],
+        ['', '6 passed (11.4 s) · light and dark · phone and desktop', 'ok']
       ], [
-        ['One forgotten device is the whole story', 'A camera on factory firmware is what a scan of a home or office network finds first. It went to its own network segment that evening.', '#toolkit', 'h', 'HIGH'],
-        ['Inventory every week', 'A scheduled scan of my own network, diffed against last week: a new device or a new open service is a line in a report, not a surprise.', '#toolkit', 'l', 'WEEKLY'],
-        ['Scope', 'My own lab, my own hardware. Security tooling runs only where I own the machines or hold written authorization.', '#contact', 'l', 'SCOPE'],
-        ['What I do with it for clients', 'The same habit, applied to a server estate: a quick scan with a written report and a fix list.', 'https://scuttle.dev/services/security-quick-scan', 'l', '→']
-      ]), { title: 'zsh · weekly scan of my lab network', done: 'done · 3 hosts · 2 findings' }),
-      'hardening': Object.assign(run([
-        ['$', 'ssh deploy@web-02 sudo harden --check', 'ac'],
-        ['', 'sshd       key only, root login off, port 22 limited to the office and the VPN', 'ok'],
-        ['', 'firewall   default deny · 22, 80, 443 open · everything else closed', 'ok'],
-        ['', 'fail2ban   active · 2 bans in the last 24 h', 'ok'],
-        ['', 'updates    unattended security updates on · last reboot 6 days ago', 'ok'],
-        ['', 'tls        app.example.nl valid 71 days · HSTS · TLS 1.2 and 1.3 only', 'ok'],
-        ['', 'secrets    none in the repository · .env outside the web root · keys 0600', 'ok'],
-        ['', 'backups    nightly dump · off-site copy · last restore test 12 days ago', 'warn'],
-        ['', 'done · 1 warning · restore test due this week', 'ac']
-      ], [
-        ['Eight checks, one warning', 'SSH, firewall, bans, updates, TLS, secrets, backups: the baseline every server I run passes, printed in one command.', '#toolkit', 'l', 'BASE'],
-        ['A backup counts after a restore', 'The dump exists; the restore test is twelve days old, so it is due. The warning is the point of the check.', '#toolkit', 'm', 'DUE'],
-        ['Rebuild instead of repair', 'All of this comes from the same playbook, so a misbehaving server is rebuilt from the file with last night\'s data.', '#toolkit', 'l', 'IAC'],
-        ['Sold as', 'Hardening and secure pipeline, at Scuttle Development.', 'https://scuttle.dev/services/hardening', 'l', '→']
-      ]), { title: 'zsh · server hardening check (web-02)', done: 'done · 1 warning' }),
+        ['Migrations without downtime', 'Expand first, backfill, contract later: a column is never dropped in the same release that stops writing it.', '/projects#cases', 'l', 'SAFE'],
+        ['312 tests before anything ships', 'PHPUnit for the rules, Playwright for the real pages; the suite runs on every push and nothing merges red.', '/toolkit#devops', 'l', 'TESTS'],
+        ['Phalcon to Laravel, in daily use', 'The same commands run on a platform that started on Phalcon 3.4 and PHP 7.4 and was migrated while hotels used it.', '/projects#cases', 'l', 'CASE'],
+        ['Read the case', 'Sixty percent lower latency, PHP back in support, the hotels kept working.', '/projects#cases', 'l', '→']
+      ]), { title: '312 tests green before anything ships · Laravel, PHPUnit, Playwright', done: 'done · 312 tests · 41 s' }),
       'npm-build': Object.assign(run([
-        ['$', 'npm run build', 'ac'],
+        ['$', 'npm run build && npm audit --omit=dev', 'ac'],
         ['', '> site@2.4.0 build', ''],
         ['', '> vite build', ''],
         ['', 'vite v6.3.5 building for production...', ''],
@@ -177,36 +165,13 @@
         ['', 'dist/index.html                  2.41 kB │ gzip:  1.02 kB', ''],
         ['', 'dist/assets/index-Bd4k2x.css    38.20 kB │ gzip:  7.91 kB', ''],
         ['', 'dist/assets/index-C9s1pQ.js    142.77 kB │ gzip: 46.30 kB', ''],
-        ['', '✓ built in 1.84s', 'ok'],
-        ['$', 'npm audit --omit=dev', 'ac'],
-        ['', 'found 0 vulnerabilities', 'ok'],
-        ['$', 'npx playwright test', 'ac'],
-        ['', '12 passed (14.2s)', 'ok']
+        ['', '✓ built in 1.84 s', 'ok'],
+        ['', 'found 0 vulnerabilities', 'ok']
       ], [
-        ['1.84 s build, 46 kB of JS', 'A front end the size the page needs; no framework for a page that does not need one.', '#toolkit', 'l', 'VITE'],
-        ['Audit clean', 'Production dependencies audited on every build; a known vulnerability blocks the release.', '#toolkit', 'l', 'AUDIT'],
-        ['12 browser tests', 'Playwright runs the real pages, light and dark, phone and desktop, before anything deploys.', '#toolkit', 'l', 'E2E'],
-        ['This site, the same way', 'One stylesheet, one script, tested in the pipeline, deployed from main.', 'https://github.com/spdotdev/splotnikov-dev', 'l', '→']
-      ]), { title: 'zsh · npm run build (Vite, Playwright)', done: 'done · 1.84 s · 12 tests' }),
-      'artisan': Object.assign(run([
-        ['$', 'php artisan migrate --force', 'ac'],
-        ['', 'INFO  Running migrations.', ''],
-        ['', '2026_10_12_000001_add_index_to_bookings_table ........ 212 ms DONE', 'ok'],
-        ['', '2026_10_12_000002_backfill_booking_status ............ 1.8 s DONE', 'ok'],
-        ['$', 'php artisan test --parallel', 'ac'],
-        ['', 'PASS  Tests\\Feature\\BookingFlowTest', 'ok'],
-        ['', 'PASS  Tests\\Feature\\InvoiceExportTest', 'ok'],
-        ['', 'Tests: 312 passed (1 048 assertions) · Duration: 41.2 s', 'ok'],
-        ['$', 'vendor/bin/phpstan analyse --level=6 --memory-limit=512M', 'ac'],
-        ['', '[OK] No errors', 'ok'],
-        ['$', 'php artisan queue:work --once', 'ac'],
-        ['', 'Processing: App\\Jobs\\SyncChannelManager ............ 1.2 s DONE', 'ok']
-      ], [
-        ['Migrations without downtime', 'Expand first, backfill, contract later: a column is never dropped in the same release that stops writing it.', '#proof', 'l', 'SAFE'],
-        ['312 tests, level 6', 'The suite and static analysis run on every push; nothing merges red.', '#toolkit', 'l', 'CI'],
-        ['Phalcon to Laravel', 'The same commands run on a platform that started on Phalcon 3.4 and PHP 7.4, migrated while in daily use.', '#proof', 'l', 'CASE'],
-        ['Read the case', 'Sixty percent lower latency, PHP back in support, the hotels kept working.', '#proof', 'l', '→']
-      ]), { title: 'zsh · php artisan (Laravel 12, PHP 8.4)', done: 'done · 312 tests green' }),
+        ['1.84 s build, 46 kB of JS', 'A front end the size the page needs; no framework for a page that does not need one.', '/toolkit#backend', 'l', 'VITE'],
+        ['Audit on every build', 'Production dependencies audited before the release; a known vulnerability blocks it.', '/toolkit#devops', 'l', 'AUDIT'],
+        ['This site, the same way', 'One stylesheet, one script, tested in the pipeline, deployed from main.', '/blog/one-stylesheet-one-script-a-live-terminal', 'l', '→']
+      ]), { title: 'A front end that builds in two seconds · Vite', done: 'done · 1.84 s' }),
       'ansible': Object.assign(run([
         ['$', 'ansible-playbook site.yml --limit web-02 --diff', 'ac'],
         ['', 'PLAY [web] *********************************************', ''],
@@ -220,29 +185,67 @@
         ['', 'TASK [backup : nightly dump to object storage]  ok: [web-02]', 'ok'],
         ['', 'PLAY RECAP  web-02 : ok=14 changed=4 unreachable=0 failed=0', 'ac']
       ], [
-        ['A server from a file', 'Hardening, Docker, the app, backups and alerts in one playbook; staging and production are the same machine.', '#toolkit', 'l', 'IAC'],
-        ['Rebuild instead of repair', 'A misbehaving server is rebuilt from the playbook with last night\'s data; no hand-made snowflakes.', '#toolkit', 'l', 'OK'],
-        ['Restore tested', 'A backup counts only after it has been restored on a scratch box and timed.', '#toolkit', 'l', 'DR'],
-        ['How I work', 'Infrastructure as code, written down in your repository, owned by you from day one.', '#manifesto', 'l', '→']
-      ]), { title: 'zsh · ansible-playbook (DigitalOcean, Docker)', done: 'done · 4 changed · 0 failed' }),
-      'release': Object.assign(run([
-        ['$', 'git push origin feat/channel-sync', 'ac'],
-        ['', 'remote: Create a pull request for feat/channel-sync on GitHub', ''],
+        ['A server from a file', 'Hardening, Docker, the app, backups and alerts in one playbook; staging and production are the same machine.', '/toolkit#infra', 'l', 'IAC'],
+        ['Rebuild instead of repair', 'A misbehaving server is rebuilt from the playbook with last night\'s data; no hand-made snowflakes.', '/toolkit#infra', 'l', 'OK'],
+        ['Restore tested', 'A backup counts only after it has been restored on a scratch box and timed.', '/toolkit#infra', 'l', 'DR'],
+        ['How I work', 'Infrastructure as code, written down in your repository, owned by you from day one.', '/#manifesto', 'l', '→']
+      ]), { title: 'A hardened server from one file, in four minutes · Ansible', done: 'done · 4 changed · 0 failed' }),
+      'git': Object.assign(run([
+        ['$', 'git fetch origin && git rebase -i origin/main', 'ac'],
+        ['', 'pick 3f2a1c9 bookings: expand-first migration', ''],
+        ['', 'squash 8be77d0 bookings: backfill status', ''],
+        ['', 'pick c41d2e7 bookings: switch writers to the new column', ''],
+        ['', 'Successfully rebased and updated refs/heads/feat/bookings-status.', 'ok'],
+        ['$', 'git commit -S -m "bookings: status column, expand first" && git push --force-with-lease', 'ac'],
+        ['', '[feat/bookings-status 9a1f0b3] bookings: status column, expand first', ''],
+        ['', 'To github.com:spdotdev/platform.git · feat/bookings-status → feat/bookings-status (forced update)', 'ok'],
         ['', '✓ ci · lint, phpstan, 312 tests · 1 min 40 s', 'ok'],
-        ['', '✓ security · composer audit, secret scan, SAST · clean', 'ok'],
-        ['', '✓ review · agent review posted 2 comments · human approved', 'ok'],
-        ['$', 'gh pr merge 412 --squash', 'ac'],
-        ['', '✓ squashed and merged pull request #412', 'ok'],
-        ['', '✓ build · image tagged v2.31.0', 'ok'],
-        ['', '✓ deploy · staging smoke test 200 → production', 'ok'],
-        ['', '✓ post-deploy · migrations ok · error rate flat · rollback image kept', 'ok'],
+        ['', '✓ security · composer audit, secret scan · clean', 'ok'],
+        ['', '✓ review · agent review 2 comments · human approved · merged', 'ok'],
+        ['', '✓ deploy · staging smoke 200 → production · rollback image kept', 'ok'],
         ['', 'done · 9 min from push to production · nobody touched a server', 'ac']
       ], [
-        ['9 minutes to production', 'Tests, security gates, review, build, staging, production, in one pipeline that fails fast.', '#toolkit', 'l', 'CI/CD'],
-        ['Nothing merges red', 'A failing test or a leaked secret stops the release before a person has to notice.', '#toolkit', 'l', 'GATE'],
-        ['Rollback in one command', 'The previous image stays tagged; undoing a release takes a minute, not a night.', '#toolkit', 'l', 'SAFE'],
-        ['Strangler Fig, release by release', 'Every module moved off the old framework shipped like this: small and reversible.', '#proof', 'l', '→']
-      ]), { title: 'zsh · git push → production (GitHub Actions)', done: 'done · 9 min' }),
+        ['Rebase, not merge commits', 'A branch is rewritten into one intent per commit before it merges; the history reads like a changelog.', '/toolkit#devops', 'l', 'REBASE'],
+        ['Nothing merges red', 'A failing test or a leaked secret stops the release before a person has to notice.', '/toolkit#devops', 'l', 'GATE'],
+        ['Rollback in one command', 'The previous image stays tagged; undoing a release takes a minute, not a night.', '/toolkit#devops', 'l', 'SAFE'],
+        ['Strangler Fig, release by release', 'Every module moved off the old framework shipped like this: small and reversible.', '/blog/strangler-fig-what-the-bridge-taught-me', 'l', '→']
+      ]), { title: 'From rebase to production in nine minutes · Git, GitHub Actions', done: 'done · 9 min' }),
+      'nmap': Object.assign(run([
+        ['$', 'sudo nmap -sV 10.13.37.0/24 -oN lab/$(date +%F).txt', 'ac'],
+        ['', 'Starting Nmap ( https://nmap.org ) · my own lab network, weekly', ''],
+        ['', 'gw.lab     22 ssh · 53 dns · 443 https          up to date', 'ok'],
+        ['', 'nas.lab    445 smb · 8080 http               admin panel without TLS', 'warn'],
+        ['', 'cam.lab    23 telnet                          factory firmware', 'bad'],
+        ['', 'Nmap done: 256 IP addresses (3 hosts up) scanned in 41.07 seconds', ''],
+        ['$', 'diff lab/2026-10-22.txt lab/2026-10-29.txt', 'ac'],
+        ['', '> cam.lab 23/tcp open telnet   ← new this week', 'bad'],
+        ['', 'fix → camera on its own VLAN, admin panel behind TLS, the same evening', 'ok']
+      ], [
+        ['One forgotten device is the whole story', 'A camera on factory firmware is what a scan of a home or office network finds first. It went to its own network segment that evening.', '/toolkit#security', 'h', 'HIGH'],
+        ['Scan weekly, diff against last week', 'A new device or a newly open service is a line in a diff, not a surprise months later.', '/toolkit#security', 'l', 'WEEKLY'],
+        ['Scope', 'My own lab, my own hardware. Security tooling runs only where I own the machines or hold written authorization.', '/contact', 'l', 'SCOPE'],
+        ['The same habit for a server estate', 'A quick scan with a written report and a fix list, at my company.', 'https://scuttle.dev/services/security-assessment', 'l', '→']
+      ]), { title: 'Know your own network before someone else does · nmap', done: 'done · 3 hosts · 1 new finding' }),
+      'history': Object.assign(run([
+        ['$', 'history | awk \'{print $2}\' | sort | uniq -c | sort -rn | head -12', 'ac'],
+        ['', ' 412  git', ''],
+        ['', ' 388  ssh', ''],
+        ['', ' 301  docker', ''],
+        ['', ' 257  grep', ''],
+        ['', ' 190  tail', ''],
+        ['', ' 164  claude', 'ac'],
+        ['', ' 151  journalctl', ''],
+        ['', ' 139  rsync', ''],
+        ['', ' 122  ansible-playbook', ''],
+        ['', '  97  ss', ''],
+        ['', '  84  dig', ''],
+        ['', '  61  nmap', '']
+      ], [
+        ['The shell is the IDE', 'Arch Linux, zsh, tmux, Neovim; most of a day is git, ssh, docker and grep, in that order.', '/toolkit#infra', 'l', 'ZSH'],
+        ['claude in the top ten', 'Claude Code is a command like the others: a skill is a written procedure, a run is reviewed like a pull request.', '/toolkit#ai', 'l', 'AI'],
+        ['Logs before guesses', 'tail, grep and journalctl before any theory about what broke; evidence first.', '/#manifesto', 'l', 'OK'],
+        ['The whole toolkit', 'Six groups, what I do with each tool.', '/toolkit', 'l', '→']
+      ]), { title: 'The commands I actually use · zsh history', done: 'top 12 · last 30 days' }),
       'strangler': Object.assign(run([
         ['1', '// Strangler Fig: the new service takes one route at a time.', 'cm'],
         ['2', 'import { legacy } from \'./legacy\'        // the old monolith, untouched', ''],
@@ -255,30 +258,32 @@
         ['9', '// One flag per module: flip back in seconds if a release misbehaves.', 'cm'],
         ['10', 'if (flags.on(\'bookings.legacy\')) router.use(\'/api/v2/bookings\', legacy)', 'warn']
       ], [
-        ['One route at a time', 'The new code takes over a route when it is ready; the old code keeps serving everything else.', '#manifesto', 'l', 'PATTERN'],
-        ['A flag per module', 'Each migrated module can go back to the old code in seconds; there is no big-bang cutover.', '#proof', 'l', 'SAFE'],
-        ['The monolith stays untouched', 'The old code keeps serving until its last route is gone, then it is deleted, not rewritten.', '#manifesto', 'l', 'OK'],
-        ['Read the case', 'Phalcon to Laravel, migrated while hotels used the platform every day.', '#proof', 'l', '→']
-      ]), { title: 'router.ts · Strangler Fig in ten lines', done: 'open · 10 lines' }),
+        ['One route at a time', 'The new code takes over a route when it is ready; the old code keeps serving everything else.', '/#manifesto', 'l', 'PATTERN'],
+        ['A flag per module', 'Each migrated module can go back to the old code in seconds; there is no big-bang cutover.', '/blog/strangler-fig-what-the-bridge-taught-me', 'l', 'SAFE'],
+        ['The monolith stays untouched', 'The old code keeps serving until its last route is gone, then it is deleted, not rewritten.', '/#manifesto', 'l', 'OK'],
+        ['Read the notes', 'What a year of two frameworks in one app taught me.', '/blog/strangler-fig-what-the-bridge-taught-me', 'l', '→']
+      ]), { title: 'Strangler Fig in ten lines · router.ts', done: 'open · 10 lines' }),
       'bridge': Object.assign(run([
         ['1', '<?php', ''],
-        ['2', '// Bridge: a request handled by the new framework, or passed to the old one untouched.', 'cm'],
-        ['3', 'final class Bridge', 'kw'],
-        ['4', '{', ''],
-        ['5', '    public function handle(Request $request, Closure $next): Response', ''],
-        ['6', '    {', ''],
-        ['7', '        if (! $this->migrated->matches($request->path())) {', ''],
-        ['8', '            return $this->phalcon->handle($request);   // old framework, same session', 'warn'],
-        ['9', '        }', ''],
-        ['10', '        return $next($request);                      // new Laravel module', 'ok'],
-        ['11', '    }', ''],
-        ['12', '}', '']
+        ['2', '', ''],
+        ['3', '// Bridge: a request handled by the new framework, or passed to the old one untouched.', 'cm'],
+        ['4', 'final class Bridge', 'kw'],
+        ['5', '{', ''],
+        ['6', '    public function handle(Request $request, Closure $next): Response', ''],
+        ['7', '    {', ''],
+        ['8', '        if (! $this->migrated->matches($request->path())) {', ''],
+        ['9', '            return $this->phalcon->handle($request);   // old framework, same session', 'warn'],
+        ['10', '        }', ''],
+        ['11', '', ''],
+        ['12', '        return $next($request);                      // new Laravel module', 'ok'],
+        ['13', '    }', ''],
+        ['14', '}', '']
       ], [
-        ['Two frameworks, one session', 'Login, session and database are shared, so a user never notices which framework answered.', '#proof', 'l', 'BRIDGE'],
-        ['Migrated routes in a list', 'The list grows by one module per release; the bridge is deleted together with the last old route.', '#proof', 'l', 'LIST'],
-        ['PHP 7.4 to 8.4 on the way', 'The runtime was upgraded during the migration, so the system stayed in support throughout.', '#proof', 'l', 'OK'],
-        ['Read the case', 'Sixty percent lower latency, a supported runtime, a codebase developers know.', '#proof', 'l', '→']
-      ]), { title: 'Bridge.php · old and new framework side by side', done: 'open · 12 lines' }),
+        ['Two frameworks, one session', 'Login, session and database are shared, so a user never notices which framework answered.', '/blog/strangler-fig-what-the-bridge-taught-me', 'l', 'BRIDGE'],
+        ['Migrated routes in a list', 'The list grows by one module per release; the bridge is deleted together with the last old route.', '/projects#cases', 'l', 'LIST'],
+        ['PHP 7.4 to 8.4 on the way', 'The runtime was upgraded during the migration, so the system stayed in support throughout.', '/projects#cases', 'l', 'OK'],
+        ['Read the case', 'Sixty percent lower latency, a supported runtime, a codebase developers know.', '/projects#cases', 'l', '→']
+      ]), { title: 'Two frameworks, one session · Bridge.php', done: 'open · 14 lines' }),
       'claude': Object.assign(run([
         ['$', 'claude -p "triage overnight tickets, draft answers, never send"', 'ac'],
         ['', 'skill ticket-triage → helpdesk: 23 new tickets overnight', ''],
@@ -291,29 +296,11 @@
         ['', 'cost → $0.84 · cap $5 a day · evaluation set 48/48 passed', 'ok'],
         ['', 'done · 23 triaged in 91 s · nothing sent without a human tap', 'ac']
       ], [
-        ['14 drafts before 07:02', 'Answered from the product manual with the paragraph quoted; a person sees them before anyone else does.', '#proof', 'l', 'AGENT'],
-        ['A skill is a checklist', 'What to read, how to write, what never to include. The procedure lives in the repository, not in a prompt someone remembers.', '#toolkit', 'l', 'SKILL'],
-        ['Guardrails', 'An evaluation set before any change ships, a cost cap, an audit log, a switch-off in the runbook.', '#toolkit', 'l', 'OK'],
-        ['The sales case', 'Sixteen hours a week reclaimed the same way.', '#proof', 'l', '→']
-      ]), { title: 'zsh · claude -p (agent run with a skill)', done: 'done · 23 triaged · 91 s' }),
-      'applog': Object.assign(run([
-        ['$', 'tail -f storage/logs/app.log', 'ac'],
-        ['09:14:01', 'INFO  server listening on :8080 · php 8.4.27 · opcache warm', ''],
-        ['09:14:02', 'INFO  db connected · 4 ms · redis ok', ''],
-        ['09:15:10', 'GET   /api/health 200 · 2 ms', 'ok'],
-        ['09:17:22', 'POST  /api/sync 201 · 45 ms · 312 rows', 'ok'],
-        ['09:20:00', 'INFO  scheduler: channel-sync done · 1.2 s', 'ok'],
-        ['09:21:48', 'WARN  queue: retry 2/3 SyncChannelManager · upstream 503', 'warn'],
-        ['09:21:51', 'INFO  queue: SyncChannelManager done · 1.9 s', 'ok'],
-        ['09:30:00', 'INFO  backup: dump 412 MB → object storage · checksum verified', 'ok'],
-        ['09:30:04', 'INFO  certificate app.example.nl valid 71 days', 'ok'],
-        ['09:40:00', 'INFO  health check passed · error rate flat · p95 118 ms', 'ok']
-      ], [
-        ['A retry, not a page', 'An upstream hiccup at 09:21, retried and done ten seconds later; a person reads it in the morning report, not at night.', '#toolkit', 'l', 'QUEUE'],
-        ['p95 118 ms', 'Latency watched per route after the migration; the number that fell by sixty percent.', '#proof', 'l', 'PERF'],
-        ['Backups verified daily', 'Dumped, shipped off-site, checksum compared, restore tested every month.', '#toolkit', 'l', 'DR'],
-        ['How this is built', 'Monitoring and alerts to one phone, in every system I run.', '#toolkit', 'l', '→']
-      ]), { title: 'zsh · tail -f app.log (production, anonymized)', done: 'live · last line 09:40' })
+        ['14 drafts before 07:02', 'Answered from the product manual with the paragraph quoted; a person sees them before anyone else does.', '/projects#cases', 'l', 'AGENT'],
+        ['A skill is a checklist', 'What to read, how to write, what never to include. The procedure lives in the repository, not in a prompt someone remembers.', '/toolkit#ai', 'l', 'SKILL'],
+        ['Guardrails', 'An evaluation set before any change ships, a cost cap, an audit log, a switch-off in the runbook.', '/toolkit#ai', 'l', 'OK'],
+        ['The sales case', 'Sixteen hours a week reclaimed the same way.', '/projects#cases', 'l', '→']
+      ]), { title: 'An agent that drafts, a person who taps · Claude Code', done: 'done · 23 triaged · 91 s' })
     };
     var pb = $('pb'), stt = $('stt'), sti = $('sti'), shH = $('sh-h'), timers = [], cur = null;
     var clear = function () { timers.forEach(clearTimeout); timers = []; };
@@ -362,7 +349,7 @@
     main.addEventListener('mouseenter', function () { hover = true; }); main.addEventListener('mouseleave', function () { hover = false; rotStart = Date.now(); rotate(); });
     side.addEventListener('mouseenter', function () { hover = true; }); side.addEventListener('mouseleave', function () { hover = false; });
     side.addEventListener('click', function (e) { var b = e.target.closest('.it'); if (b) { show(b.dataset.k); hold = true; clearTimeout(rotT); setTimeout(function () { hold = false; rotate(); }, 30000); } });
-    var started = false, first = function () { if (started) return; started = true; show('netscan'); if (!reduce) { rotate(); raf = requestAnimationFrame(tick); } };
+    var started = false, first = function () { if (started) return; started = true; show('artisan'); if (!reduce) { rotate(); raf = requestAnimationFrame(tick); } };
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) first(); }); }, { threshold: 0.2 }).observe(main);
     }

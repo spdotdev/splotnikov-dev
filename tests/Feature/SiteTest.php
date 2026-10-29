@@ -5,7 +5,10 @@ namespace Spdotdev\SplotnikovDev\Tests\Feature;
 use Illuminate\Support\Facades\Mail;
 use Spdotdev\SplotnikovDev\Http\Controllers\ContactController;
 use Spdotdev\SplotnikovDev\Mail\ContactMessage;
+use Spdotdev\SplotnikovDev\Posts;
+use Spdotdev\SplotnikovDev\Projects;
 use Spdotdev\SplotnikovDev\Tests\TestCase;
+use Spdotdev\SplotnikovDev\Toolkit;
 
 class SiteTest extends TestCase
 {
@@ -51,28 +54,44 @@ class SiteTest extends TestCase
 
     public function test_every_page_shares_the_shell(): void
     {
-        foreach (['/', '/cv', '/contact'] as $path) {
+        foreach (['/', '/cv', '/contact', '/projects', '/toolkit', '/blog', '/blog/strangler-fig-what-the-bridge-taught-me'] as $path) {
             $html = (string) $this->get('http://splotnikov.dev'.$path)->assertOk()->getContent();
             $this->assertStringContainsString('vendor/splotnikov/site.css', $html, $path);
             $this->assertStringContainsString('vendor/splotnikov/site.js', $html, $path);
             $this->assertStringContainsString('vendor/splotnikov/icon.svg', $html, $path);
-            $this->assertStringContainsString('vendor/splotnikov/portrait.jpg', $html, $path);
+            if (in_array($path, ['/', '/cv', '/contact'], true)) {
+                $this->assertStringContainsString('vendor/splotnikov/portrait.jpg', $html, $path);
+            }
             $this->assertStringContainsString('class="lg', $html, $path);
             $this->assertSame(1, substr_count($html, '<h1'), $path.' has one h1');
             $this->assertSame(3, substr_count($html, 'data-th="'), $path.': three-way theme control, system, light, dark');
             $this->assertStringContainsString('href="http://splotnikov.dev/contact"', $html, $path.' links the contact page');
             $this->assertStringNotContainsString('profile.png', $html, $path.' uses the new portrait');
             $this->assertStringNotContainsString('—', $html, $path.' has no long dashes');
+            $this->assertStringNotContainsString('96040947', $html, $path.' carries no Chamber of Commerce number');
+            $this->assertStringNotContainsString('NL005184584B85', $html, $path.' carries no VAT number');
+            $this->assertStringContainsString('title="Curriculum vitae"', $html, $path.' names the CV in full on hover');
         }
     }
 
-    public function test_the_language_switch_is_on_the_home_page_only(): void
+    public function test_every_page_is_translatable(): void
     {
-        $home = (string) $this->get('http://splotnikov.dev/')->getContent();
-        $this->assertStringContainsString('id="nl"', $home);
-        $this->assertStringContainsString('Object.assign(window.SCUTTLE_NL.t', $home);
-        $this->assertStringNotContainsString('id="nl"', (string) $this->get('http://splotnikov.dev/cv')->getContent());
-        $this->assertStringNotContainsString('id="nl"', (string) $this->get('http://splotnikov.dev/contact')->getContent());
+        preg_match_all('/\b([a-z0-9_]+): "/', (string) file_get_contents(__DIR__.'/../../resources/views/layout.blade.php'), $shell);
+        $paths = ['/', '/cv', '/contact', '/projects', '/toolkit', '/blog'];
+        foreach (Posts::all() as $post) {
+            $paths[] = '/blog/'.$post['slug'];
+        }
+        foreach ($paths as $path) {
+            $html = (string) $this->get('http://splotnikov.dev'.$path)->assertOk()->getContent();
+            $this->assertStringContainsString('id="nl"', $html, $path.' has the language switch');
+            $this->assertStringContainsString('Object.assign(window.SCUTTLE_NL.t', $html, $path.' pushes its Dutch strings');
+            preg_match_all('/data-i="([A-Za-z0-9_]+)"/', $html, $m);
+            $own = array_diff(array_unique($m[1]), $shell[1]);
+            $this->assertGreaterThanOrEqual(7, count($own), $path.' marks its own text (found '.count($own).' keys)');
+            foreach (array_unique($m[1]) as $key) {
+                $this->assertTrue((bool) preg_match('/[{,\s]"?'.preg_quote($key, '/').'"?\s*:/', $html), $path.' has no Dutch string for data-i="'.$key.'"');
+            }
+        }
     }
 
     public function test_the_home_page_has_the_terminal_panel_and_the_sections(): void
@@ -80,13 +99,13 @@ class SiteTest extends TestCase
         $home = (string) $this->get('http://splotnikov.dev/')->assertOk()->getContent();
 
         $this->assertStringContainsString('id="demo"', $home);
-        $this->assertSame(10, substr_count($home, 'class="it'), 'ten clickable scenes in the terminal panel');
+        $this->assertSame(9, substr_count($home, 'class="it'), 'nine clickable scenes in the terminal panel');
         $js = (string) file_get_contents(__DIR__.'/../../public/site.js');
         preg_match_all('/data-k="([a-z-]+)"/', $home, $m);
         foreach ($m[1] as $key) {
             $this->assertStringContainsString("'".$key."': Object.assign(run(", $js, 'scene '.$key.' exists in site.js');
         }
-        foreach (['id="manifesto"', 'id="proof"', 'id="toolkit"', 'id="contact"', 'data-dec', 'class="belt', 'Phalcon to Laravel', '16 h'] as $needle) {
+        foreach (['id="manifesto"', 'id="projects"', 'id="toolkit"', 'id="contact"', 'class="name" data-dec', 'class="belt', 'class="scroller"', 'href="http://splotnikov.dev/toolkit"', 'PHP since 2008'] as $needle) {
             $this->assertStringContainsString($needle, $home);
         }
         $this->assertStringContainsString('"@type": "Person"', $home);
@@ -114,7 +133,7 @@ class SiteTest extends TestCase
         $this->assertStringContainsString('html2pdf', $cv);
         $this->assertStringContainsString('integrity="sha384-', $cv, 'the PDF library loads with subresource integrity');
         $this->assertStringContainsString('id="cv-content"', $cv);
-        foreach (['Executive summary', 'Core competencies', 'Professional experience', 'Employment history', 'Key projects', 'Hosintra B.V.', 'Radius College Breda', 'KVK 96040947', '+31 (0) 6 345 00 328'] as $needle) {
+        foreach (['Executive summary', 'Core competencies', 'Professional experience', 'Employment history', 'Key projects', 'Hosintra B.V.', 'Radius College Breda', 'https://scuttle.dev', '+31 (0) 6 345 00 328'] as $needle) {
             $this->assertStringContainsString($needle, $cv);
         }
     }
@@ -132,6 +151,41 @@ class SiteTest extends TestCase
         $this->assertStringContainsString('href="https://plan.scuttle.dev/book/stas"', $contact);
         $this->assertStringNotContainsString('<iframe', $contact);
         $this->assertLessThan(strpos($contact, 'class="cc rv"'), strpos($contact, 'id="cform"'), 'the form comes first');
+        $this->assertStringContainsString('contact-grid"', $contact, 'form and cards side by side');
+        preg_match('/<div class="soc">(.*?)<\/div>/s', $contact, $soc);
+        $this->assertSame(2, substr_count($soc[1], '<a '), 'the About card links LinkedIn and GitHub only');
+        $this->assertStringNotContainsString('/cv"', $soc[1]);
+    }
+
+    public function test_projects_toolkit_and_blog_render_from_their_data(): void
+    {
+        $projects = (string) $this->get('http://splotnikov.dev/projects')->assertOk()->getContent();
+        foreach (Projects::all() as $pr) {
+            $this->assertStringContainsString('href="'.$pr['url'].'"', $projects);
+        }
+        $this->assertStringContainsString('Phalcon to Laravel', $projects);
+        $this->assertStringContainsString('16 h', $projects);
+        $this->assertSame(count(Projects::all()), substr_count((string) $this->get('http://splotnikov.dev/')->getContent(), 'class="c cg rv"'), 'every project is in the home scroller');
+
+        $toolkit = (string) $this->get('http://splotnikov.dev/toolkit')->assertOk()->getContent();
+        $this->assertCount(6, Toolkit::all());
+        foreach (Toolkit::all() as $g) {
+            $this->assertStringContainsString($g['title'], $toolkit);
+        }
+        $this->assertStringContainsString('BackTrack', $toolkit);
+        $this->assertSame(3, substr_count((string) $this->get('http://splotnikov.dev/')->getContent(), 'class="c g rv"'), 'three groups on the home page');
+
+        $sitemap = (string) $this->get('http://splotnikov.dev/sitemap.xml')->getContent();
+        foreach (['/projects', '/toolkit', '/blog'] as $path) {
+            $this->assertStringContainsString('<loc>https://splotnikov.dev'.$path.'</loc>', $sitemap);
+        }
+        $blog = (string) $this->get('http://splotnikov.dev/blog')->assertOk()->getContent();
+        foreach (Posts::all() as $post) {
+            $this->assertStringContainsString($post['title'], $blog);
+            $this->get('http://splotnikov.dev/blog/'.$post['slug'])->assertOk()->assertSee($post['title']);
+            $this->assertStringContainsString('<loc>https://splotnikov.dev/blog/'.$post['slug'].'</loc>', $sitemap);
+        }
+        $this->get('http://splotnikov.dev/blog/nope')->assertNotFound();
     }
 
     public function test_the_contact_form_sends_mail_and_blocks_bots(): void

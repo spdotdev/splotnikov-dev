@@ -566,3 +566,19 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
   .cv-photo{width:110px;height:110px}
   .cv a{color:inherit;text-decoration:none}
 }
+
+/* v0.3: the name as a block, no scroll bars in the panel, code keeps its indentation, contact as two columns, projects scroller, toolkit button */
+.hero h1.name{display:inline-block;background:var(--ink);color:var(--bg);padding:.1em .28em .14em;border-radius:10px;line-height:1.05}
+.main{scrollbar-width:none}.main::-webkit-scrollbar{display:none}
+.log .t.n~span{white-space:pre}
+.contact-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:24px;align-items:start;padding:0 0 72px}
+.contact-grid .cform.light{max-width:none}
+.contact-grid .side-cards{display:grid;gap:24px}
+@media (max-width:980px){.contact-grid{grid-template-columns:minmax(0,1fr);padding-bottom:48px}}
+.gridh.row{max-width:none;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.gridh.row>div{max-width:42rem}
+.scroller{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 4px 14px;scrollbar-width:thin;-webkit-mask-image:linear-gradient(90deg,#000 94%,transparent);mask-image:linear-gradient(90deg,#000 94%,transparent)}
+.scroller>.c{flex:0 0 min(380px,82%);scroll-snap-align:start}
+.scroller .c h3{font-size:19px}
+.more-row{display:flex;justify-content:flex-end;margin-top:22px}
+.c.g .pl a small{text-wrap:pretty}
