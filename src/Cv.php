@@ -17,7 +17,7 @@ final class Cv
             'title' => 'Senior Developer / Legacy Modernization and Solution Architect',
             'availability' => 'Available for freelance and contract roles · Eindhoven, the Netherlands',
             'sections' => [
-                'sum' => ['title' => 'Executive summary', 'text' => 'Pragmatic solution architect, programming in PHP since 2008 and in networks and Linux since 2003, focused on transforming legacy technical debt into scalable, high-performance infrastructure. Specialist in incremental modernization (Strangler Fig pattern), modular monolith design and automation with AI agents. I prioritize business continuity and return on investment over industry trends, with migrations in daily use and long-term maintainability.'],
+                'sum' => ['title' => 'Executive summary', 'text' => 'Pragmatic solution architect, programming in PHP since 2008 and in networks and Linux since 2005, focused on transforming legacy technical debt into scalable, high-performance infrastructure. Specialist in incremental modernization (Strangler Fig pattern), modular monolith design and automation with AI agents. I prioritize business continuity and return on investment over industry trends, with migrations in daily use and long-term maintainability.'],
                 'core' => ['title' => 'Core competencies', 'items' => [
                     ['Architecture', 'system design, modular monoliths, microservices feasibility, API gateway design.'],
                     ['Engineering', 'PHP (Laravel, Symfony, Phalcon expert), Node.js, Python (AI and LLM integration), Kotlin.'],
@@ -60,7 +60,7 @@ final class Cv
             'cv_title' => 'Senior Developer / Modernisering van legacy en Solution Architect',
             'cv_avail' => 'Beschikbaar voor freelance- en contractwerk · Eindhoven, Nederland',
             'cv_s_sum' => 'Samenvatting',
-            'cv_t_sum' => 'Pragmatische solution architect, sinds 2008 programmeur in PHP en sinds 2003 bezig met netwerken en Linux, gericht op het omzetten van technische schuld in legacy software naar schaalbare, snelle infrastructuur. Specialist in stapsgewijze modernisering (Strangler Fig-patroon), modulaire monolieten en automatisering met AI-agents. Ik zet bedrijfscontinuïteit en rendement boven trends, met migraties die in gebruik blijven en onderhoudbaarheid op lange termijn.',
+            'cv_t_sum' => 'Pragmatische solution architect, sinds 2008 programmeur in PHP en sinds 2005 bezig met netwerken en Linux, gericht op het omzetten van technische schuld in legacy software naar schaalbare, snelle infrastructuur. Specialist in stapsgewijze modernisering (Strangler Fig-patroon), modulaire monolieten en automatisering met AI-agents. Ik zet bedrijfscontinuïteit en rendement boven trends, met migraties die in gebruik blijven en onderhoudbaarheid op lange termijn.',
             'cv_s_core' => 'Kerncompetenties',
             'cv_i_core_0' => '<b>Architectuur:</b> systeemontwerp, modulaire monolieten, haalbaarheid van microservices, API-gatewayontwerp.',
             'cv_i_core_1' => '<b>Engineering:</b> PHP (Laravel, Symfony, Phalcon-expert), Node.js, Python (AI- en LLM-integratie), Kotlin.',
