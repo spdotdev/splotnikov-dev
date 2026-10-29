@@ -1,7 +1,7 @@
 # splotnikov-dev
 
-The splotnikov.dev portfolio + CV, packaged as a Laravel library for
-inclusion in a host Laravel application. Host-based routing serves the site
+The splotnikov.dev personal site (home with an interactive terminal panel, a printable CV and a contact form), packaged as a Laravel library for
+inclusion in a host Laravel application. Same theme as scuttle.dev, teal accent. Host-based routing serves the site
 on the configured domain alongside the host app's own routes.
 
 ## Requirements
@@ -19,7 +19,7 @@ Add the VCS repository and require a tagged version:
     { "type": "vcs", "url": "https://github.com/spdotdev/splotnikov-dev" }
 ],
 "require": {
-    "spdotdev/splotnikov-dev": "^0.1"
+    "spdotdev/splotnikov-dev": "^0.2"
 }
 ```
 
@@ -29,7 +29,7 @@ php artisan vendor:publish --tag=splotnikov-dev-assets
 ```
 
 The service provider is auto-discovered. It registers these routes on the
-configured domain: `/` (portfolio), `/cv`, `/robots.txt`, `/sitemap.xml` and
+configured domain: `/` (home), `/cv`, `/contact` (GET and POST), `/robots.txt`, `/sitemap.xml` and
 `/site.webmanifest`. The assets tag copies `public/` to the host's
 `public/vendor/splotnikov`.
 
@@ -47,6 +47,9 @@ application's** `.env`.
 | Variable | Default | Purpose |
 |---|---|---|
 | `SPLOTNIKOV_DOMAIN` | `splotnikov.dev` | Host this package's routes answer on (`Route::domain(...)`). |
+| `SPLOTNIKOV_BOOKING_URL` | `https://plan.scuttle.dev/book/stas` | The booking page behind "Or book a call" on the contact page. |
+| `SPLOTNIKOV_CONTACT_TO` | `stplotnikov@gmail.com` | Where the contact form delivers (sent by the host app's mailer). |
+| `SPLOTNIKOV_TURNSTILE_SITE_KEY`, `SPLOTNIKOV_TURNSTILE_SECRET` | empty | Cloudflare Turnstile on the contact form; empty means honeypot plus a signed 3-second minimum only. |
 
 Every variable has a safe default baked into `config/splotnikov-dev.php`,
 so the package works out of the box even if none of these are set —

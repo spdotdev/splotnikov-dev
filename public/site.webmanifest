@@ -1,19 +1,19 @@
 {
     "name": "Stanislav Plotnikov",
-    "short_name": "Scuttle",
-    "description": "Professional Full-Stack Developer, Hosting & Security",
+    "short_name": "splotnikov",
+    "description": "Senior developer and solution architect, Eindhoven",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#111118",
-    "theme_color": "#5454D4",
+    "background_color": "#f5f5f5",
+    "theme_color": "#f5f5f5",
     "icons": [
         {
-            "src": "/android-chrome-192x192.png",
+            "src": "/vendor/splotnikov/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "/android-chrome-512x512.png",
+            "src": "/vendor/splotnikov/android-chrome-512x512.png",
             "sizes": "512x512",
             "type": "image/png"
         }

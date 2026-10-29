@@ -1,0 +1,4 @@
+{{-- The mark: a prompt (chevron and underscore) in a rounded square, inline so the three parts can fade in one after the other. $w/$h set the box. --}}
+@php($w = $w ?? 26)
+@php($h = $h ?? 26)
+<svg class="lg {{ $cls ?? '' }}" width="{{ $w }}" height="{{ $h }}" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><defs><linearGradient id="lg-{{ $id ?? 'g' }}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" class="s1"/><stop offset="1" class="s2"/></linearGradient></defs><rect class="r1" x="4" y="4" width="40" height="40" rx="10" fill="none" stroke-width="4"/><path class="r2" d="M15 17l8 7-8 7" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path class="r3" d="M26 31h8" fill="none" stroke="url(#lg-{{ $id ?? 'g' }})" stroke-width="4" stroke-linecap="round"/></svg>
