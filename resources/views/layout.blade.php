@@ -107,16 +107,21 @@
   <div class="wrap no-print"><footer>
     <div class="col"><div class="brand">@include('splotnikov::partials.logo', ['id' => 'foot'])<span>splotnikov</span></div><p data-i="ft_p">Senior developer and solution architect in Eindhoven. Legacy modernization, automation with AI agents, and security, by one person who takes ownership of the system.</p></div>
     <div class="col"><small data-i="ft_nav">Navigate</small><a href="{{ $home ? '' : route('splotnikov.home') }}#manifesto" data-i="n_manifesto">Manifesto</a><a href="{{ route('splotnikov.projects') }}" data-i="n_projects">Projects</a><a href="{{ route('splotnikov.toolkit') }}" data-i="n_toolkit">Toolkit</a><a href="{{ route('splotnikov.blog') }}" data-i="n_blog">Blog</a><a href="{{ route('splotnikov.cv') }}" data-i="ft_cv" title="Curriculum vitae">CV, print or PDF</a></div>
-    <div class="col"><small data-i="ft_connect">Connect</small><a href="{{ route('splotnikov.contact.page') }}" data-i="ft_form">Contact form</a><a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a><a href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a><a href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a></div>
+    <div class="col"><small data-i="ft_connect">Connect</small><a href="{{ route('splotnikov.contact.page') }}" data-i="ft_form">Contact form</a><a href="{{ route('splotnikov.privacy') }}" data-i="ft_privacy">Privacy</a><a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a><a href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a><a href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a></div>
     <div class="col"><small data-i="ft_work">Work</small><a href="https://scuttle.dev" rel="noopener" target="_blank">Scuttle Development</a><a href="https://scuttle.dev/pricing" rel="noopener" target="_blank" data-i="ft_pricing">Services and pricing</a><a href="https://scuttle.dev/case-studies" rel="noopener" target="_blank" data-i="ft_cases">Case studies</a></div>
     <div class="bottom"><span>© {{ date('Y') }} STANISLAV PLOTNIKOV</span><span>EINDHOVEN, NL</span></div>
   </footer></div>
 
   <script>
-    window.SCUTTLE_NL = { t: { skip: "Naar de inhoud", n_home: "Home", n_manifesto: "Manifest", n_projects: "Projecten", n_toolkit: "Tools", n_blog: "Blog", n_cv: "CV", n_contact: "Contact", n_hire: "Neem contact op", ft_p: "Senior developer en solution architect in Eindhoven. Modernisering van legacy software, automatisering met AI-agents en beveiliging, door één persoon die eigenaarschap neemt over het systeem.", ft_nav: "Navigatie", ft_cv: "CV, printen of PDF", ft_connect: "Contact", ft_form: "Contactformulier", ft_work: "Werk", ft_pricing: "Diensten en prijzen", ft_cases: "Casestudy's" }, ph: {} };
+    window.SCUTTLE_NL = { t: { skip: "Naar de inhoud", n_home: "Home", n_manifesto: "Manifest", n_projects: "Projecten", n_toolkit: "Tools", n_blog: "Blog", n_cv: "CV", n_contact: "Contact", n_hire: "Neem contact op", ft_p: "Senior developer en solution architect in Eindhoven. Modernisering van legacy software, automatisering met AI-agents en beveiliging, door één persoon die eigenaarschap neemt over het systeem.", ft_nav: "Navigatie", ft_cv: "CV, printen of PDF", ft_connect: "Contact", ft_form: "Contactformulier", ft_privacy: "Privacy", ft_work: "Werk", ft_pricing: "Diensten en prijzen", ft_cases: "Casestudy's" }, ph: {} };
   </script>
   @stack('nl')
   @yield('scripts')
+  @if(config('splotnikov-dev.analytics_key'))
+  {{-- sd-analytics: no cookie, no browser storage, same host (/_sda/ is answered by the sd-analytics package). --}}
+  <script defer data-site="{{ config('splotnikov-dev.analytics_key') }}" src="/_sda/s.js"></script>
+  <noscript><img src="/_sda/px/{{ config('splotnikov-dev.analytics_key') }}.gif" alt="" width="1" height="1" style="position:absolute;left:-9999px"></noscript>
+  @endif
   <script src="{{ secure_asset('vendor/splotnikov/site.js') }}" defer></script>
 </body>
 

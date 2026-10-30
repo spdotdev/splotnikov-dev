@@ -66,7 +66,7 @@ class SiteTest extends TestCase
 
     public function test_every_internal_link_resolves(): void
     {
-        $pages = ['/', '/cv', '/contact', '/projects', '/toolkit', '/blog', '/nl', '/nl/cv', '/nl/contact', '/nl/projects', '/nl/toolkit'];
+        $pages = ['/', '/cv', '/contact', '/projects', '/toolkit', '/privacy', '/blog', '/nl', '/nl/cv', '/nl/contact', '/nl/projects', '/nl/toolkit', '/nl/privacy'];
         foreach (Posts::all() as $post) {
             $pages[] = '/blog/'.$post['slug'];
         }
@@ -597,5 +597,34 @@ class SiteTest extends TestCase
             return str_contains($msg, 'lead #1') && str_contains($msg, 'splotnikov:contact-leads --unmailed');
         });
         $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm())->assertSessionHas('contact_sent', 'stored');
+    }
+
+    public function test_the_own_analytics_snippet_only_exists_with_a_key_and_the_statement_follows(): void
+    {
+        $off = $this->get('http://splotnikov.dev/privacy')->assertOk();
+        $this->assertStringNotContainsString('/_sda/', (string) $this->get('http://splotnikov.dev/')->getContent());
+        $this->assertStringContainsString('no analytics of any kind is loaded', (string) $off->getContent());
+
+        config(['splotnikov-dev.analytics_key' => 'abcDEF123456']);
+        $response = $this->get('http://splotnikov.dev/');
+        $home = (string) $response->getContent();
+        $this->assertStringContainsString('<script defer data-site="abcDEF123456" src="/_sda/s.js"></script>', $home);
+        $this->assertStringContainsString('<img src="/_sda/px/abcDEF123456.gif"', $home);
+        $this->assertEmpty($response->headers->getCookies(), 'reading a page still sets no cookie');
+
+        $on = (string) $this->get('http://splotnikov.dev/privacy')->getContent();
+        foreach (['I count visits with a small tool that runs on my own server', 'does not store your IP address', 'Do Not Track', 'Ik tel bezoeken met een klein programma', 'Privacyverklaring'] as $needle) {
+            $this->assertStringContainsString($needle, $on);
+        }
+        $this->assertStringNotContainsString('no analytics of any kind is loaded', $on);
+        $this->get('http://splotnikov.dev/nl/privacy')->assertOk()->assertSee('Privacyverklaring', false);
+        $this->get('http://splotnikov.dev/sitemap.xml')->assertSee('https://splotnikov.dev/privacy', false);
+    }
+
+    public function test_the_contact_success_event_is_only_added_with_a_key(): void
+    {
+        $this->withSession(['contact_sent' => 'mailed'])->get('http://splotnikov.dev/contact')->assertDontSee("sda('Contact form sent')", false);
+        config(['splotnikov-dev.analytics_key' => 'abcDEF123456']);
+        $this->withSession(['contact_sent' => 'mailed'])->get('http://splotnikov.dev/contact')->assertSee("sda('Contact form sent')", false);
     }
 }

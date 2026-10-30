@@ -39,6 +39,7 @@ Route::domain(config('splotnikov-dev.domain'))
             Route::get('/cv', [SiteController::class, 'cv'])->name('splotnikov.cv');
             Route::get('/projects', [SiteController::class, 'projects'])->name('splotnikov.projects');
             Route::get('/toolkit', [SiteController::class, 'toolkit'])->name('splotnikov.toolkit');
+            Route::get('/privacy', [SiteController::class, 'privacy'])->name('splotnikov.privacy');
             Route::get('/blog', [SiteController::class, 'blog'])->name('splotnikov.blog');
             Route::get('/blog/{slug}', [SiteController::class, 'post'])->where('slug', '[a-z0-9-]+')->name('splotnikov.post');
 
@@ -48,6 +49,7 @@ Route::domain(config('splotnikov-dev.domain'))
                 Route::get('/cv', [SiteController::class, 'cv']);
                 Route::get('/projects', [SiteController::class, 'projects']);
                 Route::get('/toolkit', [SiteController::class, 'toolkit']);
+                Route::get('/privacy', [SiteController::class, 'privacy']);
             });
 
             // Crawler / PWA files served at the site root.

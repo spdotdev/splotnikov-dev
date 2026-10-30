@@ -13,7 +13,7 @@ final class Dutch
     public const HOST = 'https://splotnikov.dev';
 
     /** @var list<string> */
-    private const FIXED = ['/', '/cv', '/contact', '/projects', '/toolkit'];
+    private const FIXED = ['/', '/cv', '/contact', '/projects', '/toolkit', '/privacy'];
 
     public static function paired(string $path): bool
     {
@@ -61,6 +61,7 @@ final class Dutch
             '/cv' => ['CV', 'Curriculum vitae van Stanislav Plotnikov: senior developer en solution architect in Eindhoven, PHP sinds 2008, Laravel, Python, AI-agents en Linux. Printbaar en als PDF.'],
             '/contact' => ['Contact', 'Neem contact op met Stanislav Plotnikov in Eindhoven: het formulier, stplotnikov@gmail.com, LinkedIn en GitHub. Ik reageer binnen één werkdag.'],
             '/projects' => ['Projecten', 'Open source projecten van Stanislav Plotnikov: een WhatsApp MCP-server, een Claude Code-skill voor handboeken, een Telegram-relay, een voorraadproduct en deze site.'],
+            '/privacy' => ['Privacyverklaring', 'Welke gegevens splotnikov.dev gebruikt: geen cookies bij het lezen, een eigen teller zonder IP-adres, en het contactformulier.'],
             '/toolkit' => ['Tools', 'De tools en werkwijzen die Stanislav Plotnikov dagelijks gebruikt: PHP en Laravel, AI-agents met vangrails, security, infrastructure as code en pipelines die op rood blokkeren.'],
         ];
 

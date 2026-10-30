@@ -26,4 +26,8 @@ return [
     // form falls back to a honeypot plus a signed minimum fill time.
     'turnstile_site_key' => env('SPLOTNIKOV_TURNSTILE_SITE_KEY', ''),
     'turnstile_secret' => env('SPLOTNIKOV_TURNSTILE_SECRET', ''),
+
+    // Site key of this site in sd-analytics (the cookieless own analytics, analytics.scuttle.dev). Empty means no
+    // counting and the privacy page says so. Created with `php artisan analytics:site create`.
+    'analytics_key' => env('SPLOTNIKOV_ANALYTICS_KEY', ''),
 ];

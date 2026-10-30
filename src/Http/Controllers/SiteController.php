@@ -51,6 +51,12 @@ class SiteController
         return view('splotnikov::contact');
     }
 
+    public function privacy(): View
+    {
+        // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
+        return view('splotnikov::privacy');
+    }
+
     public function robots(): Response
     {
         return $this->staticFile('robots.txt', 'text/plain');
