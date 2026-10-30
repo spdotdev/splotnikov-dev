@@ -583,4 +583,19 @@ class SiteTest extends TestCase
             $this->assertStringContainsString('<info>', $out, 'a style tag from a visitor is printed literally, not applied');
         }
     }
+
+    public function test_a_lead_without_a_sent_mail_raises_a_critical_log_line_with_no_visitor_data(): void
+    {
+        config(['splotnikov-dev.require_real_mailer' => true, 'mail.default' => 'log']);
+        Log::shouldReceive('critical')->once()->withArgs(function (string $msg, array $ctx = []): bool {
+            foreach (['Anna', 'anna@example.com', 'old PHP portal'] as $secret) {
+                if (stripos($msg.json_encode($ctx), $secret) !== false) {
+                    return false;
+                }
+            }
+
+            return str_contains($msg, 'lead #1') && str_contains($msg, 'splotnikov:contact-leads --unmailed');
+        });
+        $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm())->assertSessionHas('contact_sent', 'stored');
+    }
 }

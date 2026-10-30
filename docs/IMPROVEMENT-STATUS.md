@@ -57,3 +57,6 @@ Dutch twins read in a browser at 360 px: no overflow. Wording: "legacy-schuld", 
 
 # Round 6 (2026-10-31, v0.3.31)
 - Contact form: every valid message is stored first in `splotnikov_contact_leads` (same design, tests and security fixes as scuttle.dev: no raw IP, safe logging, control characters rejected, `php artisan splotnikov:contact-leads`). When mail cannot be sent the form says "Received and saved", not "Sent". Lighthouse mobile on /cv: 100 in accessibility, best practices, SEO and agentic browsing.
+
+## Leads nobody sees (round 7)
+A lead that is stored but not mailed logs one `critical` line (lead id and the list command, no visitor data), so the existing log alerting can pick it up. The exact commands to list and purge leads on the server are kept in the private operations notes, not in this public repository.
