@@ -48,6 +48,15 @@
     try { localStorage.setItem('lang', l); } catch (e) {}
     if (animate) document.querySelectorAll('[data-dec]').forEach(function (h) { decrypt(h, 700); });
   }
+  // Keep every nav label at the width of its longest translation, so the bar does not move when the language switches.
+  document.querySelectorAll('.links a[data-i]').forEach(function (e) {
+    var k = e.dataset.i; if (!T.t[k]) return;
+    var probe = e.cloneNode(true); probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;min-width:0';
+    e.parentNode.appendChild(probe);
+    probe.innerHTML = base[k]; var w = probe.getBoundingClientRect().width;
+    probe.innerHTML = T.t[k]; w = Math.max(w, probe.getBoundingClientRect().width);
+    probe.remove(); if (w) e.style.setProperty('--w', Math.ceil(w) + 'px');
+  });
   if ($('en')) $('en').onclick = function () { lang('en', true); };
   if ($('nl')) $('nl').onclick = function () { lang('nl', true); };
 
