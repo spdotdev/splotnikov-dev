@@ -50,3 +50,7 @@ Dutch twins read in a browser at 360 px: no overflow. Wording: "legacy-schuld", 
 - **Buyer on a phone:** the price now sits above the buttons on every service page (Health Check: EUR 1,080 before "Ask about Health Check"); the pricing page shows the three prices a buyer looks for (EUR 90 per hour, Health Check EUR 1,080, retainer from EUR 720) as a row under the headline in both languages.
 - **CI on both repos was red since round 2** (Larastan error in the 404 handler); found and fixed in this round, green now. Lesson: read the CI result before calling a release done.
 - **Not done:** Core Web Vitals field data from the CrUX API (using the Google key from KeePass was blocked by the permission classifier; lab data only; the sites are small, field data may not exist for them anyway).
+
+# Round 5 (2026-10-30, v0.3.29)
+- /cv: an "At a glance" block for hirers (work, form and rate EUR 90 excl. VAT as published on scuttle.dev/pricing, place, languages, where to look first) and ProfilePage data; Dutch twin strings. The hero sentence is untouched (Stas decides). axe on the live /cv and /nl/cv, light and dark: 0 findings.
+- Blocked: the contact form on this site has the same mail problem as scuttle.dev (needs `SPLOTNIKOV_CONTACT_MAIL_DSN` and `SPLOTNIKOV_CONTACT_MAIL_FROM` in the host `.env`).
