@@ -50,8 +50,18 @@
     try { localStorage.setItem('lang', l); } catch (e) {}
     if (animate) document.querySelectorAll('[data-dec]').forEach(function (h) { decrypt(h, 700); });
   }
-  if ($('en')) $('en').onclick = function () { lang('en', true); };
-  if ($('nl')) $('nl').onclick = function () { lang('nl', true); };
+  // Pages that exist in both languages switch with two links (/ and /nl/); the rest switch in place.
+  var swEn = document.querySelector('.seg a#en'), swNl = document.querySelector('.seg a#nl'), paired = !!(swEn && swNl);
+  if (paired) {
+    swEn.addEventListener('click', function () { try { localStorage.setItem('lang', 'en'); } catch (e) {} });
+    swNl.addEventListener('click', function () { try { localStorage.setItem('lang', 'nl'); } catch (e) {} });
+    // Someone who chose Dutch before lands on the Dutch twin of an English address.
+    try { if (root.lang === 'en' && localStorage.getItem('lang') === 'nl') location.replace(swNl.href + location.hash); } catch (e) {}
+  } else {
+    if ($('en')) $('en').onclick = function () { lang('en', true); };
+    if ($('nl')) $('nl').onclick = function () { lang('nl', true); };
+  }
+
 
   // Theme: system by default, or the visitor's choice (the head script applied it before paint).
   var thBtns = [].slice.call(document.querySelectorAll('.seg.th button'));
@@ -395,5 +405,5 @@
     if (cf.querySelector('.sent, .err')) setTimeout(function () { cf.scrollIntoView({ block: 'center' }); }, 100);
   }
 
-  try { if (localStorage.getItem('lang') === 'nl') lang('nl'); } catch (e) {}
+  try { if (!paired && localStorage.getItem('lang') === 'nl') lang('nl'); } catch (e) {}
 })();

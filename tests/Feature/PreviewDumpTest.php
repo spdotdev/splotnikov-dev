@@ -2,6 +2,7 @@
 
 namespace Spdotdev\SplotnikovDev\Tests\Feature;
 
+use Spdotdev\SplotnikovDev\Dutch;
 use Spdotdev\SplotnikovDev\Tests\TestCase;
 
 /**
@@ -30,6 +31,13 @@ class PreviewDumpTest extends TestCase
         foreach ($pages as $path => $file) {
             $html = (string) $this->get('http://splotnikov.dev'.$path)->assertOk()->getContent();
             file_put_contents($dir.'/'.$file.'.html', strtr($html, $map));
+        }
+        // The Dutch twins of the paired pages.
+        foreach ($pages as $path => $file) {
+            if (Dutch::paired($path)) {
+                $html = (string) $this->get('http://splotnikov.dev/nl'.($path === '/' ? '' : $path))->assertOk()->getContent();
+                file_put_contents($dir.'/nl-'.$file.'.html', strtr($html, $map));
+            }
         }
         $this->assertFileExists($dir.'/index.html');
     }

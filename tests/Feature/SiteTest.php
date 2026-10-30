@@ -13,6 +13,39 @@ use Spdotdev\SplotnikovDev\Toolkit;
 
 class SiteTest extends TestCase
 {
+    public function test_dutch_twins_are_real_pages_with_hreflang(): void
+    {
+        foreach (['/', '/cv', '/contact', '/projects', '/toolkit'] as $path) {
+            $nlPath = '/nl'.($path === '/' ? '' : $path);
+            $nl = (string) $this->get('http://splotnikov.dev'.$nlPath)->assertOk()->getContent();
+            $en = (string) $this->get('http://splotnikov.dev'.$path)->assertOk()->getContent();
+            $this->assertStringContainsString('<html lang="nl"', $nl, $nlPath);
+            $this->assertStringContainsString('<link rel="canonical" href="https://splotnikov.dev'.$nlPath.'" />', $nl, $nlPath.' canonical');
+            foreach ([$en, $nl] as $html) {
+                $this->assertStringContainsString('hreflang="nl" href="https://splotnikov.dev'.$nlPath.'"', $html, $path.' hreflang nl');
+                $this->assertStringContainsString('hreflang="x-default" href="https://splotnikov.dev'.($path === '/' ? '/' : $path).'"', $html, $path.' hreflang x-default');
+            }
+            preg_match('/<title>(.*?)<\/title>/s', $nl, $t);
+            preg_match('/name="description" content="(.*?)"/s', $nl, $d);
+            $this->assertLessThanOrEqual(70, mb_strlen(html_entity_decode($t[1])), $nlPath.' title');
+            $this->assertLessThanOrEqual(160, mb_strlen(html_entity_decode($d[1])), $nlPath.' description');
+            $this->assertNotSame(strip_tags($en), strip_tags($nl), $nlPath.' differs from English');
+            preg_match_all('/<script type="application\/ld\+json">(.*?)<\/script>/s', $nl, $blocks);
+            foreach ($blocks[1] as $json) {
+                $this->assertIsArray(json_decode($json, true), $nlPath.' ld+json parses');
+            }
+        }
+        $this->assertStringContainsString('lang="nl"', (string) $this->get('http://splotnikov.dev/nl')->getContent());
+        $this->get('http://splotnikov.dev/nl/blog')->assertNotFound();
+        $sitemap = (string) $this->get('http://splotnikov.dev/sitemap.xml')->getContent();
+        $this->assertStringContainsString('<loc>https://splotnikov.dev/nl</loc>', $sitemap);
+        $this->assertStringContainsString('hreflang="nl" href="https://splotnikov.dev/nl/cv"', $sitemap);
+        $this->assertStringNotContainsString('/nl/blog', $sitemap);
+        $blog = (string) $this->get('http://splotnikov.dev/blog')->getContent();
+        $this->assertStringNotContainsString('hreflang="nl"', $blog);
+        $this->assertStringContainsString('<button id="nl"', $blog);
+    }
+
     public function test_search_snippets_fit_and_structured_data_is_valid(): void
     {
         $paths = ['/', '/cv', '/contact', '/projects', '/toolkit', '/blog'];

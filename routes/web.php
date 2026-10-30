@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Spdotdev\SplotnikovDev\Http\Controllers\ContactController;
 use Spdotdev\SplotnikovDev\Http\Controllers\SiteController;
+use Spdotdev\SplotnikovDev\Http\Middleware\DutchVersion;
 
 Route::domain(config('splotnikov-dev.domain'))
     ->middleware('web')
@@ -15,6 +16,15 @@ Route::domain(config('splotnikov-dev.domain'))
         Route::get('/blog/{slug}', [SiteController::class, 'post'])->where('slug', '[a-z0-9-]+')->name('splotnikov.post');
         Route::get('/contact', [SiteController::class, 'contact'])->name('splotnikov.contact.page');
         Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:6,1')->name('splotnikov.contact');
+
+        // The Dutch version of the pages that exist in full in both languages (see Dutch.php).
+        Route::prefix('nl')->middleware(DutchVersion::class)->group(function () {
+            Route::get('/', [SiteController::class, 'index'])->name('splotnikov.nl.home');
+            Route::get('/cv', [SiteController::class, 'cv']);
+            Route::get('/projects', [SiteController::class, 'projects']);
+            Route::get('/toolkit', [SiteController::class, 'toolkit']);
+            Route::get('/contact', [SiteController::class, 'contact']);
+        });
 
         // Crawler / PWA files served at the site root.
         Route::get('/robots.txt', [SiteController::class, 'robots'])->name('splotnikov.robots');

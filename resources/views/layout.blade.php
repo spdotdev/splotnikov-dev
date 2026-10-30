@@ -16,12 +16,20 @@
         $seoDesc = preg_match('/^(.{80,}(?<!excl)(?<!e\.g)[.!?])\s/us', $cut, $m) ? $m[1] : rtrim(preg_replace('/\s+\S*$/u', '', mb_substr($rawDesc, 0, 157)), " ,.:;-").'…';
     }
     $canon = trim($__env->yieldContent('canonical'));
+    $enPath = '/'.trim((string) parse_url($canon, PHP_URL_PATH), '/');
+    $isNl = request()->is('nl') || request()->is('nl/*');
+    $paired = \Spdotdev\SplotnikovDev\Dutch::paired($enPath);
   @endphp
   <title>{{ $seoTitle }}</title>
   <meta name="description" content="{{ $seoDesc }}" />
   <meta name="author" content="Stanislav Plotnikov" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="@yield('canonical')" />
+  @if($paired)
+  <link rel="alternate" hreflang="en" href="{{ \Spdotdev\SplotnikovDev\Dutch::enUrl($enPath) }}" />
+  <link rel="alternate" hreflang="nl" href="{{ \Spdotdev\SplotnikovDev\Dutch::nlUrl($enPath) }}" />
+  <link rel="alternate" hreflang="x-default" href="{{ \Spdotdev\SplotnikovDev\Dutch::enUrl($enPath) }}" />
+  @endif
   <meta name="theme-color" content="#f5f5f5" />
 
   <link rel="icon" type="image/svg+xml" href="{{ secure_asset('vendor/splotnikov/icon.svg') }}" />
@@ -66,8 +74,8 @@
 </head>
 
 <body>
-  @php($home = request()->routeIs('splotnikov.home'))
-  @php($cur = fn (string $r) => request()->routeIs($r) ? ' class="cur-page"' : '')
+  @php($home = request()->routeIs('splotnikov.home') || request()->is('nl'))
+  @php($cur = fn (string $r) => (request()->routeIs($r) || request()->is('nl/'.\Illuminate\Support\Str::after($r, 'splotnikov.'))) ? ' class="cur-page"' : '')
   <a class="skip no-print" href="#top" data-i="skip">Skip to content</a>
   <nav class="top no-print" aria-label="Main navigation"><div class="wrap">
     <a class="brand" href="{{ route('splotnikov.home') }}" aria-label="splotnikov.dev home">@include('splotnikov::partials.logo', ['id' => 'nav'])<span data-scr="splotnikov">splotnikov</span></a>
@@ -81,7 +89,11 @@
       <a href="{{ route('splotnikov.contact.page') }}" data-i="n_contact"{!! $cur('splotnikov.contact.page') !!}>Contact</a>
     </div>
     <div class="right">
+      @if($paired)
+      <div class="seg" role="group" aria-label="Language"><a id="en" href="{{ \Spdotdev\SplotnikovDev\Dutch::enUrl($enPath) }}" hreflang="en" lang="en" @if(! $isNl) aria-current="true" @endif>EN</a><a id="nl" href="{{ \Spdotdev\SplotnikovDev\Dutch::nlUrl($enPath) }}" hreflang="nl" lang="nl" @if($isNl) aria-current="true" @endif>NL</a></div>
+      @else
       <div class="seg" role="group" aria-label="Language"><button id="en" aria-pressed="true" type="button">EN</button><button id="nl" aria-pressed="false" type="button">NL</button></div>
+      @endif
       <div class="seg th" role="group" aria-label="Theme"><button type="button" data-th="system" aria-pressed="true" title="System"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button><button type="button" data-th="light" aria-pressed="false" title="Light"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" data-th="dark" aria-pressed="false" title="Dark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div>
       <a class="btn cta" href="{{ route('splotnikov.contact.page') }}" data-i="n_hire">Contact me</a>
       <button class="ic" id="burger" aria-label="Menu" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>

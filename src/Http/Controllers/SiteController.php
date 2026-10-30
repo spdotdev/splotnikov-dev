@@ -4,6 +4,7 @@ namespace Spdotdev\SplotnikovDev\Http\Controllers;
 
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Spdotdev\SplotnikovDev\Dutch;
 use Spdotdev\SplotnikovDev\Posts;
 
 class SiteController
@@ -71,6 +72,20 @@ class SiteController
             }
         }
         $xml = str_replace('</urlset>', $extra.'</urlset>', $xml);
+
+        // Pages that exist in both languages: every address lists both twins, and the Dutch one is a url of its own.
+        $xml = str_replace('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">', $xml);
+        $xml = (string) preg_replace_callback('#<url>\s*<loc>(https://splotnikov\.dev(/[^<]*))</loc>(.*?)</url>#s', function (array $m): string {
+            $path = $m[2];
+            if (! Dutch::paired($path)) {
+                return $m[0];
+            }
+            $en = Dutch::enUrl($path);
+            $nl = Dutch::nlUrl($path);
+            $alt = "\n    <xhtml:link rel=\"alternate\" hreflang=\"en\" href=\"$en\"/>\n    <xhtml:link rel=\"alternate\" hreflang=\"nl\" href=\"$nl\"/>\n    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"$en\"/>";
+
+            return "<url>\n    <loc>$en</loc>".$m[3].$alt."\n  </url>\n  <url>\n    <loc>$nl</loc>".$m[3].$alt."\n  </url>";
+        }, $xml);
 
         return response($xml, 200, ['Content-Type' => 'application/xml']);
     }
