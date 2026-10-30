@@ -54,3 +54,6 @@ Dutch twins read in a browser at 360 px: no overflow. Wording: "legacy-schuld", 
 # Round 5 (2026-10-30, v0.3.29)
 - /cv: an "At a glance" block for hirers (work, form and rate EUR 90 excl. VAT as published on scuttle.dev/pricing, place, languages, where to look first) and ProfilePage data; Dutch twin strings. The hero sentence is untouched (Stas decides). axe on the live /cv and /nl/cv, light and dark: 0 findings.
 - Blocked: the contact form on this site has the same mail problem as scuttle.dev (needs `SPLOTNIKOV_CONTACT_MAIL_DSN` and `SPLOTNIKOV_CONTACT_MAIL_FROM` in the host `.env`).
+
+# Round 6 (2026-10-31, v0.3.31)
+- Contact form: every valid message is stored first in `splotnikov_contact_leads` (same design, tests and security fixes as scuttle.dev: no raw IP, safe logging, control characters rejected, `php artisan splotnikov:contact-leads`). When mail cannot be sent the form says "Received and saved", not "Sent". Lighthouse mobile on /cv: 100 in accessibility, best practices, SEO and agentic browsing.
