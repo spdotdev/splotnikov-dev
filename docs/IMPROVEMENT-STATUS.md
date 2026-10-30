@@ -12,3 +12,13 @@ Started 2026-10-30. Audit tools: live crawl of every sitemap URL, Lighthouse mob
 | /blog | done v0.3.18 | shared head |
 | /blog/* | done v0.3.18 | BlogPosting structured data, og:type article, title cut under 70 |
 | All pages | done v0.3.18 | Geist self-hosted (no Google Fonts request), twitter tags, og:locale, og:type website by default |
+
+## Later in the same pass
+| Change | Version | Notes |
+|---|---|---|
+| Skip link on every page (EN and NL) | v0.3.19 | first tab stop, visible on focus |
+| Card titles after the page title are h2 | v0.3.20 | /blog, /projects, /toolkit: no skipped heading level (test added) |
+| Blog archive: out-of-month calendar days readable, year and month links 24 px high | v0.3.21 | same fix as scuttle.dev |
+
+nginx compression and caching for both sites: see scuttle-dev docs/IMPROVEMENT-STATUS.md (change lives in the sd-admin repo).
+

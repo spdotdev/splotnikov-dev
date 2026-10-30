@@ -623,7 +623,7 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .arch summary::-webkit-details-marker{display:none}
 .arch summary::before{content:"▸";font-size:10px;color:var(--muted);margin-right:6px;transition:transform .2s}
 .arch details[open]>summary::before{transform:rotate(90deg)}
-.arch summary a{flex:1}
+.arch summary a{flex:1;display:flex;align-items:center;min-height:24px}
 .arch summary span{font:400 11px "Geist Mono",monospace;color:var(--muted)}
 .arch summary:hover{background:var(--plate)}
 .arch details.m{margin-left:14px}
@@ -649,7 +649,7 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .cal-g .wk{height:24px;display:grid;place-items:center;color:var(--muted);border-radius:4px;font-size:10px}
 .cal-g .wk:hover,.cal-g .wk.cur{background:var(--plate);color:var(--acc)}
 .cal-g .d{height:24px;display:grid;place-items:center;border-radius:4px;color:var(--ink2)}
-.cal-g .d.out{color:var(--line2)}
+.cal-g .d.out{color:var(--muted)}
 .cal-g a.d.on{background:var(--plate);border:1px solid var(--line2);color:var(--ink);font-weight:500}
 .cal-g a.d.on:hover,.cal-g a.d.on.cur{border-color:var(--acc);color:var(--acc)}
 
