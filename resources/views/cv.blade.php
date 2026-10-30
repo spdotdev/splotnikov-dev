@@ -7,6 +7,7 @@
 
 @section('head')
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha384-Yv5O+t3uE3hunW8uyrbpPW3iw6/5/Y7HitWJBLgqfMoA36NogMmy+8wWZMpn3HWc" crossorigin="anonymous" defer></script>
+  <script type="application/ld+json">{!! json_encode(['@'.'context' => 'https://schema.org', '@type' => 'ProfilePage', 'url' => 'https://splotnikov.dev/cv', 'mainEntity' => ['@type' => 'Person', 'name' => 'Stanislav Plotnikov', 'jobTitle' => $cv['title'], 'url' => 'https://splotnikov.dev', 'address' => ['@type' => 'PostalAddress', 'addressLocality' => 'Eindhoven', 'addressCountry' => 'NL'], 'knowsLanguage' => ['nl', 'en', 'ru'], 'knowsAbout' => ['PHP', 'Laravel', 'Python', 'Legacy modernization', 'AI agents', 'Linux', 'Server hardening'], 'sameAs' => ['https://github.com/spdotdev', 'https://www.linkedin.com/in/stanislavplotnikov/', 'https://scuttle.dev']]], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}</script>
 @endsection
 
 @section('content')
@@ -21,6 +22,19 @@
       <div class="cv-actions"><div class="seg biz" role="group" aria-label="With or without company details" title="With or without the company details, on the page, in the PDF and in the print"><button type="button" data-biz="1" aria-pressed="true" data-i="cv_biz_on">Company</button><button type="button" data-biz="0" aria-pressed="false" data-i="cv_biz_off">Personal</button></div><button type="button" class="btn" id="btn-pdf" data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div>
     </div>
   </header>
+
+  <div class="wrap no-print">
+    <div class="plate rv glance-cv">
+      <span class="lbl dot" data-i="cv_g_l">At a glance</span>
+      <dl>
+        <div><dt data-i="cv_g1t">Work I do</dt><dd data-i="cv_g1d">Legacy modernization, automation with AI agents, security hardening. PHP and Laravel first, Python and Linux next to it.</dd></div>
+        <div><dt data-i="cv_g2t">Form</dt><dd data-i="cv_g2d">Freelance and contract, through my company Scuttle Development. EUR 90 per hour excl. VAT, written down on <a href="https://scuttle.dev/pricing">scuttle.dev/pricing</a>.</dd></div>
+        <div><dt data-i="cv_g3t">Where</dt><dd data-i="cv_g3d">Eindhoven. On site in Brabant, remote for the rest of the Netherlands and Europe.</dd></div>
+        <div><dt data-i="cv_g4t">Languages</dt><dd data-i="cv_g4d">Dutch, English, Russian. I write documents in Dutch or English.</dd></div>
+        <div><dt data-i="cv_g5t">Look before you call</dt><dd data-i="cv_g5d">Sixteen public repositories on <a href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a>, the <a href="{{ route('splotnikov.projects') }}">projects page</a> and the <a href="{{ route('splotnikov.blog') }}">blog</a>.</dd></div>
+      </dl>
+    </div>
+  </div>
 
   <div class="wrap">
     <div class="cv" id="cv-content">

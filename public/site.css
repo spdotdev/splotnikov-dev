@@ -682,3 +682,8 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .cform .cf-foot .btn.o,.cform.light .cf-foot .btn.o{background:#0f766e;border-color:#0f766e;color:#fff}
 :root[data-theme="dark"] .cform .cf-foot .btn.o{background:var(--acc);border-color:var(--acc);color:#0b0b0b}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cform .cf-foot .btn.o{background:var(--acc);border-color:var(--acc);color:#0b0b0b}}
+.glance-cv{margin:0 0 28px}
+.glance-cv dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px 28px;margin:14px 0 0}
+.glance-cv dt{font-weight:600;font-size:14px}
+.glance-cv dd{margin:4px 0 0;color:var(--muted);font-size:15px}
+.glance-cv dd a{color:var(--ink);text-decoration:underline}

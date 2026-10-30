@@ -4,6 +4,7 @@ namespace Spdotdev\SplotnikovDev\Tests\Feature;
 
 use Illuminate\Support\Facades\Mail;
 use Spdotdev\SplotnikovDev\Archive;
+use Spdotdev\SplotnikovDev\Cv;
 use Spdotdev\SplotnikovDev\Http\Controllers\ContactController;
 use Spdotdev\SplotnikovDev\Mail\ContactMessage;
 use Spdotdev\SplotnikovDev\Posts;
@@ -472,5 +473,15 @@ class SiteTest extends TestCase
         $t = (string) (time() - 10);
 
         return $t.'.'.hash_hmac('sha256', $t, (string) config('app.key'));
+    }
+
+    public function test_the_cv_has_an_at_a_glance_block_and_profile_data(): void
+    {
+        $html = (string) $this->get('http://splotnikov.dev/cv')->assertOk()->getContent();
+        $this->assertStringContainsString('EUR 90 per hour excl. VAT', $html);
+        preg_match_all('#<script type="application/ld\+json">(.*?)</script>#s', $html, $m);
+        $types = array_map(fn ($j) => json_decode($j, true, 512, JSON_THROW_ON_ERROR)['@type'] ?? '', $m[1]);
+        $this->assertContains('ProfilePage', $types);
+        $this->assertStringContainsString('EUR 90 per uur excl. btw', json_encode(Cv::nl(), JSON_UNESCAPED_UNICODE));
     }
 }
