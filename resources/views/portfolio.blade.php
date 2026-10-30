@@ -125,7 +125,7 @@ $nl = [
     'mf_l' => '01 · Het manifest', 'mf_h' => 'Engineering voor rendement, niet voor trends',
     'mf_p' => 'Senior developer en solution architect in Eindhoven, sinds 2008 in de code. De duurste regel code is de regel die nooit geschreven had moeten worden. Ik volg geen cargo-cult-architectuur: waar anderen over-engineeren met microservices die ze niet kunnen beheren, pleit ik voor modulaire monolieten en pragmatisch schalen.',
     'mf1' => 'Pragmatisme boven hype', 'mf1s' => 'Een stack wordt gekozen op de mensen die hem kunnen draaien en de totale kosten, niet op GitHub-sterren.',
-    'mf2' => 'De Strangler Fig-strategie', 'mf2s' => 'Geen grote herbouw. Legacy schuld wordt stuk voor stuk vervangen terwijl het bedrijf doordraait, elke release met een rollback.',
+    'mf2' => 'De Strangler Fig-strategie', 'mf2s' => 'Geen grote herbouw. Legacy-schuld wordt stuk voor stuk vervangen terwijl het bedrijf doordraait, elke release met een rollback.',
     'mf3' => 'Systeemdenken', 'mf3s' => 'Een ticketdeveloper sluit taken af. Een architect voorziet de afweging van elke structurele keuze over 24 maanden.',
     'pj_l' => '02 · Projecten', 'pj_h' => 'Open source, en wat ik voor mezelf bouw', 'pj_p' => 'Tools die ik nodig had en publiceerde, producten die ik thuis draai, een spel omgebouwd tot engineeringproject. <span class="desk">Scroll opzij.</span>', 'pj_all' => 'Alle projecten →',
     'tk_l' => '03 · Het gereedschap', 'tk_h' => 'Technologieën en werkwijze', 'tk_p' => 'De tools van dagelijks gebruik, geen wensenlijst. Drie groepen hier, zeven op de gereedschapspagina.', 'tk_all' => 'Bekijk het hele gereedschap →',

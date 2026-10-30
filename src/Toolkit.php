@@ -39,7 +39,7 @@ final class Toolkit
                 'nl' => ['label' => 'Frameworks', 'title' => 'Laravel eerst, de andere als ze er al zijn'],
                 'tools' => [
                     ['name' => 'Laravel, Filament', 'note' => 'Products, client platforms, admin panels; packages mounted in one host', 'nl' => 'Producten, klantplatforms, beheerpanelen; pakketten in één host'],
-                    ['name' => 'Symfony, Phalcon', 'note' => 'The legacy side of migrations: kept running while the new code takes over', 'nl' => 'De legacy kant van migraties: blijft draaien terwijl de nieuwe code overneemt'],
+                    ['name' => 'Symfony, Phalcon', 'note' => 'The legacy side of migrations: kept running while the new code takes over', 'nl' => 'De legacy-kant van migraties: blijft draaien terwijl de nieuwe code overneemt'],
                     ['name' => 'Node.js', 'note' => 'Event-driven services and relays', 'nl' => 'Event-driven services en relays'],
                     ['name' => 'Jetpack Compose', 'note' => 'Android apps for my own products', 'nl' => 'Android-apps voor mijn eigen producten'],
                 ],

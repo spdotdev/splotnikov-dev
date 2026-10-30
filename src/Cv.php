@@ -68,11 +68,11 @@ final class Cv
     {
         $nl = [
             'cv_lbl' => 'Curriculum vitae', 'cv_pdf' => 'Download PDF', 'cv_print' => 'Printen',
-            'cv_lead' => 'Senior developer en solution architect, PHP sinds 2008. Van legacy schuld naar software die schaalt en in support blijft. Beschikbaar voor freelance- en contractwerk.',
+            'cv_lead' => 'Senior developer en solution architect, PHP sinds 2008. Van legacy-schuld naar software die schaalt en in support blijft. Beschikbaar voor freelance- en contractwerk.',
             'cv_title' => 'Senior Developer / Modernisering van legacy en Solution Architect',
             'cv_avail' => 'Beschikbaar voor freelance- en contractwerk · Eindhoven, Nederland',
             'cv_s_sum' => 'Samenvatting',
-            'cv_t_sum' => 'Pragmatische solution architect, sinds 2008 programmeur in PHP en sinds 2005 bezig met netwerken en Linux, gericht op het omzetten van technische schuld in legacy software naar schaalbare, snelle infrastructuur. Specialist in stapsgewijze modernisering (Strangler Fig-patroon), modulaire monolieten en automatisering met AI-agents. Ik zet bedrijfscontinuïteit en rendement boven trends, met migraties die in gebruik blijven en onderhoudbaarheid op lange termijn.',
+            'cv_t_sum' => 'Pragmatische solution architect, sinds 2008 programmeur in PHP en sinds 2005 bezig met netwerken en Linux, gericht op het omzetten van technische schuld in legacy-software naar schaalbare, snelle infrastructuur. Specialist in stapsgewijze modernisering (Strangler Fig-patroon), modulaire monolieten en automatisering met AI-agents. Ik zet bedrijfscontinuïteit en rendement boven trends, met migraties die in gebruik blijven en onderhoudbaarheid op lange termijn.',
             'cv_s_core' => 'Kerncompetenties',
             'cv_i_core_0' => '<b>Architectuur:</b> systeemontwerp, modulaire monolieten, haalbaarheid van microservices, API-gatewayontwerp, migraties die in gebruik blijven (Strangler Fig).',
             'cv_i_core_1' => '<b>Talen en frameworks:</b> PHP sinds 2008 (Laravel, Symfony, Phalcon, Filament), Python, JavaScript en TypeScript, Kotlin, Go, C en C++, SQL.',
