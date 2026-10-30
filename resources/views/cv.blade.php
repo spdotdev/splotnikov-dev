@@ -18,7 +18,7 @@
         <h1 data-dec>Stanislav Plotnikov</h1>
         <p class="lead" data-i="cv_lead">{{ $cv['lead'] }}</p>
       </div>
-      <div class="cv-actions"><button type="button" class="btn" id="btn-pdf" data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div>
+      <div class="cv-actions"><div class="row"><button type="button" class="btn" id="btn-pdf" data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div><label class="sw" title="Show or hide the company details on the CV, the PDF and the print"><input type="checkbox" id="cv-biz-toggle" checked><span data-i="cv_biz_sw">Company details</span></label></div>
     </div>
   </header>
 
@@ -56,6 +56,7 @@
       <aside class="cv-side">
         <img class="cv-photo" src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="160" height="160">
         <div class="blk"><small data-i="cv_b_contact">Contact</small><span data-i="cv_b_where">Eindhoven, the Netherlands</span><a href="tel:+31634500328">+31 (0) 6 345 00 328</a><a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a><a href="https://splotnikov.dev">splotnikov.dev</a></div>
+        <div class="blk" id="cv-biz"><small data-i="cv_b_biz">Business details</small><span>Scuttle Development</span><a href="tel:+31618233175">+31 (0) 6 182 33 175</a><a href="mailto:info@scuttle.dev">info@scuttle.dev</a><span>KvK 96040947</span><span>BTW NL005184584B85</span><a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a></div>
         <div class="blk"><small data-i="cv_b_links">Links</small><a href="https://www.linkedin.com/in/stanislavplotnikov/">linkedin.com/in/stanislavplotnikov</a><a href="https://github.com/spdotdev">github.com/spdotdev</a><a href="https://scuttle.dev" title="Scuttle Development, my company">scuttle.dev</a></div>
         <div class="blk"><small data-i="cv_b_exp">Expertise</small>
           @foreach($cv['expertise'] as $ek => $eg)
@@ -88,6 +89,11 @@ Object.assign(window.SCUTTLE_NL.t, @json(\Spdotdev\SplotnikovDev\Cv::nl()));
 <script>
 (function () {
   var el = document.getElementById('cv-content'), pdf = document.getElementById('btn-pdf'), prt = document.getElementById('btn-print');
+  // Company details on or off, remembered in this browser; the PDF and the print follow the switch.
+  var sw = document.getElementById('cv-biz-toggle');
+  var biz = function (on) { el.classList.toggle('no-biz', !on); if (sw) sw.checked = on; try { localStorage.setItem('cv_business', on ? '1' : '0'); } catch (e) {} };
+  try { biz(localStorage.getItem('cv_business') !== '0'); } catch (e) {}
+  if (sw) sw.onchange = function () { biz(sw.checked); };
   if (prt) prt.onclick = function () { window.print(); };
   if (pdf) pdf.onclick = function () {
     if (!window.html2pdf) { window.print(); return; }

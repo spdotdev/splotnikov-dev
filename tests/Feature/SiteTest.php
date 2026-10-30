@@ -68,8 +68,10 @@ class SiteTest extends TestCase
             $this->assertStringContainsString('href="http://splotnikov.dev/contact"', $html, $path.' links the contact page');
             $this->assertStringNotContainsString('profile.png', $html, $path.' uses the new portrait');
             $this->assertStringNotContainsString('—', $html, $path.' has no long dashes');
-            $this->assertStringNotContainsString('96040947', $html, $path.' carries no Chamber of Commerce number');
-            $this->assertStringNotContainsString('NL005184584B85', $html, $path.' carries no VAT number');
+            if ($path !== '/cv') {
+                $this->assertStringNotContainsString('96040947', $html, $path.' carries no Chamber of Commerce number');
+                $this->assertStringNotContainsString('NL005184584B85', $html, $path.' carries no VAT number');
+            }
             $this->assertStringContainsString('title="Curriculum vitae"', $html, $path.' names the CV in full on hover');
         }
     }
@@ -133,6 +135,9 @@ class SiteTest extends TestCase
         $this->assertStringContainsString('html2pdf', $cv);
         $this->assertStringContainsString('integrity="sha384-', $cv, 'the PDF library loads with subresource integrity');
         $this->assertStringContainsString('id="cv-content"', $cv);
+        $this->assertStringContainsString('id="cv-biz"', $cv, 'the company details block');
+        $this->assertStringContainsString('id="cv-biz-toggle"', $cv, 'the switch that hides it');
+        $this->assertStringContainsString('KvK 96040947', $cv);
         foreach (['Executive summary', 'Core competencies', 'Professional experience', 'Employment history', 'Key projects', 'Hosintra B.V.', 'Radius College Breda', 'https://scuttle.dev', '+31 (0) 6 345 00 328'] as $needle) {
             $this->assertStringContainsString($needle, $cv);
         }

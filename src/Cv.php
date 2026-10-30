@@ -118,6 +118,7 @@ final class Cv
             'cv_jl_proj_2_2' => '<b>Resultaat:</b> 16 uur handwerk per week geautomatiseerd.',
             'cv_s_edu' => 'Opleiding',
             'cv_t_edu' => 'MBO 4 ICT-beheer, <a href="https://www.linkedin.com/company/radius-college/" rel="noopener" target="_blank">Radius College Breda</a>.',
+            'cv_b_biz' => 'Bedrijfsgegevens', 'cv_biz_sw' => 'Bedrijfsgegevens',
             'cv_b_contact' => 'Contact', 'cv_b_where' => 'Eindhoven, Nederland', 'cv_b_links' => 'Links', 'cv_b_exp' => 'Expertise',
             'cv_e_languages' => 'Talen', 'cv_e_frameworks' => 'Frameworks', 'cv_e_automation' => 'Automatisering', 'cv_e_ai' => 'AI', 'cv_e_infra' => 'Infrastructuur', 'cv_e_networking' => 'Netwerken', 'cv_e_security' => 'Beveiliging',
             'cv_b_lang' => 'Gesproken talen', 'cv_b_l1' => 'Engels', 'cv_b_l2' => 'Nederlands', 'cv_b_l3' => 'Russisch',
