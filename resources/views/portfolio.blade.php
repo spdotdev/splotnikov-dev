@@ -12,7 +12,7 @@
     "@type": "Person",
     "name": "Stanislav Plotnikov",
     "jobTitle": "Senior developer and solution architect",
-    "description": "Legacy modernization, automation with AI agents and security. PHP, Laravel, Phalcon, Python, Kotlin, Linux.",
+    "description": "Automation with AI agents, legacy modernization and security. PHP, Laravel, Phalcon, Python, Kotlin, Linux.",
     "url": "https://splotnikov.dev",
     "image": "{{ secure_asset('vendor/splotnikov/portrait.jpg') }}",
     "email": "stplotnikov@gmail.com",
@@ -28,7 +28,7 @@
 <header class="wrap hero">
   <div class="portrait in1"><img src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="120" height="120"></div>
   <h1 class="name" data-dec>Stanislav Plotnikov</h1>
-  <div class="sub in2" data-i="sub">Legacy modernization · Automation with AI · Security</div>
+  <div class="sub in2" data-i="sub">Automation with AI · Legacy modernization · Security</div>
   <p class="hero-q in2" data-i="hq">I turn legacy technical debt into infrastructure that scales and keeps running, by putting return on investment before industry trends.</p>
   <div class="cta in3"><a class="btn" href="{{ route('splotnikov.cv') }}" title="Curriculum vitae" data-i="cta1">View the CV <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn o" href="{{ route('splotnikov.contact.page') }}" data-i="cta2">Contact me</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a></div>
   <div class="cmd in3"><span>&gt; whoami&nbsp;&nbsp;<span>stas</span>&nbsp;&nbsp;<b data-i="cmd_b"><span>senior developer</span><span>PHP since 2008, Linux and networks since 2005</span><span>modernization</span><span>automation</span><span>AI</span><span>security</span><span>freelance since 2024</span></b></span></div>
@@ -116,7 +116,7 @@
 @push('nl')
 <?php
 $nl = [
-    'sub' => 'Modernisering van legacy · Automatisering met AI · Beveiliging',
+    'sub' => 'Automatisering met AI · Modernisering van legacy · Beveiliging',
     'hq' => 'Ik maak van technische schuld in legacy software infrastructuur die schaalt en blijft draaien, door rendement boven trends te zetten.',
     'cta1' => 'Bekijk het CV', 'cta2' => 'Neem contact op',
     'cmd_b' => '<span>senior developer</span><span>PHP sinds 2008, Linux en netwerken sinds 2005</span><span>modernisering</span><span>automatisering</span><span>AI</span><span>beveiliging</span><span>freelance sinds 2024</span>',

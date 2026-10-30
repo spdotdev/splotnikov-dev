@@ -667,3 +667,8 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 /* the language switch is two links when the page exists in both languages, two buttons otherwise */
 .seg a{display:block;color:var(--muted);padding:9px 10px;text-decoration:none}
 .seg a[aria-current="true"]{background:var(--ink);color:var(--bg)}
+
+/* contrast: white on the light teal fell under 4.5:1; light mode uses a deeper teal, dark mode dark text on the lighter one */
+.badge,.cform .cf-foot .btn{background:#0f766e;border-color:#0f766e;color:#fff}
+:root[data-theme="dark"] .badge,:root[data-theme="dark"] .cform .cf-foot .btn{background:var(--acc);border-color:var(--acc);color:#0b0b0b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge,:root:not([data-theme="light"]) .cform .cf-foot .btn{background:var(--acc);border-color:var(--acc);color:#0b0b0b}}
