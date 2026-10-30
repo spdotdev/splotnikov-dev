@@ -50,7 +50,7 @@
         @endforeach
 
         <h2 data-i="cv_s_edu">Education</h2>
-        <p data-i="cv_t_edu">MBO 4 IT Administration, <a href="https://radiuscollege.nl" rel="noopener" target="_blank">Radius College Breda</a>.</p>
+        <p data-i="cv_t_edu">MBO 4 IT Administration, <a href="https://www.linkedin.com/company/radius-college/" rel="noopener" target="_blank">Radius College Breda</a>.</p>
       </div>
 
       <aside class="cv-side">
@@ -58,12 +58,11 @@
         <div class="blk"><small data-i="cv_b_contact">Contact</small><span data-i="cv_b_where">Eindhoven, the Netherlands</span><a href="tel:+31634500328">+31 (0) 6 345 00 328</a><a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a><a href="https://splotnikov.dev">splotnikov.dev</a></div>
         <div class="blk"><small data-i="cv_b_links">Links</small><a href="https://www.linkedin.com/in/stanislavplotnikov/">linkedin.com/in/stanislavplotnikov</a><a href="https://github.com/spdotdev">github.com/spdotdev</a><a href="https://scuttle.dev" title="Scuttle Development, my company">scuttle.dev</a></div>
         <div class="blk"><small data-i="cv_b_exp">Expertise</small>
-          <em>Backend</em><div class="tags"><span>PHP</span><span>Laravel</span><span>Symfony</span><span>Phalcon</span><span>Python</span></div>
-          <em data-i="cv_b_infra">Infrastructure</em><div class="tags"><span>Docker</span><span>Linux</span><span>Ansible</span><span>CI/CD</span></div>
-          <em>AI</em><div class="tags"><span>Claude Code</span><span>MCP</span><span>Agents</span><span>RAG</span><span>n8n</span></div>
-          <em data-i="cv_b_sec">Security</em><div class="tags"><span data-i="cv_b_sec1">Network</span><span>Web</span><span>Hardening</span><span>Kali</span><span>BlackArch</span></div>
+          @foreach($cv['expertise'] as $ek => $eg)
+          <em data-i="cv_e_{{ $ek }}">{{ $eg[0] }}</em><div class="tags">@foreach($eg[1] as $t)<span>{{ $t }}</span>@endforeach</div>
+          @endforeach
         </div>
-        <div class="blk"><small data-i="cv_b_lang">Languages</small><div class="tags"><span data-i="cv_b_l1">English</span><span data-i="cv_b_l2">Dutch</span><span data-i="cv_b_l3">Russian</span></div></div>
+        <div class="blk"><small data-i="cv_b_lang">Spoken languages</small><div class="tags"><span data-i="cv_b_l1">English</span><span data-i="cv_b_l2">Dutch</span><span data-i="cv_b_l3">Russian</span></div></div>
       </aside>
     </div>
   </div>
