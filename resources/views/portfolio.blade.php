@@ -1,7 +1,7 @@
 @extends('splotnikov::layout')
 
-@section('title', 'Senior developer and solution architect, Eindhoven')
-@section('description', 'Stanislav Plotnikov: legacy modernization, automation with AI agents and security. PHP since 2008, Linux and networks since 2005. Available for freelance and contract roles in and around Eindhoven, remote everywhere else.')
+@section('title', 'Senior developer and architect, Eindhoven')
+@section('description', 'Stanislav Plotnikov: automation with AI agents, legacy modernization and security. PHP since 2008. Available for freelance and contract roles, Eindhoven or remote.')
 @section('canonical', 'https://splotnikov.dev/')
 @section('ogtype', 'website')
 
@@ -52,7 +52,7 @@
       <button class="it" data-k="claude" type="button"><i class="led"></i><span>claude -p</span><small>agent</small></button>
     </aside>
     <div class="main" id="main">
-      <div class="top"><h4 id="sh-h">312 tests green before anything ships · Laravel, PHPUnit, Playwright</h4><div class="st"><i id="sti"></i><span id="stt">running</span></div></div>
+      <div class="top"><p class="sh" id="sh-h">312 tests green before anything ships · Laravel, PHPUnit, Playwright</p><div class="st"><i id="sti"></i><span id="stt">running</span></div></div>
       <div class="prog"><i id="pb"></i></div>
       <div class="view" id="view"><div class="log" id="log"></div><div class="find" id="find"></div></div>
     </div>

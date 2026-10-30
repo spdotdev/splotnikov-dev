@@ -14,6 +14,8 @@
     var start = null, lh = parseFloat(getComputedStyle(el).lineHeight) || 40, oneLine = el.offsetHeight < lh * 1.6 && html.indexOf('<br') < 0;
     // Random glyphs are wider than the real letters: keep a one-line headline on one line while it settles.
     if (oneLine) el.style.whiteSpace = 'nowrap';
+    // Pin the box height while the glyphs settle, so the content under it never jumps (layout shift).
+    el.style.height = el.offsetHeight + 'px';
     function frame(ts) {
       if (start === null) start = ts;
       var k = Math.min(1, (ts - start) / (ms || 900)), done = Math.floor(k * total), idx = 0, out = '';
@@ -27,7 +29,7 @@
         }
       });
       el.innerHTML = out;
-      if (k < 1) requestAnimationFrame(frame); else { el.innerHTML = html; el.style.whiteSpace = ''; }
+      if (k < 1) requestAnimationFrame(frame); else { el.innerHTML = html; el.style.whiteSpace = ''; el.style.height = ''; }
     }
     requestAnimationFrame(frame);
   }

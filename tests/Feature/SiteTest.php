@@ -13,6 +13,31 @@ use Spdotdev\SplotnikovDev\Toolkit;
 
 class SiteTest extends TestCase
 {
+    public function test_search_snippets_fit_and_structured_data_is_valid(): void
+    {
+        $paths = ['/', '/cv', '/contact', '/projects', '/toolkit', '/blog'];
+        foreach (Posts::all() as $post) {
+            $paths[] = '/blog/'.$post['slug'];
+        }
+        foreach ($paths as $path) {
+            $html = (string) $this->get('http://splotnikov.dev'.$path)->assertOk()->getContent();
+            preg_match('/<title>(.*?)<\/title>/s', $html, $t);
+            preg_match('/name="description" content="(.*?)"/s', $html, $d);
+            $this->assertLessThanOrEqual(70, mb_strlen(html_entity_decode($t[1])), $path.' title length');
+            $this->assertLessThanOrEqual(160, mb_strlen(html_entity_decode($d[1])), $path.' description length');
+            preg_match_all('/<script type="application\/ld\+json">(.*?)<\/script>/s', $html, $blocks);
+            if ($path !== '/') {
+                $this->assertNotEmpty($blocks[1], $path.' has structured data');
+            }
+            foreach ($blocks[1] as $json) {
+                $data = json_decode($json, true);
+                $this->assertIsArray($data, $path.' ld+json parses');
+                $this->assertSame('https://schema.org', $data['@context'] ?? null, $path.' ld+json context');
+            }
+            $this->assertStringNotContainsString('fonts.googleapis.com', $html, $path.' loads no Google Fonts');
+        }
+    }
+
     public function test_portfolio_renders_on_the_configured_host(): void
     {
         // Routes are bound at boot from config('splotnikov-dev.domain'),

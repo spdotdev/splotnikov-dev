@@ -31,6 +31,9 @@ shape as `spdotdev/scuttle-dev`) with a teal accent instead of orange.
 ## Writing for this site versus scuttle.dev (Stas, 2026-10-29)
 splotnikov.dev is the personal side: technology, what I am busy with, why one thing beats another, my own experience; open source projects. scuttle.dev is the enterprise side: news that sells a service (security quick scan, maintenance retainer, architecture review, modernization), why choose me, what customers get. Articles from the CRM outreach end up here and on LinkedIn.
 
+## Head and fonts (v0.3.18, 2026-10-30)
+Same as scuttle-dev v0.7.12: the layout fits every title (66 characters with the name, else the bare title under 70) and description (under 160, cut at a sentence end) and adds a BreadcrumbList on inner pages; blog posts carry BlogPosting data and og:type article. Geist and Geist Mono are self-hosted in `public/fonts/` (`site.css` starts with the `@font-face` rules, the layout preloads the two latin files), so no request goes to Google Fonts. `test_search_snippets_fit_and_structured_data_is_valid` pins it. Page status: `docs/IMPROVEMENT-STATUS.md`.
+
 ## Integration / route precedence
 The host app's landing route must be host-scoped so it does not shadow this
 package's domain routes. Verified by the host app's `SplotnikovSiteTest`.

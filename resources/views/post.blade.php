@@ -3,6 +3,11 @@
 @section('title', $post['title'])
 @section('description', $post['summary'])
 @section('canonical', 'https://splotnikov.dev/blog/'.$post['slug'])
+@section('ogtype', 'article')
+
+@section('head')
+  <script type="application/ld+json">{!! json_encode(['@'.'context' => 'https://schema.org', '@type' => 'BlogPosting', 'headline' => \Illuminate\Support\Str::limit($post['title'], 108, ''), 'description' => $post['summary'], 'datePublished' => $post['date'], 'mainEntityOfPage' => 'https://splotnikov.dev/blog/'.$post['slug'], 'image' => secure_asset('vendor/splotnikov/og-image.png'), 'author' => ['@type' => 'Person', 'name' => 'Stanislav Plotnikov', 'url' => 'https://splotnikov.dev'], 'publisher' => ['@type' => 'Person', 'name' => 'Stanislav Plotnikov']], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+@endsection
 
 @section('content')
 <article class="wrap page">
