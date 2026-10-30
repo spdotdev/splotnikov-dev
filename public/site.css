@@ -541,10 +541,12 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .cv-side .blk small{font:500 11px "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .cv-side .blk em{font-style:normal;font:500 10.5px "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:6px}
 .cv-side .blk a:hover{color:var(--acc)}
+/* The four folding side blocks: plain blocks on the desktop, in print and in the PDF; tappable headings, closed by default, up to 980 px (the script closes them). */
+.cv-side .fold{display:block}.fold summary{list-style:none;display:block;cursor:default}.fold summary::-webkit-details-marker{display:none}.cv-side .fold summary small{display:block;margin-bottom:8px}.fold .fold-body{display:grid;gap:4px}
 .cv-side .tags span{color:var(--ink2)}
 .cv .cv-main a{color:var(--acc);text-decoration:underline;text-underline-offset:3px}
-@media (max-width:980px){.cv{grid-template-columns:1fr;padding:24px 20px;gap:28px}.roles{grid-template-columns:1fr}.cv-side{order:-1;grid-template-columns:1fr 1fr}.cv-side .blk:first-of-type{grid-column:1/-1}.cv-photo{width:120px;height:120px}}
-@media (max-width:600px){.cv-side{grid-template-columns:1fr}}
+@media (max-width:980px){.cv{grid-template-columns:1fr;padding:24px 20px;gap:28px}.roles{grid-template-columns:1fr}.cv-side{order:-1;grid-template-columns:1fr;gap:0}.cv-photo{width:120px;height:120px;margin-bottom:16px}.cv-side .blk:first-of-type{margin-bottom:12px}
+  .fold{border-top:1px solid var(--line)}.fold:last-child{border-bottom:1px solid var(--line)}.fold summary{cursor:pointer;padding:12px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}.cv-side .fold summary small{margin:0;color:var(--ink)}.fold summary::after{content:"+";font:400 16px "Geist Mono",monospace;color:var(--acc)}.fold[open] summary::after{content:"\2212"}.fold .fold-body{padding:0 0 14px}}
 /* the PDF export (html2pdf) and print: always light, no chrome, name and title inside the document */
 .cv.pdf{--panel:#fff;--bg:#fff;--ink:#000;--ink2:#222;--muted:#555;--line:#ddd;--acc:#0f766e;border:0;border-radius:0;padding:0;width:740px;margin:0;grid-template-columns:minmax(0,1fr) 200px;gap:28px;font-size:13px}
 .cv.pdf .cv-print-head,.cv.pdf .cv-print-head p{display:block}
@@ -556,6 +558,7 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .cv.pdf .job-title,.cv.pdf .roles b{font-size:13.5px}
 .cv.pdf .cv-photo{width:120px;height:120px}
 .cv.pdf .cv-side .blk{font-size:12px}
+.cv.pdf .fold{border:0}.cv.pdf .fold summary{padding:0;cursor:default;display:block}.cv.pdf .fold summary::after,.cv.pdf .fold[open] summary::after{content:none}.cv.pdf .fold summary small{margin-bottom:8px}.cv.pdf .fold .fold-body{padding:0}
 @media print{
   @page{size:A4;margin:12mm 12mm 14mm}
   nav.top,footer,.no-print,.cta-end,.ph,.rv{display:none!important}
@@ -568,6 +571,7 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
   .roles{grid-template-columns:1fr 1fr}
   .cv p,.cv li,.cv .roles span{font-size:10.5pt;line-height:1.4}
   .cv-side .blk{font-size:10pt}
+  .fold{border:0}.fold summary{padding:0;display:block}.fold summary::after,.fold[open] summary::after{content:none}.cv-side .fold summary small{margin-bottom:8px}.fold .fold-body{padding:0}
   .cv h2{break-after:avoid}
   .job,.roles div,.cv-side .blk{break-inside:avoid}
   .cv-photo{width:110px;height:110px}

@@ -56,14 +56,14 @@
       <aside class="cv-side">
         <img class="cv-photo" src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="160" height="160">
         <div class="blk"><small data-i="cv_b_contact">Contact</small><span data-i="cv_b_where">Eindhoven, the Netherlands</span><a href="tel:+31634500328">+31 (0) 6 345 00 328</a><a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a><a href="https://splotnikov.dev">splotnikov.dev</a></div>
-        <div class="blk" id="cv-biz"><small data-i="cv_b_biz">Business details</small><span>Scuttle Development</span><a href="tel:+31618233175">+31 (0) 6 182 33 175</a><a href="mailto:info@scuttle.dev">info@scuttle.dev</a><span>KvK 96040947</span><span>BTW NL005184584B85</span><a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a></div>
-        <div class="blk"><small data-i="cv_b_links">Links</small><a href="https://www.linkedin.com/in/stanislavplotnikov/">linkedin.com/in/stanislavplotnikov</a><a href="https://github.com/spdotdev">github.com/spdotdev</a><a href="https://scuttle.dev" title="Scuttle Development, my company">scuttle.dev</a></div>
-        <div class="blk"><small data-i="cv_b_exp">Expertise</small>
+        <details class="blk fold" id="cv-biz" open><summary><small data-i="cv_b_biz">Business details</small></summary><div class="fold-body"><span>Scuttle Development</span><a href="tel:+31618233175">+31 (0) 6 182 33 175</a><a href="mailto:info@scuttle.dev">info@scuttle.dev</a><span>KvK 96040947</span><span>BTW NL005184584B85</span><a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a></div></details>
+        <details class="blk fold" open><summary><small data-i="cv_b_links">Links</small></summary><div class="fold-body"><a href="https://www.linkedin.com/in/stanislavplotnikov/">linkedin.com/in/stanislavplotnikov</a><a href="https://github.com/spdotdev">github.com/spdotdev</a><a href="https://scuttle.dev" title="Scuttle Development, my company">scuttle.dev</a></div></details>
+        <details class="blk fold" open><summary><small data-i="cv_b_exp">Expertise</small></summary><div class="fold-body">
           @foreach($cv['expertise'] as $ek => $eg)
           <em data-i="cv_e_{{ $ek }}">{{ $eg[0] }}</em><div class="tags">@foreach($eg[1] as $t)<span>{{ $t }}</span>@endforeach</div>
           @endforeach
-        </div>
-        <div class="blk"><small data-i="cv_b_lang">Spoken languages</small><div class="tags"><span data-i="cv_b_l1">English</span><span data-i="cv_b_l2">Dutch</span><span data-i="cv_b_l3">Russian</span></div></div>
+        </div></details>
+        <details class="blk fold" open><summary><small data-i="cv_b_lang">Spoken languages</small></summary><div class="fold-body"><div class="tags"><span data-i="cv_b_l1">English</span><span data-i="cv_b_l2">Dutch</span><span data-i="cv_b_l3">Russian</span></div></div></details>
       </aside>
     </div>
   </div>
@@ -94,6 +94,12 @@ Object.assign(window.SCUTTLE_NL.t, @json(\Spdotdev\SplotnikovDev\Cv::nl()));
   var biz = function (on) { el.classList.toggle('no-biz', !on); segBtns.forEach(function (b) { b.setAttribute('aria-pressed', (b.dataset.biz === '1') === on); }); try { localStorage.setItem('cv_business', on ? '1' : '0'); } catch (e) {} };
   try { biz(localStorage.getItem('cv_business') !== '0'); } catch (e) {}
   segBtns.forEach(function (b) { b.onclick = function () { biz(b.dataset.biz === '1'); }; });
+  // The four side blocks fold on screens up to 980 px (closed by default), stay open on the desktop, and are opened for print and the PDF.
+  var folds = [].slice.call(document.querySelectorAll('.cv-side .fold')), closedBefore = [];
+  if (window.matchMedia && window.matchMedia('(max-width: 980px)').matches) folds.forEach(function (d) { d.open = false; });
+  var openFolds = function () { closedBefore = folds.filter(function (d) { return !d.open; }); closedBefore.forEach(function (d) { d.open = true; }); };
+  var restoreFolds = function () { closedBefore.forEach(function (d) { d.open = false; }); closedBefore = []; };
+  window.addEventListener('beforeprint', openFolds); window.addEventListener('afterprint', restoreFolds);
   if (prt) prt.onclick = function () { window.print(); };
   if (pdf) pdf.onclick = function () {
     if (!window.html2pdf) { window.print(); return; }
@@ -103,7 +109,7 @@ Object.assign(window.SCUTTLE_NL.t, @json(\Spdotdev\SplotnikovDev\Cv::nl()));
     var host = document.createElement('div'), mark = document.createElement('div');
     host.style.cssText = 'position:fixed;left:0;top:0;width:740px;background:#fff;z-index:-1;overflow:visible';
     el.parentNode.insertBefore(mark, el); host.appendChild(el); document.body.appendChild(host);
-    el.classList.add('pdf');
+    el.classList.add('pdf'); openFolds();
     var label = pdf.textContent; pdf.disabled = true; pdf.textContent = '…';
     window.html2pdf().set({
       margin: [10, 10, 12, 10], filename: 'Stanislav_Plotnikov_CV.pdf',
@@ -116,6 +122,7 @@ Object.assign(window.SCUTTLE_NL.t, @json(\Spdotdev\SplotnikovDev\Cv::nl()));
       el.classList.remove('pdf'); mark.parentNode.insertBefore(el, mark); mark.remove(); host.remove();
       if (was) document.documentElement.setAttribute('data-theme', was); else document.documentElement.removeAttribute('data-theme');
       pdf.disabled = false; pdf.textContent = label;
+      restoreFolds();
     }
   };
 })();
