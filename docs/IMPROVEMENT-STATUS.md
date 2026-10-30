@@ -63,3 +63,6 @@ A lead that is stored but not mailed logs one `critical` line (lead id and the l
 
 # Round 7 (2026-10-31, v0.3.32)
 - Three more blog drafts in sd-cms, status review, none published: the contact form broken in three layers, Lighthouse versus axe (with contrast ratios the agent calculated), escaping JSON inside HTML. Each carries the author note about agent-done work.
+
+# Round 8 (2026-10-31, v0.3.33)
+- Full live sweep with scuttle.dev: Lighthouse mobile on the 13 sitemap addresses incl. Dutch twins, 100 in accessibility, best practices and SEO and 95 to 100 in performance; axe 0 findings in light and dark. Public hygiene: no IP, token or key in HEAD or the last 50 commits; server nickname and home paths removed from HEAD. /nl/cv "At a glance" read in Dutch by the agent (not a native editor), left unchanged.
