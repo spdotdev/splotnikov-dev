@@ -56,7 +56,7 @@
         $ld = ['@context' => 'https://schema.org', '@type' => 'BreadcrumbList', 'itemListElement' => array_map(fn ($c, $k) => ['@type' => 'ListItem', 'position' => $k + 1, 'name' => $c[0], 'item' => $c[1]], $crumbs, array_keys($crumbs))];
     }
   @endphp
-  @isset($ld)<script type="application/ld+json">{!! json_encode($ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>@endisset
+  @isset($ld)<script type="application/ld+json">{!! json_encode($ld, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}</script>@endisset
 
   <link rel="preload" href="{{ secure_asset('vendor/splotnikov/fonts/geist-latin.woff2') }}" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="{{ secure_asset('vendor/splotnikov/fonts/geist-mono-latin.woff2') }}" as="font" type="font/woff2" crossorigin />

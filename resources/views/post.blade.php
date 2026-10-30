@@ -6,7 +6,7 @@
 @section('ogtype', 'article')
 
 @section('head')
-  <script type="application/ld+json">{!! json_encode(['@'.'context' => 'https://schema.org', '@type' => 'BlogPosting', 'headline' => \Illuminate\Support\Str::limit($post['title'], 108, ''), 'description' => $post['summary'], 'datePublished' => $post['date'], 'mainEntityOfPage' => 'https://splotnikov.dev/blog/'.$post['slug'], 'image' => secure_asset('vendor/splotnikov/og-image.png'), 'author' => ['@type' => 'Person', 'name' => 'Stanislav Plotnikov', 'url' => 'https://splotnikov.dev'], 'publisher' => ['@type' => 'Person', 'name' => 'Stanislav Plotnikov']], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+  <script type="application/ld+json">{!! json_encode(['@'.'context' => 'https://schema.org', '@type' => 'BlogPosting', 'headline' => \Illuminate\Support\Str::limit($post['title'], 108, ''), 'description' => $post['summary'], 'datePublished' => $post['date'], 'mainEntityOfPage' => 'https://splotnikov.dev/blog/'.$post['slug'], 'image' => secure_asset('vendor/splotnikov/og-image.png'), 'author' => ['@type' => 'Person', 'name' => 'Stanislav Plotnikov', 'url' => 'https://splotnikov.dev'], 'publisher' => ['@type' => 'Person', 'name' => 'Stanislav Plotnikov']], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}</script>
 @endsection
 
 @section('content')
