@@ -24,6 +24,7 @@ abstract class TestCase extends BaseTestCase
     {
         // The package routes run in the `web` group, whose cookie encryption
         // requires an application key. Set a deterministic one for tests.
+        $app['config']->set('splotnikov-dev.require_real_mailer', false);
         $app['config']->set('app.key', 'base64:'.base64_encode(str_repeat('a', 32)));
     }
 }

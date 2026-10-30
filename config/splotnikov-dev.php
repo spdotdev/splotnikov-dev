@@ -11,6 +11,11 @@ return [
     // Where the contact form delivers.
     'contact_to' => env('SPLOTNIKOV_CONTACT_TO', 'stplotnikov@gmail.com'),
 
+    // The form refuses to say "Sent" when the application's default mailer is `log` or `array`: those mailers write the
+    // message to a file and deliver nothing (found 2026-10-30: the form answered Sent and no mail arrived). Set false
+    // only in tests.
+    'require_real_mailer' => (bool) env('SPLOTNIKOV_REQUIRE_REAL_MAILER', true),
+
     // Cloudflare Turnstile (the bot check on the contact form). Without keys the
     // form falls back to a honeypot plus a signed minimum fill time.
     'turnstile_site_key' => env('SPLOTNIKOV_TURNSTILE_SITE_KEY', ''),

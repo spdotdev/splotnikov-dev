@@ -13,6 +13,26 @@ use Spdotdev\SplotnikovDev\Toolkit;
 
 class SiteTest extends TestCase
 {
+    public function test_the_form_does_not_say_sent_when_the_mailer_only_logs(): void
+    {
+        config(['splotnikov-dev.require_real_mailer' => true, 'mail.default' => 'log']);
+        $page = $this->get('http://splotnikov.dev/contact');
+        $token = ContactController::token();
+        $this->withSession([])->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', [
+            'name' => 'A', 'email' => 'a@example.com', 'message' => 'A real message of enough length.', 't' => $token, 'website' => '',
+        ])->assertSessionHasErrors('message')->assertSessionMissing('contact_sent');
+    }
+
+    public function test_the_contact_session_cookie_has_no_shared_domain(): void
+    {
+        config(['session.domain' => '.scuttle.dev']);
+        $cookies = $this->get('http://splotnikov.dev/contact')->assertOk()->headers->getCookies();
+        $this->assertNotEmpty($cookies);
+        foreach ($cookies as $cookie) {
+            $this->assertNull($cookie->getDomain(), $cookie->getName().' must be a host-only cookie on splotnikov.dev');
+        }
+    }
+
     public function test_content_pages_set_no_cookie_and_the_contact_form_keeps_its_session(): void
     {
         foreach (['/', '/nl', '/cv', '/projects', '/toolkit', '/blog', '/robots.txt', '/sitemap.xml'] as $path) {

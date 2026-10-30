@@ -10,6 +10,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Spdotdev\SplotnikovDev\Http\Controllers\ContactController;
 use Spdotdev\SplotnikovDev\Http\Controllers\SiteController;
 use Spdotdev\SplotnikovDev\Http\Middleware\DutchVersion;
+use Spdotdev\SplotnikovDev\Http\Middleware\OwnSessionDomain;
 
 // Content pages start no session and set no cookie (2026-10-30): nothing on them needs one, a visitor who only reads
 // gets no cookie at all, and the server does no session read or write per page. Only the contact page, which holds
@@ -25,7 +26,7 @@ $noSession = [
 ];
 
 Route::domain(config('splotnikov-dev.domain'))
-    ->middleware('web')
+    ->middleware([OwnSessionDomain::class, 'web'])
     ->group(function () use ($noSession) {
         Route::get('/contact', [SiteController::class, 'contact'])->name('splotnikov.contact.page');
         Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:6,1')->name('splotnikov.contact');
