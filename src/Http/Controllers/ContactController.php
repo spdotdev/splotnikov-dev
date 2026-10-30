@@ -2,6 +2,7 @@
 
 namespace Spdotdev\SplotnikovDev\Http\Controllers;
 
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -20,10 +21,10 @@ class ContactController
     public function send(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:120'],
-            'email' => ['required', 'email', 'max:160'],
-            'about' => ['nullable', 'string', 'max:120'],
-            'message' => ['required', 'string', 'min:10', 'max:4000'],
+            'name' => ['required', 'string', 'max:120', $this->noControlChars(false)],
+            'email' => ['required', 'email', 'max:160', $this->noControlChars(false)],
+            'about' => ['nullable', 'string', 'max:120', $this->noControlChars(false)],
+            'message' => ['required', 'string', 'min:10', 'max:4000', $this->noControlChars(true)],
             'website' => ['nullable', 'max:0'], // honeypot: humans never see it
             't' => ['required', 'string'],
             'cf-turnstile-response' => ['nullable', 'string'],
@@ -49,7 +50,7 @@ class ContactController
                 'is_test' => str_starts_with(strtolower($data['name']), '[test]'),
             ]);
         } catch (\Throwable $e) {
-            Log::error('splotnikov.dev contact form: the message could not be stored', ['error' => $e->getMessage()]);
+            Log::error('splotnikov.dev contact form: the message could not be stored', self::safeContext($e));
 
             return back()->withInput()->withErrors(['message' => 'Your message could not be saved right now, and I do not want you to think it arrived. Please email '.$to.' directly or book a call.']);
         }
@@ -72,13 +73,44 @@ class ContactController
                 ->send(new ContactMessage($data['name'], $data['email'], (string) ($data['about'] ?? ''), $data['message'], (string) $lead->ip_hash));
             $lead->update(['mail_status' => 'sent', 'mailed_at' => now()]);
         } catch (\Throwable $e) {
-            Log::error('splotnikov.dev contact form could not send mail; lead #'.$lead->id.' is stored', ['error' => $e->getMessage()]);
+            Log::error('splotnikov.dev contact form could not send mail; lead #'.$lead->id.' is stored', self::safeContext($e));
             $lead->update(['mail_status' => 'failed']);
 
             return back()->with('contact_sent', 'stored');
         }
 
         return back()->with('contact_sent', 'mailed');
+    }
+
+    /**
+     * Rejects control characters (and invalid UTF-8) so a submission cannot carry terminal escape sequences into the
+     * admin's console. The message may keep newline and tab.
+     */
+    private function noControlChars(bool $multiline): \Closure
+    {
+        return function (string $attribute, mixed $value, \Closure $fail) use ($multiline): void {
+            $v = (string) $value;
+            $pattern = $multiline ? '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F\x{80}-\x{9F}]/u' : '/[\x00-\x1F\x7F\x{80}-\x{9F}]/u';
+            if (! mb_check_encoding($v, 'UTF-8') || preg_match($pattern, $v) === 1) {
+                $fail('The :attribute contains characters that are not allowed.');
+            }
+        };
+    }
+
+    /**
+     * What may go into a log line about a failure: the exception class and, for a database error, the SQLSTATE.
+     * Never the message (it can hold the SQL and the bound visitor values) and never the bindings.
+     *
+     * @return array<string, string>
+     */
+    private static function safeContext(\Throwable $e): array
+    {
+        $ctx = ['exception' => get_class($e)];
+        if ($e instanceof QueryException) {
+            $ctx['sqlstate'] = (string) ($e->errorInfo[0] ?? $e->getCode());
+        }
+
+        return $ctx;
     }
 
     /**
@@ -119,7 +151,7 @@ class ContactController
 
             return (bool) $r->json('success', false);
         } catch (\Throwable $e) {
-            Log::warning('Turnstile verification failed', ['error' => $e->getMessage()]);
+            Log::warning('Turnstile verification failed', self::safeContext($e));
 
             return false;
         }

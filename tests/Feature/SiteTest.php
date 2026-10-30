@@ -2,6 +2,8 @@
 
 namespace Spdotdev\SplotnikovDev\Tests\Feature;
 
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Spdotdev\SplotnikovDev\Archive;
@@ -542,5 +544,43 @@ class SiteTest extends TestCase
         $this->artisan('splotnikov:contact-leads')->expectsOutputToContain('2 shown, 2 stored in total')->assertSuccessful();
         $this->artisan('splotnikov:contact-leads', ['--purge-test' => true])->expectsOutputToContain('Deleted 1 test')->assertSuccessful();
         $this->assertSame(['Anna'], ContactLead::query()->pluck('name')->all());
+    }
+
+    public function test_a_failing_insert_logs_no_visitor_data(): void
+    {
+        Schema::drop('splotnikov_contact_leads');
+        Log::shouldReceive('error')->once()->withArgs(function (string $msg, array $ctx = []): bool {
+            $all = $msg.json_encode($ctx);
+            foreach (['Anna', 'anna@example.com', 'old PHP portal', 'insert into'] as $secret) {
+                if (stripos($all, $secret) !== false) {
+                    return false;
+                }
+            }
+
+            return isset($ctx['exception']) && isset($ctx['sqlstate']) && ! isset($ctx['error']);
+        });
+        $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm())->assertSessionHasErrors('message');
+    }
+
+    public function test_control_characters_are_rejected_at_validation(): void
+    {
+        foreach ([['name' => "An\e[2Jna"], ['email' => "a\x00@example.com"], ['about' => "x\ry"], ['message' => "Hello there \e[31mred\e[0m please"], ['message' => "Hello there \x07 bell please"]] as $bad) {
+            $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm($bad))->assertSessionHasErrors();
+        }
+        $this->assertSame(0, ContactLead::query()->count());
+        $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm(['message' => "Line one of the message\nLine two\twith a tab."]))->assertSessionHasNoErrors();
+        $this->assertSame(1, ContactLead::query()->count());
+    }
+
+    public function test_the_leads_command_prints_stored_text_without_escapes_or_tags(): void
+    {
+        $l = ContactLead::create(['name' => "Eve\e[2J<info>x</info>", 'email' => 'e@example.com', 'about' => "a\e[31m", 'message' => "Hello \e[2J<error>boom</error>\x07 there", 'language' => 'en', 'mail_status' => 'pending']);
+        foreach ([[], ['--id' => $l->id]] as $opts) {
+            Artisan::call('splotnikov:contact-leads', $opts);
+            $out = Artisan::output();
+            $this->assertStringNotContainsString("\e", $out);
+            $this->assertStringNotContainsString("\x07", $out);
+            $this->assertStringContainsString('<info>', $out, 'a style tag from a visitor is printed literally, not applied');
+        }
     }
 }
