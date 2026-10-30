@@ -68,6 +68,7 @@
 <body>
   @php($home = request()->routeIs('splotnikov.home'))
   @php($cur = fn (string $r) => request()->routeIs($r) ? ' class="cur-page"' : '')
+  <a class="skip no-print" href="#top" data-i="skip">Skip to content</a>
   <nav class="top no-print" aria-label="Main navigation"><div class="wrap">
     <a class="brand" href="{{ route('splotnikov.home') }}" aria-label="splotnikov.dev home">@include('splotnikov::partials.logo', ['id' => 'nav'])<span data-scr="splotnikov">splotnikov</span></a>
     <div class="links" id="links">
@@ -100,7 +101,7 @@
   </footer></div>
 
   <script>
-    window.SCUTTLE_NL = { t: { n_home: "Home", n_manifesto: "Manifest", n_projects: "Projecten", n_toolkit: "Tools", n_blog: "Blog", n_cv: "CV", n_contact: "Contact", n_hire: "Neem contact op", ft_p: "Senior developer en solution architect in Eindhoven. Modernisering van legacy software, automatisering met AI-agents en beveiliging, door één persoon die eigenaarschap neemt over het systeem.", ft_nav: "Navigatie", ft_cv: "CV, printen of PDF", ft_connect: "Contact", ft_form: "Contactformulier", ft_work: "Werk", ft_pricing: "Diensten en prijzen", ft_cases: "Casestudy's" }, ph: {} };
+    window.SCUTTLE_NL = { t: { skip: "Naar de inhoud", n_home: "Home", n_manifesto: "Manifest", n_projects: "Projecten", n_toolkit: "Tools", n_blog: "Blog", n_cv: "CV", n_contact: "Contact", n_hire: "Neem contact op", ft_p: "Senior developer en solution architect in Eindhoven. Modernisering van legacy software, automatisering met AI-agents en beveiliging, door één persoon die eigenaarschap neemt over het systeem.", ft_nav: "Navigatie", ft_cv: "CV, printen of PDF", ft_connect: "Contact", ft_form: "Contactformulier", ft_work: "Werk", ft_pricing: "Diensten en prijzen", ft_cases: "Casestudy's" }, ph: {} };
   </script>
   @stack('nl')
   @yield('scripts')
