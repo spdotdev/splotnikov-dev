@@ -214,6 +214,16 @@ class SiteTest extends TestCase
         $this->assertSame(count($posts), $n, 'a page past the end clamps to the last page');
         $this->assertSame('October 2026', Archive::label('2026-10'));
         $this->assertSame('29 oktober 2026', Archive::label('2026-10-29', 'nl'));
+        $this->assertSame('2026-W44', Archive::week('2026-10-29'));
+        $this->assertCount(count($posts), Archive::filter($posts, '2026-W44'));
+        $this->assertCount(0, Archive::filter($posts, '2026-W43'));
+        $this->assertSame('Week 44, 2026', Archive::label('2026-W44'));
+        $rows = Archive::calendar($tree, '2026-10');
+        $this->assertSame('2026-W40', $rows[0]['week'], 'October 2026 starts in ISO week 40');
+        $this->assertSame(1, $rows[0]['days'][3]['day'], 'the first of October 2026 is a Thursday');
+        $this->assertSame(count($posts), array_sum(array_map(fn ($r) => array_sum(array_column($r['days'], 'posts')), $rows)));
+        $this->assertSame('2026-10', Archive::calendarMonth($tree, ''));
+        $this->assertSame('2026-10', Archive::calendarMonth($tree, '2026-W44'));
 
         $html = (string) $this->get('http://splotnikov.dev/blog')->assertOk()->getContent();
         $this->assertStringContainsString('class="arch"', $html);
@@ -221,6 +231,9 @@ class SiteTest extends TestCase
         $this->get('http://splotnikov.dev/blog?p=2026-10-29')->assertOk()->assertSee('29 October 2026');
         $this->get('http://splotnikov.dev/blog?p=2025')->assertOk()->assertSee('Nothing on this page.');
         $this->get('http://splotnikov.dev/blog?page=5')->assertOk();
+        $this->get('http://splotnikov.dev/blog?p=2026-W44')->assertOk()->assertSee('Week 44, 2026');
+        $this->assertStringContainsString('class="cal"', $html);
+        $this->get('http://splotnikov.dev/blog?m=2026-09')->assertOk()->assertSee('September')->assertSee('?m=2026-08', false);
     }
 
     public function test_the_contact_form_sends_mail_and_blocks_bots(): void

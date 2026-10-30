@@ -1,4 +1,5 @@
-{{-- The archive beside a post list: years collapsed, months inside, days that link to the posts of that day; plus the page links.
+{{-- Variables also: $A (the Archive class), $ns (the view namespace).
+     The archive beside a post list: years collapsed, months inside, days that link to the posts of that day; plus the page links.
      Variables: $base (the list url), $tree (Archive::tree), $period (the active filter or ''), $page, $pages, $prefix (data-i prefix). --}}
 <aside class="arch">
   <small data-i="{{ $prefix }}_arch">Archive</small>
@@ -18,4 +19,5 @@
     @endforeach
   </details>
   @endforeach
+  @include($ns.'::partials.calendar', ['A' => $A, 'base' => $base, 'tree' => $tree, 'period' => $period, 'prefix' => $prefix])
 </aside>

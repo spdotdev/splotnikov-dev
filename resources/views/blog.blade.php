@@ -16,10 +16,10 @@
 
   @php($A = \Spdotdev\SplotnikovDev\Archive::class)
   @php($all = \Spdotdev\SplotnikovDev\Posts::all())
-  @php($period = preg_match('/^\d{4}(-\d{2}){0,2}$/', (string) request('p')) ? (string) request('p') : '')
+  @php($period = preg_match('/^\d{4}(-\d{2}){0,2}$|^\d{4}-W\d{2}$/', (string) request('p')) ? (string) request('p') : '')
   @php([$posts, $page, $pages] = $A::page($A::filter($all, $period), request('page')))
   <div class="wrap arch-grid">
-    @include('splotnikov::partials.archive', ['base' => route('splotnikov.blog'), 'tree' => $A::tree($all), 'period' => $period, 'page' => $page, 'pages' => $pages, 'prefix' => 'bl'])
+    @include('splotnikov::partials.archive', ['A' => $A, 'ns' => 'splotnikov', 'base' => route('splotnikov.blog'), 'tree' => $A::tree($all), 'period' => $period, 'page' => $page, 'pages' => $pages, 'prefix' => 'bl'])
     <div class="posts">
       @if($period !== '')<p class="arch-cur"><span data-i="bl_showing">Showing</span> <b>{{ $A::label($period) }}</b> · <a href="{{ route('splotnikov.blog') }}" data-i="bl_all2">all posts</a></p>@endif
       @if(! count($posts))<p class="arch-empty" data-i="bl_none">Nothing on this page.</p>@endif
@@ -68,6 +68,10 @@ foreach (\Spdotdev\SplotnikovDev\Archive::tree(\Spdotdev\SplotnikovDev\Posts::al
         $nl['bl_m_'.$y.'_'.$m] = \Carbon\Carbon::create((int) $y, (int) $m, 1)->locale('nl')->translatedFormat('F');
     }
 }
+foreach (range(1, 12) as $mo) {
+    $nl['bl_cm_'.sprintf('%02d', $mo)] = \Carbon\Carbon::create(2026, $mo, 1)->locale('nl')->translatedFormat('F');
+}
+$nl += ['bl_wk' => 'wk', 'bl_wd0' => 'M', 'bl_wd1' => 'D', 'bl_wd2' => 'W', 'bl_wd3' => 'D', 'bl_wd4' => 'V', 'bl_wd5' => 'Z', 'bl_wd6' => 'Z'];
 ?>
 <script>
 Object.assign(window.SCUTTLE_NL.t, @json($nl));
