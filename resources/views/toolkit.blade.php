@@ -17,7 +17,7 @@
   <div class="wrap">
     <div class="cards3">
       @foreach(\Spdotdev\SplotnikovDev\Toolkit::all() as $g)
-      @include('splotnikov::partials.toolgroup', ['g' => $g, 'n' => $loop->iteration])
+      @include('splotnikov::partials.toolgroup', ['g' => $g, 'n' => $loop->iteration, 'lvl' => 2])
       @endforeach
     </div>
   </div>

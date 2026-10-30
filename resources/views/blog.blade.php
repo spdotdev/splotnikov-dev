@@ -26,7 +26,7 @@
       @foreach($posts as $post)
       <a class="post-card rv" href="{{ route('splotnikov.post', ['slug' => $post['slug']]) }}">
         <div class="meta"><time datetime="{{ $post['date'] }}">{{ \Carbon\Carbon::parse($post['date'])->format('j M Y') }}</time><span>{{ implode(' · ', $post['tags']) }}</span></div>
-        <h3 data-i="bl_t_{{ str_replace('-', '_', $post['slug']) }}">{{ $post['title'] }}</h3>
+        <h2 data-i="bl_t_{{ str_replace('-', '_', $post['slug']) }}">{{ $post['title'] }}</h2>
         <p data-i="bl_s_{{ str_replace('-', '_', $post['slug']) }}">{{ $post['summary'] }}</p>
         <span class="more" data-i="bl_more">Read →</span>
       </a>

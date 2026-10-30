@@ -656,3 +656,10 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 /* skip link: first tab stop, visible only when focused */
 .skip{position:absolute;left:12px;top:-60px;z-index:100;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:4px;font:500 13px "Geist Mono",monospace;text-decoration:none}
 .skip:focus{top:12px}
+
+/* card titles that follow the page title are h2 (heading order), drawn exactly like the h3 they replaced */
+.c h2,.tile h2,.post-card h2{line-height:1.2;letter-spacing:-.01em;font-weight:500;text-wrap:initial}
+.c h2,.tile h2{font-size:18px}
+.c.g h2{font-size:20px;text-wrap:balance}
+.c.cg h2{font-size:21px;text-wrap:balance}
+.post-card h2{font-size:22px;text-wrap:balance}

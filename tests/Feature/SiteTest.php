@@ -35,6 +35,12 @@ class SiteTest extends TestCase
                 $this->assertSame('https://schema.org', $data['@context'] ?? null, $path.' ld+json context');
             }
             $this->assertStringNotContainsString('fonts.googleapis.com', $html, $path.' loads no Google Fonts');
+            preg_match_all('/<h([1-6])[ >]/', (string) preg_replace('#<script.*?</script>#s', '', $html), $levels);
+            $prev = 0;
+            foreach ($levels[1] as $level) {
+                $this->assertLessThanOrEqual($prev + 1, (int) $level, $path.' skips a heading level');
+                $prev = (int) $level;
+            }
         }
     }
 

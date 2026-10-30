@@ -19,7 +19,7 @@
       @foreach(\Spdotdev\SplotnikovDev\Projects::all() as $pr)
       <a class="c rv cg" href="{{ $pr['url'] }}" rel="noopener" target="_blank">
         <span class="lbl" data-i="pj_{{ $loop->index }}_k">{{ $pr['kind'] }}</span>
-        <h3>{{ $pr['name'] }}</h3>
+        <h2>{{ $pr['name'] }}</h2>
         <p data-i="pj_{{ $loop->index }}_s">{{ $pr['short'] }}</p>
         <div class="tags">@foreach($pr['stack'] as $t)<span>{{ $t }}</span>@endforeach</div>
         <span class="more" data-i="pj_more">On GitHub →</span>
