@@ -36,3 +36,6 @@ Council (small version, see scuttle-dev docs/IMPROVEMENT-STATUS.md): Dutch twins
 
 Lighthouse mobile live: 100 in all four categories on /toolkit, /projects, /blog, a blog post, /cv, / and the Dutch pages measured before the contact fix. The CV in Dutch (`/nl/cv`) is the page to send to Dutch recruiters.
 
+# Round 3 (2026-10-30)
+Dutch twins read in a browser at 360 px: no overflow. Wording: "legacy-schuld", "legacy-kant". Post facts brought up to date: the first post said the fonts come from a third party; they are self-hosted since 30 October, and the file sizes are now the real ones (62 and 29 kilobytes, 14 and 10 compressed). Trailing slash and index.php answer 301 (nginx, sd-admin).
+
