@@ -60,3 +60,6 @@ Dutch twins read in a browser at 360 px: no overflow. Wording: "legacy-schuld", 
 
 ## Leads nobody sees (round 7)
 A lead that is stored but not mailed logs one `critical` line (lead id and the list command, no visitor data), so the existing log alerting can pick it up. The exact commands to list and purge leads on the server are kept in the private operations notes, not in this public repository.
+
+# Round 7 (2026-10-31, v0.3.32)
+- Three more blog drafts in sd-cms, status review, none published: the contact form broken in three layers, Lighthouse versus axe (with contrast ratios the agent calculated), escaping JSON inside HTML. Each carries the author note about agent-done work.
