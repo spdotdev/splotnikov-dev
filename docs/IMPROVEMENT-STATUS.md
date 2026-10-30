@@ -22,3 +22,4 @@ Started 2026-10-30. Audit tools: live crawl of every sitemap URL, Lighthouse mob
 
 nginx compression and caching for both sites: see scuttle-dev docs/IMPROVEMENT-STATUS.md (change lives in the sd-admin repo).
 
+v0.3.22 (2026-10-30): the decrypt headline also pins its width, home layout shift 0.238 to passing. Final live check: Lighthouse mobile 100 in all four categories on /, /projects, /blog, /cv.
