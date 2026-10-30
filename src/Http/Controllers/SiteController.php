@@ -74,7 +74,7 @@ class SiteController
         $xml = str_replace('</urlset>', $extra.'</urlset>', $xml);
 
         // Pages that exist in both languages: every address lists both twins, and the Dutch one is a url of its own.
-        $xml = str_replace('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">', $xml);
+        $xml = str_replace('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"', '<urlset xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"', $xml);
         $xml = (string) preg_replace_callback('#<url>\s*<loc>(https://splotnikov\.dev(/[^<]*))</loc>(.*?)</url>#s', function (array $m): string {
             $path = $m[2];
             if (! Dutch::paired($path)) {

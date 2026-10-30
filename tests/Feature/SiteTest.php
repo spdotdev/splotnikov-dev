@@ -13,6 +13,15 @@ use Spdotdev\SplotnikovDev\Toolkit;
 
 class SiteTest extends TestCase
 {
+    public function test_missing_pages_get_the_site_own_404(): void
+    {
+        foreach (['/nope', '/blog/nope', '/nl/blog'] as $path) {
+            $r = $this->get('http://splotnikov.dev'.$path)->assertNotFound();
+            $r->assertSee('That page does not exist', false);
+            $r->assertSee('noindex', false);
+        }
+    }
+
     public function test_dutch_twins_are_real_pages_with_hreflang(): void
     {
         foreach (['/', '/cv', '/contact', '/projects', '/toolkit'] as $path) {
@@ -38,6 +47,7 @@ class SiteTest extends TestCase
         $this->assertStringContainsString('lang="nl"', (string) $this->get('http://splotnikov.dev/nl')->getContent());
         $this->get('http://splotnikov.dev/nl/blog')->assertNotFound();
         $sitemap = (string) $this->get('http://splotnikov.dev/sitemap.xml')->getContent();
+        $this->assertNotFalse(simplexml_load_string($sitemap), 'the sitemap is well-formed XML');
         $this->assertStringContainsString('<loc>https://splotnikov.dev/nl</loc>', $sitemap);
         $this->assertStringContainsString('hreflang="nl" href="https://splotnikov.dev/nl/cv"', $sitemap);
         $this->assertStringNotContainsString('/nl/blog', $sitemap);
