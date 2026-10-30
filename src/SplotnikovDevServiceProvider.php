@@ -21,6 +21,7 @@ class SplotnikovDevServiceProvider extends ServiceProvider
 
         // A missing page on this host gets the site's own 404, not the framework's bare one. Other hosts of the
         // same app keep theirs.
+        /** @var object $handler the app's handler; only Laravel's own Handler has renderable(), others are left alone */
         $handler = $this->app->make(ExceptionHandler::class);
         if (method_exists($handler, 'renderable')) {
             $handler->renderable(function (NotFoundHttpException $e, Request $request) {

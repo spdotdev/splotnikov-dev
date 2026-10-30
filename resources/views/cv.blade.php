@@ -53,7 +53,7 @@
         <p data-i="cv_t_edu">MBO 4 IT Administration, <a href="https://www.linkedin.com/company/radius-college/" rel="noopener" target="_blank">Radius College Breda</a>.</p>
       </div>
 
-      <aside class="cv-side">
+      <div class="cv-side">
         <img class="cv-photo" src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="160" height="160">
         <div class="blk"><small data-i="cv_b_contact">Contact</small><span data-i="cv_b_where">Eindhoven, the Netherlands</span><a href="tel:+31634500328">+31 (0) 6 345 00 328</a><a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a><a href="https://splotnikov.dev">splotnikov.dev</a></div>
         <details class="blk fold" id="cv-biz" open><summary><small data-i="cv_b_biz">Business details</small></summary><div class="fold-body"><span>Scuttle Development</span><a href="tel:+31618233175">+31 (0) 6 182 33 175</a><a href="mailto:info@scuttle.dev">info@scuttle.dev</a><span>KvK 96040947</span><span>BTW NL005184584B85</span><a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a></div></details>
@@ -64,7 +64,7 @@
           @endforeach
         </div></details>
         <details class="blk fold" open><summary><small data-i="cv_b_lang">Spoken languages</small></summary><div class="fold-body"><div class="tags"><span data-i="cv_b_l1">English</span><span data-i="cv_b_l2">Dutch</span><span data-i="cv_b_l3">Russian</span></div></div></details>
-      </aside>
+      </div>
     </div>
   </div>
 

@@ -32,9 +32,9 @@
   @endforeach
   @if($list)</ul>@endif
 
-  <aside class="callout">
+  <div class="callout" role="note">
     <p data-i="blp_q">Written by Stanislav Plotnikov, senior developer and solution architect in Eindhoven. Disagree or want to talk about your own system? <a href="/contact">Write me</a>, or find me on <a href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a>.</p>
-  </aside>
+  </div>
 
   <p class="updated" style="margin-top:32px"><span data-i="blp_more">More notes:</span> @foreach(\Spdotdev\SplotnikovDev\Posts::all() as $o)@if($o['slug'] !== $post['slug'])<a href="{{ route('splotnikov.post', ['slug' => $o['slug']]) }}">{{ $o['title'] }}</a> · @endif @endforeach <a href="{{ route('splotnikov.blog') }}" data-i="blp_all">all posts</a></p>
 </article>

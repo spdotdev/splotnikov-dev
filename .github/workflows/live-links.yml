@@ -1,0 +1,20 @@
+name: Live links
+
+# Weekly crawl of the live site: every sitemap address answers 200 and names itself as canonical, every hreflang pair
+# is reciprocal, every internal link resolves. The same checks run on the built app in the test suite on every push;
+# this one catches what only the server can break (a deploy, a proxy rule, a missing asset).
+on:
+  schedule:
+    - cron: '17 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check-live.py https://splotnikov.dev

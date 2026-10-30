@@ -37,7 +37,7 @@
 <div class="wrap demo-wrap">
   <div class="shot-hint in4" aria-hidden="true"><svg viewBox="0 0 120 70" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M112 6c-30 2-62 10-80 36"/><path d="M40 30l-9 13 15 3"/></svg><span data-i="hint">A live terminal, not a picture. Click through, or let it play.</span></div>
   <div class="shot in4" id="demo" aria-label="Interactive examples: terminal sessions, code and an agent run from my daily work">
-    <aside class="side" id="side">
+    <div class="side" id="side">
       <div class="h"><span data-i="sd_t">Terminal</span><span>6</span></div>
       <button class="it on" data-k="artisan" type="button"><i class="led"></i><span>php artisan test</span><small data-i="now">now</small></button>
       <button class="it" data-k="npm-build" type="button"><i class="led"></i><span>npm run build</span><small>vite</small></button>
@@ -50,7 +50,7 @@
       <button class="it" data-k="bridge" type="button"><i class="led"></i><span>Bridge.php</span><small>php</small></button>
       <div class="h" style="margin-top:22px"><span data-i="sd_a">Agents</span></div>
       <button class="it" data-k="claude" type="button"><i class="led"></i><span>claude -p</span><small>agent</small></button>
-    </aside>
+    </div>
     <div class="main" id="main">
       <div class="top"><p class="sh" id="sh-h">312 tests green before anything ships · Laravel, PHPUnit, Playwright</p><div class="st"><i id="sti"></i><span id="stt">running</span></div></div>
       <div class="prog"><i id="pb"></i></div>

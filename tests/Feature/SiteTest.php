@@ -13,6 +13,83 @@ use Spdotdev\SplotnikovDev\Toolkit;
 
 class SiteTest extends TestCase
 {
+    public function test_content_pages_set_no_cookie_and_the_contact_form_keeps_its_session(): void
+    {
+        foreach (['/', '/nl', '/cv', '/projects', '/toolkit', '/blog', '/robots.txt', '/sitemap.xml'] as $path) {
+            $response = $this->get('http://splotnikov.dev'.$path)->assertOk();
+            $this->assertEmpty($response->headers->getCookies(), $path.' sets a cookie');
+        }
+        $contact = $this->get('http://splotnikov.dev/contact')->assertOk();
+        $this->assertNotEmpty($contact->headers->getCookies(), 'the contact page needs its session for the CSRF token');
+        $this->assertStringContainsString('name="_token"', (string) $contact->getContent());
+    }
+
+    public function test_every_internal_link_resolves(): void
+    {
+        $pages = ['/', '/cv', '/contact', '/projects', '/toolkit', '/blog', '/nl', '/nl/cv', '/nl/contact', '/nl/projects', '/nl/toolkit'];
+        foreach (Posts::all() as $post) {
+            $pages[] = '/blog/'.$post['slug'];
+        }
+        $links = [];
+        foreach ($pages as $page) {
+            $html = (string) $this->get('http://splotnikov.dev'.$page)->assertOk()->getContent();
+            preg_match_all('#<a\b[^>]*\shref="(?:https://splotnikov\.dev)?(/[^"\#]*)#', $html, $m);
+            foreach ($m[1] as $href) {
+                $links[$href] = $page;
+            }
+        }
+        foreach ($links as $href => $from) {
+            if (preg_match('#\.(pdf|vcf|png|svg|jpg|ico|webmanifest)$#', $href)) {
+                continue;
+            }
+            $status = $this->get('http://splotnikov.dev'.$href)->getStatusCode();
+            $this->assertContains($status, [200, 301], $href.' linked from '.$from.' answers '.$status);
+        }
+    }
+
+    public function test_sitemap_urls_resolve_and_hreflang_pairs_are_reciprocal(): void
+    {
+        $host = 'splotnikov.dev';
+        $xml = simplexml_load_string((string) $this->get('http://splotnikov.dev/sitemap.xml')->assertOk()->getContent());
+        $this->assertNotFalse($xml, 'the sitemap is well-formed XML');
+        $xml->registerXPathNamespace('s', 'http://www.sitemaps.org/schemas/sitemap/0.9');
+
+        $seen = [];
+        $pairs = [];
+        foreach ($xml->url as $url) {
+            $loc = (string) $url->loc;
+            $this->assertStringStartsWith('https://'.$host, $loc);
+            $this->assertArrayNotHasKey($loc, $seen, $loc.' is listed twice');
+            $seen[$loc] = true;
+            $path = (string) parse_url($loc, PHP_URL_PATH) ?: '/';
+            $html = (string) $this->get('http://'.$host.$path)->assertOk()->getContent();
+            $this->assertStringContainsString('<link rel="canonical" href="'.$loc.'" />', $html, $loc.' names itself as canonical');
+            $robots = preg_match('#<meta name="robots" content="([^"]*)"#', $html, $r) ? $r[1] : '';
+            $this->assertStringNotContainsString('noindex', $robots, $loc.' is indexable');
+            foreach ($url->children('xhtml', true) as $alt) {
+                $attrs = $alt->attributes();
+                $pairs[$loc][(string) $attrs['hreflang']] = (string) $attrs['href'];
+            }
+            preg_match_all('#<link rel="alternate" hreflang="([^"]+)" href="([^"]+)" />#', $html, $m, PREG_SET_ORDER);
+            $inPage = [];
+            foreach ($m as $row) {
+                $inPage[$row[1]] = $row[2];
+            }
+            if (isset($pairs[$loc])) {
+                $this->assertSame($pairs[$loc], $inPage, $loc.': the sitemap alternates and the page alternates are the same');
+            }
+        }
+        foreach ($pairs as $loc => $alts) {
+            foreach (['en', 'nl'] as $lang) {
+                $this->assertArrayHasKey($lang, $alts, $loc.' lists '.$lang);
+                $this->assertArrayHasKey($alts[$lang], $seen, $loc.' points at '.$alts[$lang].' which is not in the sitemap');
+                // reciprocal: the other page lists this one under the same two languages
+                $this->assertSame($alts, $pairs[$alts[$lang]] ?? null, $alts[$lang].' does not list the same pair back');
+            }
+            $this->assertSame($alts['en'], $alts['x-default'], $loc.' x-default is the English page');
+        }
+    }
+
     public function test_missing_pages_get_the_site_own_404(): void
     {
         foreach (['/nope', '/blog/nope', '/nl/blog'] as $path) {
@@ -193,7 +270,7 @@ class SiteTest extends TestCase
     {
         $css = (string) file_get_contents(__DIR__.'/../../public/site.css');
 
-        $this->assertStringContainsString('--acc:#0d9488;--acc2:#2dd4bf', $css, 'light accent');
+        $this->assertStringContainsString('--acc:#0f6e66;--acc2:#2dd4bf', $css, 'light accent (a deeper teal so text on the grey plates passes 4.5:1)');
         $this->assertStringContainsString('--acc:#2dd4bf;--acc2:#5eead4', $css, 'dark accent');
         $this->assertStringNotContainsString('#CF5A26', $css, 'no Claude orange left');
         $this->assertStringNotContainsString('rgba(232,147,106', $css, 'no orange glow left');
