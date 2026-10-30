@@ -69,13 +69,14 @@
   </div>
 </div></section>
 
-<section class="s tight" id="projects"><div class="wrap">
-  <div class="gridh row rv"><div><span class="lbl dot" data-i="pj_l">02 · Projects</span><h2 data-i="pj_h" style="margin-top:16px">Open source, and what I build for myself</h2><p data-i="pj_p">Tools I needed and published, products I run at home, a game turned into an engineering project. Scroll sideways.</p></div><a class="btn o" href="{{ route('splotnikov.projects') }}" data-i="pj_all">All projects →</a></div>
+<section class="s tight" id="projects"><div class="wrap pj">
+  <div class="gridh rv"><span class="lbl dot" data-i="pj_l">02 · Projects</span><h2 data-i="pj_h" style="margin-top:16px">Open source, and what I build for myself</h2><p data-i="pj_p">Tools I needed and published, products I run at home, a game turned into an engineering project. <span class="desk">Scroll sideways.</span></p></div>
   <div class="scroller" aria-label="Projects">
     @foreach(\Spdotdev\SplotnikovDev\Projects::all() as $pr)
     <a class="c cg rv" href="{{ $pr['url'] }}" rel="noopener" target="_blank"><span class="lbl" data-i="pj_{{ $loop->index }}_k">{{ $pr['kind'] }}</span><h3>{{ $pr['name'] }}</h3><p data-i="pj_{{ $loop->index }}_s">{{ $pr['short'] }}</p><div class="tags">@foreach($pr['stack'] as $t)<span>{{ $t }}</span>@endforeach</div></a>
     @endforeach
   </div>
+  <a class="btn o pj-all rv" href="{{ route('splotnikov.projects') }}" data-i="pj_all">All projects →</a>
 </div></section>
 
 <section class="s tight" id="toolkit"><div class="wrap">
@@ -126,7 +127,7 @@ $nl = [
     'mf1' => 'Pragmatisme boven hype', 'mf1s' => 'Een stack wordt gekozen op de mensen die hem kunnen draaien en de totale kosten, niet op GitHub-sterren.',
     'mf2' => 'De Strangler Fig-strategie', 'mf2s' => 'Geen grote herbouw. Legacy schuld wordt stuk voor stuk vervangen terwijl het bedrijf doordraait, elke release met een rollback.',
     'mf3' => 'Systeemdenken', 'mf3s' => 'Een ticketdeveloper sluit taken af. Een architect voorziet de afweging van elke structurele keuze over 24 maanden.',
-    'pj_l' => '02 · Projecten', 'pj_h' => 'Open source, en wat ik voor mezelf bouw', 'pj_p' => 'Tools die ik nodig had en publiceerde, producten die ik thuis draai, een spel omgebouwd tot engineeringproject. Scroll opzij.', 'pj_all' => 'Alle projecten →',
+    'pj_l' => '02 · Projecten', 'pj_h' => 'Open source, en wat ik voor mezelf bouw', 'pj_p' => 'Tools die ik nodig had en publiceerde, producten die ik thuis draai, een spel omgebouwd tot engineeringproject. <span class="desk">Scroll opzij.</span>', 'pj_all' => 'Alle projecten →',
     'tk_l' => '03 · Het gereedschap', 'tk_h' => 'Technologieën en werkwijze', 'tk_p' => 'De tools van dagelijks gebruik, geen wensenlijst. Drie groepen hier, zeven op de gereedschapspagina.', 'tk_all' => 'Bekijk het hele gereedschap →',
     'st_l' => 'Gewerkt met', 'st_h' => 'Merken waarvoor ik heb gebouwd, tools waarmee ik bouw', 'st_p' => 'In loondienst bij bureaus en productbedrijven vóór 2024, en sindsdien als freelancer.',
     'ct_h' => 'Klaar om de ruis weg te snijden?', 'ct_p' => 'Ik ben beschikbaar voor architectuurconsultaties en moderniseringsprojecten. Wil je iemand die eigenaarschap neemt over de gezondheid van je systeem in plaats van tickets te verschuiven, laten we praten.', 'ct_b1' => 'Gebruik het contactformulier', 'ct_b2' => 'Mail stplotnikov@gmail.com',
