@@ -586,12 +586,9 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .more-row{display:flex;justify-content:flex-end;margin-top:22px}
 .c.g .pl a small{text-wrap:pretty}
 
-/* cv: the company-details switch under the buttons */
-.cv-actions{align-items:center;gap:14px}
-.cv-actions .sw{margin-right:6px}
-.sw{display:inline-flex;align-items:center;gap:8px;font:500 11px "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer;user-select:none}
-.sw input{appearance:none;-webkit-appearance:none;width:30px;height:16px;border-radius:8px;background:var(--line2);position:relative;cursor:pointer;margin:0;transition:background .2s}
-.sw input::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
-.sw input:checked{background:var(--acc)}
-.sw input:checked::after{left:16px}
+/* cv: with or without company details, a segment like the language switch; on a phone the controls fill the width */
+.cv-actions{align-items:center;gap:10px}
+.cv-actions .seg.biz{height:34px;align-items:stretch}
+.cv-actions .seg.biz button{padding:0 12px;letter-spacing:.06em;text-transform:uppercase}
 .cv.no-biz #cv-biz{display:none}
+@media (max-width:600px){.cv-head{gap:16px}.cv-actions{width:100%}.cv-actions .btn{flex:1 1 auto;justify-content:center}.cv-actions .seg.biz{flex:1 1 100%}.cv-actions .seg.biz button{flex:1}}

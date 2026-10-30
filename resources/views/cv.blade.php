@@ -18,7 +18,7 @@
         <h1 data-dec>Stanislav Plotnikov</h1>
         <p class="lead" data-i="cv_lead">{{ $cv['lead'] }}</p>
       </div>
-      <div class="cv-actions"><label class="sw" title="Show or hide the company details on the CV, the PDF and the print"><input type="checkbox" id="cv-biz-toggle" checked><span data-i="cv_biz_sw">Company details</span></label><button type="button" class="btn" id="btn-pdf" data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div>
+      <div class="cv-actions"><div class="seg biz" role="group" aria-label="With or without company details" title="With or without the company details, on the page, in the PDF and in the print"><button type="button" data-biz="1" aria-pressed="true" data-i="cv_biz_on">Company</button><button type="button" data-biz="0" aria-pressed="false" data-i="cv_biz_off">Personal</button></div><button type="button" class="btn" id="btn-pdf" data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div>
     </div>
   </header>
 
@@ -90,10 +90,10 @@ Object.assign(window.SCUTTLE_NL.t, @json(\Spdotdev\SplotnikovDev\Cv::nl()));
 (function () {
   var el = document.getElementById('cv-content'), pdf = document.getElementById('btn-pdf'), prt = document.getElementById('btn-print');
   // Company details on or off, remembered in this browser; the PDF and the print follow the switch.
-  var sw = document.getElementById('cv-biz-toggle');
-  var biz = function (on) { el.classList.toggle('no-biz', !on); if (sw) sw.checked = on; try { localStorage.setItem('cv_business', on ? '1' : '0'); } catch (e) {} };
+  var segBtns = [].slice.call(document.querySelectorAll('.seg.biz button'));
+  var biz = function (on) { el.classList.toggle('no-biz', !on); segBtns.forEach(function (b) { b.setAttribute('aria-pressed', (b.dataset.biz === '1') === on); }); try { localStorage.setItem('cv_business', on ? '1' : '0'); } catch (e) {} };
   try { biz(localStorage.getItem('cv_business') !== '0'); } catch (e) {}
-  if (sw) sw.onchange = function () { biz(sw.checked); };
+  segBtns.forEach(function (b) { b.onclick = function () { biz(b.dataset.biz === '1'); }; });
   if (prt) prt.onclick = function () { window.print(); };
   if (pdf) pdf.onclick = function () {
     if (!window.html2pdf) { window.print(); return; }

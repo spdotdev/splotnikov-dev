@@ -136,7 +136,7 @@ class SiteTest extends TestCase
         $this->assertStringContainsString('integrity="sha384-', $cv, 'the PDF library loads with subresource integrity');
         $this->assertStringContainsString('id="cv-content"', $cv);
         $this->assertStringContainsString('id="cv-biz"', $cv, 'the company details block');
-        $this->assertStringContainsString('id="cv-biz-toggle"', $cv, 'the switch that hides it');
+        $this->assertStringContainsString('data-biz="0"', $cv, 'the Company / Personal segment that hides it');
         $this->assertStringContainsString('KvK 96040947', $cv);
         foreach (['Executive summary', 'Core competencies', 'Professional experience', 'Employment history', 'Key projects', 'Hosintra B.V.', 'Radius College Breda', 'https://scuttle.dev', '+31 (0) 6 345 00 328'] as $needle) {
             $this->assertStringContainsString($needle, $cv);
