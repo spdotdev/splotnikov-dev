@@ -18,7 +18,7 @@
         <h1 data-dec>Stanislav Plotnikov</h1>
         <p class="lead" data-i="cv_lead">{{ $cv['lead'] }}</p>
       </div>
-      <div class="cv-actions"><div class="row"><button type="button" class="btn" id="btn-pdf" data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div><label class="sw" title="Show or hide the company details on the CV, the PDF and the print"><input type="checkbox" id="cv-biz-toggle" checked><span data-i="cv_biz_sw">Company details</span></label></div>
+      <div class="cv-actions"><label class="sw" title="Show or hide the company details on the CV, the PDF and the print"><input type="checkbox" id="cv-biz-toggle" checked><span data-i="cv_biz_sw">Company details</span></label><button type="button" class="btn" id="btn-pdf" data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div>
     </div>
   </header>
 

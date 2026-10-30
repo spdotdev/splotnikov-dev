@@ -17,7 +17,7 @@ final class Cv
             'title' => 'Senior Developer / Legacy Modernization and Solution Architect',
             'availability' => 'Available for freelance and contract roles · Eindhoven, the Netherlands',
             'expertise' => [
-                'languages' => ['Languages', ['PHP', 'Python', 'JavaScript / TypeScript', 'Kotlin', 'Go', 'SQL', 'Bash']],
+                'languages' => ['Languages', ['PHP', 'Python', 'JavaScript / TypeScript', 'Kotlin', 'Go', 'C / C++', 'SQL', 'Bash']],
                 'frameworks' => ['Frameworks', ['Laravel', 'Symfony', 'Phalcon', 'Filament', 'Node.js', 'Jetpack Compose']],
                 'automation' => ['Automation', ['Ansible', 'GitHub Actions (CI/CD)', 'Docker Compose', 'n8n', 'cron / systemd']],
                 'ai' => ['AI', ['Claude Code', 'MCP', 'Agents', 'RAG', 'LLM orchestration', 'Evaluation sets']],
@@ -29,7 +29,7 @@ final class Cv
                 'sum' => ['title' => 'Executive summary', 'text' => 'Pragmatic solution architect, programming in PHP since 2008 and in networks and Linux since 2005, focused on transforming legacy technical debt into scalable, high-performance infrastructure. Specialist in incremental modernization (Strangler Fig pattern), modular monolith design and automation with AI agents. I prioritize business continuity and return on investment over industry trends, with migrations in daily use and long-term maintainability.'],
                 'core' => ['title' => 'Core competencies', 'items' => [
                     ['Architecture', 'system design, modular monoliths, microservices feasibility, API gateway design, migrations in daily use (Strangler Fig).'],
-                    ['Languages and frameworks', 'PHP since 2008 (Laravel, Symfony, Phalcon, Filament), Python, JavaScript and TypeScript, Kotlin, Go, SQL.'],
+                    ['Languages and frameworks', 'PHP since 2008 (Laravel, Symfony, Phalcon, Filament), Python, JavaScript and TypeScript, Kotlin, Go, C and C++, SQL.'],
                     ['Automation and DevOps', 'Ansible, Docker, CI/CD with GitHub Actions, n8n, scheduled jobs; every release small, tested and reversible.'],
                     ['AI', 'LLM orchestration, agentic workflows with a human step, MCP servers, retrieval (RAG), evaluation sets and cost caps.'],
                     ['Infrastructure and networking', 'Linux servers and home lab (Debian, Ubuntu, Arch, Proxmox), DigitalOcean, Caddy and nginx, MySQL, PostgreSQL, Redis; network segmentation, firewalls, DNS and TLS.'],
@@ -75,7 +75,7 @@ final class Cv
             'cv_t_sum' => 'Pragmatische solution architect, sinds 2008 programmeur in PHP en sinds 2005 bezig met netwerken en Linux, gericht op het omzetten van technische schuld in legacy software naar schaalbare, snelle infrastructuur. Specialist in stapsgewijze modernisering (Strangler Fig-patroon), modulaire monolieten en automatisering met AI-agents. Ik zet bedrijfscontinuïteit en rendement boven trends, met migraties die in gebruik blijven en onderhoudbaarheid op lange termijn.',
             'cv_s_core' => 'Kerncompetenties',
             'cv_i_core_0' => '<b>Architectuur:</b> systeemontwerp, modulaire monolieten, haalbaarheid van microservices, API-gatewayontwerp, migraties die in gebruik blijven (Strangler Fig).',
-            'cv_i_core_1' => '<b>Talen en frameworks:</b> PHP sinds 2008 (Laravel, Symfony, Phalcon, Filament), Python, JavaScript en TypeScript, Kotlin, Go, SQL.',
+            'cv_i_core_1' => '<b>Talen en frameworks:</b> PHP sinds 2008 (Laravel, Symfony, Phalcon, Filament), Python, JavaScript en TypeScript, Kotlin, Go, C en C++, SQL.',
             'cv_i_core_2' => '<b>Automatisering en DevOps:</b> Ansible, Docker, CI/CD met GitHub Actions, n8n, geplande taken; elke release klein, getest en terug te draaien.',
             'cv_i_core_3' => '<b>AI:</b> LLM-orkestratie, agent-workflows met een menselijke stap, MCP-servers, retrieval (RAG), evaluatiesets en kostenplafonds.',
             'cv_i_core_4' => '<b>Infrastructuur en netwerken:</b> Linux-servers en thuislab (Debian, Ubuntu, Arch, Proxmox), DigitalOcean, Caddy en nginx, MySQL, PostgreSQL, Redis; netwerksegmentatie, firewalls, DNS en TLS.',

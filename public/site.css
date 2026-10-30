@@ -584,12 +584,11 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .c.g .pl a small{text-wrap:pretty}
 
 /* cv: the company-details switch under the buttons */
-.cv-actions{flex-direction:column;align-items:flex-end;gap:10px}
-.cv-actions .row{display:flex;gap:10px;flex-wrap:wrap}
+.cv-actions{align-items:center;gap:14px}
+.cv-actions .sw{margin-right:6px}
 .sw{display:inline-flex;align-items:center;gap:8px;font:500 11px "Geist Mono",monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer;user-select:none}
 .sw input{appearance:none;-webkit-appearance:none;width:30px;height:16px;border-radius:8px;background:var(--line2);position:relative;cursor:pointer;margin:0;transition:background .2s}
 .sw input::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
 .sw input:checked{background:var(--acc)}
 .sw input:checked::after{left:16px}
 .cv.no-biz #cv-biz{display:none}
-@media (max-width:980px){.cv-actions{align-items:flex-start}}
