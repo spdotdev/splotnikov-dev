@@ -14,16 +14,24 @@
     </div>
   </header>
 
-  <div class="wrap">
+  @php($A = \Spdotdev\SplotnikovDev\Archive::class)
+  @php($all = \Spdotdev\SplotnikovDev\Posts::all())
+  @php($period = preg_match('/^\d{4}(-\d{2}){0,2}$/', (string) request('p')) ? (string) request('p') : '')
+  @php([$posts, $page, $pages] = $A::page($A::filter($all, $period), request('page')))
+  <div class="wrap arch-grid">
+    @include('splotnikov::partials.archive', ['base' => route('splotnikov.blog'), 'tree' => $A::tree($all), 'period' => $period, 'page' => $page, 'pages' => $pages, 'prefix' => 'bl'])
     <div class="posts">
-      @foreach(\Spdotdev\SplotnikovDev\Posts::all() as $post)
+      @if($period !== '')<p class="arch-cur"><span data-i="bl_showing">Showing</span> <b>{{ $A::label($period) }}</b> · <a href="{{ route('splotnikov.blog') }}" data-i="bl_all2">all posts</a></p>@endif
+      @if(! count($posts))<p class="arch-empty" data-i="bl_none">Nothing on this page.</p>@endif
+      @foreach($posts as $post)
       <a class="post-card rv" href="{{ route('splotnikov.post', ['slug' => $post['slug']]) }}">
         <div class="meta"><time datetime="{{ $post['date'] }}">{{ \Carbon\Carbon::parse($post['date'])->format('j M Y') }}</time><span>{{ implode(' · ', $post['tags']) }}</span></div>
-        <h3 data-i="bl_{{ $loop->index }}_t">{{ $post['title'] }}</h3>
-        <p data-i="bl_{{ $loop->index }}_s">{{ $post['summary'] }}</p>
+        <h3 data-i="bl_t_{{ str_replace('-', '_', $post['slug']) }}">{{ $post['title'] }}</h3>
+        <p data-i="bl_s_{{ str_replace('-', '_', $post['slug']) }}">{{ $post['summary'] }}</p>
         <span class="more" data-i="bl_more">Read →</span>
       </a>
       @endforeach
+      @include('splotnikov::partials.pager', ['base' => route('splotnikov.blog'), 'period' => $period, 'page' => $page, 'pages' => $pages, 'prefix' => 'bl'])
     </div>
   </div>
 
@@ -45,13 +53,20 @@ $nl = [
     'bl_h1' => 'Notities van mijn eigen bureau',
     'bl_lead' => 'Technologie en waar ik mee bezig ben: waarom het ene beter is dan het andere, wat een jaar met twee frameworks in één app me leerde, wat ik met AI bouw en waar ik een mens in de lus houd. Mijn eigen ervaring, geen klantnamen.',
     'bl_more' => 'Lees →',
+    'bl_arch' => 'Archief', 'bl_all' => 'Alle berichten', 'bl_showing' => 'Je ziet', 'bl_all2' => 'alle berichten', 'bl_none' => 'Niets op deze pagina.', 'bl_prev' => '← Nieuwer', 'bl_page' => 'Pagina', 'bl_next' => 'Ouder →',
     'bl_cta_h' => 'Wil je het over een van deze hebben?',
     'bl_cta_p' => 'Oneens, een betere manier, of hetzelfde willen in je eigen systeem: schrijf me. Ik beantwoord elk bericht zelf.',
     'bl_cta_b1' => 'Neem contact op',
 ];
-foreach (array_values(\Spdotdev\SplotnikovDev\Posts::all()) as $i => $post) {
-    $nl['bl_'.$i.'_t'] = e($post['nl']['title']);
-    $nl['bl_'.$i.'_s'] = e($post['nl']['summary']);
+foreach (\Spdotdev\SplotnikovDev\Posts::all() as $post) {
+    $k = str_replace('-', '_', $post['slug']);
+    $nl['bl_t_'.$k] = e($post['nl']['title']);
+    $nl['bl_s_'.$k] = e($post['nl']['summary']);
+}
+foreach (\Spdotdev\SplotnikovDev\Archive::tree(\Spdotdev\SplotnikovDev\Posts::all()) as $y => $months) {
+    foreach (array_keys($months) as $m) {
+        $nl['bl_m_'.$y.'_'.$m] = \Carbon\Carbon::create((int) $y, (int) $m, 1)->locale('nl')->translatedFormat('F');
+    }
 }
 ?>
 <script>

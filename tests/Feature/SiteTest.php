@@ -3,6 +3,7 @@
 namespace Spdotdev\SplotnikovDev\Tests\Feature;
 
 use Illuminate\Support\Facades\Mail;
+use Spdotdev\SplotnikovDev\Archive;
 use Spdotdev\SplotnikovDev\Http\Controllers\ContactController;
 use Spdotdev\SplotnikovDev\Mail\ContactMessage;
 use Spdotdev\SplotnikovDev\Posts;
@@ -191,6 +192,35 @@ class SiteTest extends TestCase
             $this->assertStringContainsString('<loc>https://splotnikov.dev/blog/'.$post['slug'].'</loc>', $sitemap);
         }
         $this->get('http://splotnikov.dev/blog/nope')->assertNotFound();
+    }
+
+    public function test_the_blog_archive_filters_by_period_and_pages_the_list(): void
+    {
+        $posts = Posts::all();
+        $tree = Archive::tree($posts);
+        $this->assertSame([2026], array_keys($tree), 'numeric keys become ints in PHP');
+        $this->assertSame([10], array_keys($tree[2026]));
+        $this->assertSame(count($posts), array_sum($tree[2026][10]));
+
+        $this->assertCount(count($posts), Archive::filter($posts, '2026'));
+        $this->assertCount(count($posts), Archive::filter($posts, '2026-10'));
+        $this->assertCount(0, Archive::filter($posts, '2025'));
+        $this->assertCount(count($posts), Archive::filter($posts, 'nonsense'), 'a malformed period keeps everything');
+
+        [$page, $n, $pages] = Archive::page($posts, 1, 1);
+        $this->assertCount(1, $page);
+        $this->assertSame([1, count($posts)], [$n, $pages]);
+        [$page, $n] = Archive::page($posts, 99, 1);
+        $this->assertSame(count($posts), $n, 'a page past the end clamps to the last page');
+        $this->assertSame('October 2026', Archive::label('2026-10'));
+        $this->assertSame('29 oktober 2026', Archive::label('2026-10-29', 'nl'));
+
+        $html = (string) $this->get('http://splotnikov.dev/blog')->assertOk()->getContent();
+        $this->assertStringContainsString('class="arch"', $html);
+        $this->assertStringContainsString('?p=2026-10-29', $html);
+        $this->get('http://splotnikov.dev/blog?p=2026-10-29')->assertOk()->assertSee('29 October 2026');
+        $this->get('http://splotnikov.dev/blog?p=2025')->assertOk()->assertSee('Nothing on this page.');
+        $this->get('http://splotnikov.dev/blog?page=5')->assertOk();
     }
 
     public function test_the_contact_form_sends_mail_and_blocks_bots(): void

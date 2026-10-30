@@ -592,3 +592,31 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .cv-actions .seg.biz button{padding:0 12px;letter-spacing:.06em;text-transform:uppercase}
 .cv.no-biz #cv-biz{display:none}
 @media (max-width:600px){.cv-head{gap:16px}.cv-actions{width:100%}.cv-actions .btn{flex:1 1 auto;justify-content:center}.cv-actions .seg.biz{flex:1 1 100%}.cv-actions .seg.biz button{flex:1}}
+
+/* archive beside the post list: years collapsed, months inside, days as chips; page links under the list */
+.arch-grid{display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;align-items:start}
+.arch-grid .posts{max-width:none}
+.arch{position:sticky;top:96px;display:grid;gap:2px;font-size:14px}
+.arch small{font:500 11px "Geist Mono",monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.arch a.all{padding:6px 0;color:var(--ink2);border-bottom:1px solid var(--line);margin-bottom:6px}
+.arch a.cur,.arch summary a.cur{color:var(--acc);font-weight:500}
+.arch details{border-left:2px solid transparent}
+.arch details.y[open]{border-left-color:var(--line2)}
+.arch summary{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px;cursor:pointer;list-style:none;color:var(--ink2);border-radius:4px}
+.arch summary::-webkit-details-marker{display:none}
+.arch summary::before{content:"▸";font-size:10px;color:var(--muted);margin-right:6px;transition:transform .2s}
+.arch details[open]>summary::before{transform:rotate(90deg)}
+.arch summary a{flex:1}
+.arch summary span{font:400 11px "Geist Mono",monospace;color:var(--muted)}
+.arch summary:hover{background:var(--plate)}
+.arch details.m{margin-left:14px}
+.arch .days{display:flex;flex-wrap:wrap;gap:6px;padding:4px 8px 10px 22px}
+.arch .days a{min-width:30px;height:28px;display:grid;place-items:center;border:1px solid var(--line);border-radius:4px;font:500 12px "Geist Mono",monospace;color:var(--ink2);background:var(--panel)}
+.arch .days a:hover,.arch .days a.cur{border-color:var(--acc);color:var(--acc)}
+.arch-cur{font:400 13px "Geist Mono",monospace;color:var(--muted);margin-bottom:4px}
+.arch-cur b{font-weight:500;color:var(--ink)}
+.arch-cur a{color:var(--acc);text-decoration:underline;text-underline-offset:3px}
+.arch-empty{color:var(--muted);padding:24px 0}
+.pager{display:flex;align-items:center;gap:14px;margin-top:8px}
+.pager .n{font:400 12px "Geist Mono",monospace;color:var(--muted)}
+@media (max-width:980px){.arch-grid{grid-template-columns:minmax(0,1fr);gap:24px}.arch{position:static}}
