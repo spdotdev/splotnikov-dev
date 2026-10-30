@@ -16,6 +16,12 @@ return [
     // only in tests.
     'require_real_mailer' => (bool) env('SPLOTNIKOV_REQUIRE_REAL_MAILER', true),
 
+    // The host application has no mail setup of its own (its default mailer is `log`). Give the form its own: a Symfony
+    // mailer DSN such as smtp://user:app-password@smtp.gmail.com:587, and the address the message is sent from (it must
+    // be one that SMTP account may send as). Both stay in the host's .env, never in the repository.
+    'mail_dsn' => env('SPLOTNIKOV_CONTACT_MAIL_DSN', ''),
+    'mail_from' => env('SPLOTNIKOV_CONTACT_MAIL_FROM', ''),
+
     // Cloudflare Turnstile (the bot check on the contact form). Without keys the
     // form falls back to a honeypot plus a signed minimum fill time.
     'turnstile_site_key' => env('SPLOTNIKOV_TURNSTILE_SITE_KEY', ''),

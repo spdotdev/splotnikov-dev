@@ -34,14 +34,20 @@ class ContactController
             return back()->withInput()->withErrors(['message' => 'The bot check failed. Please try again or email '.$to.' directly.']);
         }
 
-        if (config('splotnikov-dev.require_real_mailer', true) && in_array((string) config('mail.default'), ['log', 'array'], true)) {
+        $mailer = null;
+        if ((string) config('splotnikov-dev.mail_dsn', '') !== '') {
+            config(['mail.mailers.contact_form' => ['transport' => 'smtp', 'url' => (string) config('splotnikov-dev.mail_dsn')]]);
+            $mailer = 'contact_form';
+        }
+
+        if ($mailer === null && config('splotnikov-dev.require_real_mailer', true) && in_array((string) config('mail.default'), ['log', 'array'], true)) {
             Log::error('splotnikov.dev contact form: the default mailer is '.config('mail.default').', so the message is not delivered', ['from' => $data['email']]);
 
             return back()->withInput()->withErrors(['message' => 'Mail from this form is not working right now, and I do not want you to think it arrived. Please email '.$to.' directly or book a call.']);
         }
 
         try {
-            Mail::to($to)
+            Mail::mailer($mailer)->to($to)
                 ->send(new ContactMessage($data['name'], $data['email'], (string) ($data['about'] ?? ''), $data['message'], (string) $request->ip()));
         } catch (\Throwable $e) {
             Log::error('splotnikov.dev contact form could not send mail', ['error' => $e->getMessage()]);

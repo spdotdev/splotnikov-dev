@@ -19,8 +19,19 @@ class SiteTest extends TestCase
         $page = $this->get('http://splotnikov.dev/contact');
         $token = ContactController::token();
         $this->withSession([])->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', [
-            'name' => 'A', 'email' => 'a@example.com', 'message' => 'A real message of enough length.', 't' => $token, 'website' => '',
+            'name' => 'A', 'email' => 'a@example.com', 'message' => 'A real message of enough length.', 't' => $this->agedToken(), 'website' => '',
         ])->assertSessionHasErrors('message')->assertSessionMissing('contact_sent');
+    }
+
+    public function test_a_contact_mail_dsn_makes_the_form_deliverable_even_when_the_default_mailer_logs(): void
+    {
+        Mail::fake();
+        config(['splotnikov-dev.require_real_mailer' => true, 'mail.default' => 'log', 'splotnikov-dev.mail_dsn' => 'smtp://user:secret@127.0.0.1:2525']);
+        $this->get('http://splotnikov.dev/contact');
+        $this->withSession([])->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', [
+            'name' => 'A', 'email' => 'a@example.com', 'message' => 'A real message of enough length.', 't' => $this->agedToken(), 'website' => '',
+        ])->assertSessionHas('contact_sent', true);
+        $this->assertSame('smtp://user:secret@127.0.0.1:2525', config('mail.mailers.contact_form.url'));
     }
 
     public function test_the_contact_session_cookie_has_no_shared_domain(): void
@@ -453,5 +464,13 @@ class SiteTest extends TestCase
         $this->assertSame(['title' => 'Uit het CMS', 'summary' => 'Sum'], $post['nl']);
         $this->assertArrayHasKey('strangler-fig-what-the-bridge-taught-me', Posts::all(), 'built-in articles stay without sd-cms');
         $this->get('http://splotnikov.dev/sitemap.xml')->assertOk()->assertSee('<urlset', false);
+    }
+
+    /** A form token that is old enough to pass the minimum fill time (3 seconds). */
+    private function agedToken(): string
+    {
+        $t = (string) (time() - 10);
+
+        return $t.'.'.hash_hmac('sha256', $t, (string) config('app.key'));
     }
 }

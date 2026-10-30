@@ -21,6 +21,11 @@ class ContactMessage extends Mailable
     {
         $body = "Name: {$this->name}\nEmail: {$this->email}\nAbout: ".($this->about !== '' ? $this->about : '-')."\n\n{$this->text}\n\n--\nSent from the splotnikov.dev contact form · IP {$this->ip}";
 
+        $from = (string) config('splotnikov-dev.mail_from', '');
+        if ($from !== '') {
+            $this->from($from, 'splotnikov.dev');
+        }
+
         return $this
             ->subject('splotnikov.dev contact: '.($this->about !== '' ? $this->about : 'general').' · '.$this->name)
             ->replyTo($this->email, $this->name)
