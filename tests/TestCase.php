@@ -17,6 +17,12 @@ abstract class TestCase extends BaseTestCase
         return [SplotnikovDevServiceProvider::class];
     }
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate', ['--database' => 'testing'])->run();
+    }
+
     /**
      * @param  Application  $app
      */
@@ -24,6 +30,8 @@ abstract class TestCase extends BaseTestCase
     {
         // The package routes run in the `web` group, whose cookie encryption
         // requires an application key. Set a deterministic one for tests.
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.connections.testing', ['driver' => 'sqlite', 'database' => ':memory:', 'prefix' => '']);
         $app['config']->set('splotnikov-dev.require_real_mailer', false);
         $app['config']->set('app.key', 'base64:'.base64_encode(str_repeat('a', 32)));
     }

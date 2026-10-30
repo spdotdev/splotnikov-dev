@@ -18,6 +18,11 @@ class SplotnikovDevServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'splotnikov');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([Console\ContactLeadsCommand::class]);
+        }
 
         // A missing page on this host gets the site's own 404, not the framework's bare one. Other hosts of the
         // same app keep theirs.

@@ -3,10 +3,12 @@
 namespace Spdotdev\SplotnikovDev\Tests\Feature;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Schema;
 use Spdotdev\SplotnikovDev\Archive;
 use Spdotdev\SplotnikovDev\Cv;
 use Spdotdev\SplotnikovDev\Http\Controllers\ContactController;
 use Spdotdev\SplotnikovDev\Mail\ContactMessage;
+use Spdotdev\SplotnikovDev\Models\ContactLead;
 use Spdotdev\SplotnikovDev\Posts;
 use Spdotdev\SplotnikovDev\Projects;
 use Spdotdev\SplotnikovDev\Tests\TestCase;
@@ -21,7 +23,10 @@ class SiteTest extends TestCase
         $token = ContactController::token();
         $this->withSession([])->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', [
             'name' => 'A', 'email' => 'a@example.com', 'message' => 'A real message of enough length.', 't' => $this->agedToken(), 'website' => '',
-        ])->assertSessionHasErrors('message')->assertSessionMissing('contact_sent');
+        ])->assertSessionHas('contact_sent', 'stored')->assertSessionHasNoErrors();
+        $lead = ContactLead::query()->sole();
+        $this->assertSame('not_configured', $lead->mail_status);
+        $this->assertSame('a@example.com', $lead->email);
     }
 
     public function test_a_contact_mail_dsn_makes_the_form_deliverable_even_when_the_default_mailer_logs(): void
@@ -31,7 +36,8 @@ class SiteTest extends TestCase
         $this->get('http://splotnikov.dev/contact');
         $this->withSession([])->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', [
             'name' => 'A', 'email' => 'a@example.com', 'message' => 'A real message of enough length.', 't' => $this->agedToken(), 'website' => '',
-        ])->assertSessionHas('contact_sent', true);
+        ])->assertSessionHas('contact_sent', 'mailed');
+        $this->assertSame('sent', ContactLead::query()->sole()->mail_status);
         $this->assertSame('smtp://user:secret@127.0.0.1:2525', config('mail.mailers.contact_form.url'));
     }
 
@@ -445,7 +451,8 @@ class SiteTest extends TestCase
 
         // A real message: mailed to the configured address with the sender as reply-to.
         $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $ok + ['t' => $oldToken])
-            ->assertRedirect('http://splotnikov.dev/contact')->assertSessionHas('contact_sent', true)->assertSessionHasNoErrors();
+            ->assertRedirect('http://splotnikov.dev/contact')->assertSessionHas('contact_sent', 'mailed')->assertSessionHasNoErrors();
+        $this->assertSame(1, ContactLead::query()->count(), 'only the real message is stored, not the rejected ones');
         Mail::assertSent(ContactMessage::class, function (ContactMessage $mail) {
             $mail->build();
             $rendered = $mail->render();
@@ -483,5 +490,57 @@ class SiteTest extends TestCase
         $types = array_map(fn ($j) => json_decode($j, true, 512, JSON_THROW_ON_ERROR)['@type'] ?? '', $m[1]);
         $this->assertContains('ProfilePage', $types);
         $this->assertStringContainsString('EUR 90 per uur excl. btw', json_encode(Cv::nl(), JSON_UNESCAPED_UNICODE));
+    }
+
+    /** @return array<string, string> */
+    private function validForm(array $over = []): array
+    {
+        return $over + ['name' => 'Anna', 'email' => 'anna@example.com', 'about' => 'Hello', 'message' => 'We run an old PHP portal and need a plan.', 't' => $this->agedToken(), 'website' => ''];
+    }
+
+    public function test_a_stored_lead_survives_a_mail_failure(): void
+    {
+        config(['splotnikov-dev.require_real_mailer' => true, 'mail.default' => 'smtp', 'splotnikov-dev.mail_dsn' => '']);
+        Mail::shouldReceive('mailer')->andThrow(new \RuntimeException('smtp down'));
+        $this->from('http://splotnikov.dev/nl/contact')->post('http://splotnikov.dev/contact', $this->validForm())
+            ->assertSessionHas('contact_sent', 'stored')->assertSessionHasNoErrors();
+        $lead = ContactLead::query()->sole();
+        $this->assertSame('failed', $lead->mail_status);
+        $this->assertSame('nl', $lead->language);
+        $this->assertSame('/nl/contact', $lead->page);
+    }
+
+    public function test_the_page_says_saved_and_not_sent_when_only_stored(): void
+    {
+        config(['splotnikov-dev.require_real_mailer' => true, 'mail.default' => 'log']);
+        $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm())->assertSessionHas('contact_sent', 'stored');
+        $html = (string) $this->withSession(['contact_sent' => 'stored'])->get('http://splotnikov.dev/contact')->getContent();
+        $this->assertStringContainsString('Received and saved', $html);
+        $this->assertStringNotContainsString('data-i="ctp_sent"', $html);
+    }
+
+    public function test_the_ip_is_stored_only_as_a_hash(): void
+    {
+        $this->withServerVariables(['REMOTE_ADDR' => '203.0.113.9'])->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm());
+        $lead = ContactLead::query()->sole();
+        $this->assertSame(32, strlen((string) $lead->ip_hash));
+        $this->assertStringNotContainsString('203.0.113.9', json_encode($lead->getAttributes()));
+    }
+
+    public function test_nothing_is_stored_when_the_message_cannot_be_stored(): void
+    {
+        Schema::drop('splotnikov_contact_leads');
+        $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm())
+            ->assertSessionHasErrors('message')->assertSessionMissing('contact_sent');
+    }
+
+    public function test_the_leads_command_lists_and_purges_only_test_rows(): void
+    {
+        $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm());
+        $this->from('http://splotnikov.dev/contact')->post('http://splotnikov.dev/contact', $this->validForm(['name' => '[TEST] check']));
+        $this->assertSame(1, ContactLead::query()->where('is_test', true)->count());
+        $this->artisan('splotnikov:contact-leads')->expectsOutputToContain('2 shown, 2 stored in total')->assertSuccessful();
+        $this->artisan('splotnikov:contact-leads', ['--purge-test' => true])->expectsOutputToContain('Deleted 1 test')->assertSuccessful();
+        $this->assertSame(['Anna'], ContactLead::query()->pluck('name')->all());
     }
 }

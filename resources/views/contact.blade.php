@@ -19,8 +19,10 @@
       @csrf
       <input type="hidden" name="t" value="{{ \Spdotdev\SplotnikovDev\Http\Controllers\ContactController::token() }}">
       <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
-      @if(session('contact_sent'))
-        <div class="sent" role="status"><b>Sent. I reply within one working day.</b></div>
+      @if(session('contact_sent') === 'stored')
+        <div class="sent" role="status"><b data-i="ctp_stored">Received and saved. I could not send it on by email just now, but I have it and I will answer you at the address you gave. If it is urgent, email stplotnikov@gmail.com.</b></div>
+      @elseif(session('contact_sent'))
+        <div class="sent" role="status"><b data-i="ctp_sent">Sent. I reply within one working day.</b></div>
       @endif
       @if($errors->any())
         <div class="err" role="alert">{{ $errors->first() }}</div>
@@ -79,6 +81,8 @@ $nl = [
     'ctp_reach' => 'Bereik me', 'ctp_where' => 'Eindhoven, Nederland<br>Op locatie in de regio Eindhoven, op afstand overal elders.',
     'ctp_biz' => 'Voor werk aan de software van je bedrijf: <a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a>, diensten en prijzen.',
     'ctp_aboutl' => 'Over mij',
+    'ctp_sent' => 'Verstuurd. Ik reageer binnen één werkdag.',
+    'ctp_stored' => 'Ontvangen en bewaard. Ik kon het nu niet per e-mail doorsturen, maar ik heb het en ik antwoord op het adres dat je opgaf. Is het dringend, mail dan stplotnikov@gmail.com.',
     'ctp_bio' => 'Stanislav Plotnikov, Stas. Senior developer en solution architect, PHP sinds 2008, Laravel en Phalcon in productie, Python voor automatisering en AI, Kotlin voor Android. Nederlands, Engels en Russisch. Eén persoon, één aanspreekpunt, van het eerste gesprek tot de overdracht.',
 ];
 ?>
