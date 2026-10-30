@@ -63,6 +63,7 @@ class SiteTest extends TestCase
             if (in_array($path, ['/', '/cv', '/contact'], true)) {
                 $this->assertStringContainsString('vendor/splotnikov/portrait.jpg', $html, $path);
             }
+            $this->assertFileExists(__DIR__.'/../../public/og-image.png', 'the social preview image the layout links');
             $this->assertStringContainsString('class="lg', $html, $path);
             $this->assertSame(1, substr_count($html, '<h1'), $path.' has one h1');
             $this->assertSame(3, substr_count($html, 'data-th="'), $path.': three-way theme control, system, light, dark');
@@ -174,7 +175,7 @@ class SiteTest extends TestCase
         $this->assertSame(count(Projects::all()), substr_count((string) $this->get('http://splotnikov.dev/')->getContent(), 'class="c cg rv"'), 'every project is in the home scroller');
 
         $toolkit = (string) $this->get('http://splotnikov.dev/toolkit')->assertOk()->getContent();
-        $this->assertCount(6, Toolkit::all());
+        $this->assertCount(7, Toolkit::all(), 'the same seven groups as the CV expertise');
         foreach (Toolkit::all() as $g) {
             $this->assertStringContainsString($g['title'], $toolkit);
         }

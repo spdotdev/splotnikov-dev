@@ -79,7 +79,7 @@
 </div></section>
 
 <section class="s tight" id="toolkit"><div class="wrap">
-  <div class="gridh rv"><span class="lbl dot" data-i="tk_l">03 · The toolkit</span><h2 data-i="tk_h" style="margin-top:16px">Technologies and practices</h2><p data-i="tk_p">The tools in daily use, not a wish list. Three groups here, six on the toolkit page.</p></div>
+  <div class="gridh rv"><span class="lbl dot" data-i="tk_l">03 · The toolkit</span><h2 data-i="tk_h" style="margin-top:16px">Technologies and practices</h2><p data-i="tk_p">The tools in daily use, not a wish list. Three groups here, seven on the toolkit page.</p></div>
   <div class="cards3">
     @foreach(\Spdotdev\SplotnikovDev\Toolkit::home() as $g)
     @include('splotnikov::partials.toolgroup', ['g' => $g, 'n' => $loop->iteration])
@@ -127,7 +127,7 @@ $nl = [
     'mf2' => 'De Strangler Fig-strategie', 'mf2s' => 'Geen grote herbouw. Legacy schuld wordt stuk voor stuk vervangen terwijl het bedrijf doordraait, elke release met een rollback.',
     'mf3' => 'Systeemdenken', 'mf3s' => 'Een ticketdeveloper sluit taken af. Een architect voorziet de afweging van elke structurele keuze over 24 maanden.',
     'pj_l' => '02 · Projecten', 'pj_h' => 'Open source, en wat ik voor mezelf bouw', 'pj_p' => 'Tools die ik nodig had en publiceerde, producten die ik thuis draai, een spel omgebouwd tot engineeringproject. Scroll opzij.', 'pj_all' => 'Alle projecten →',
-    'tk_l' => '03 · Het gereedschap', 'tk_h' => 'Technologieën en werkwijze', 'tk_p' => 'De tools van dagelijks gebruik, geen wensenlijst. Drie groepen hier, zes op de gereedschapspagina.', 'tk_all' => 'Bekijk het hele gereedschap →',
+    'tk_l' => '03 · Het gereedschap', 'tk_h' => 'Technologieën en werkwijze', 'tk_p' => 'De tools van dagelijks gebruik, geen wensenlijst. Drie groepen hier, zeven op de gereedschapspagina.', 'tk_all' => 'Bekijk het hele gereedschap →',
     'st_l' => 'Gewerkt met', 'st_h' => 'Merken waarvoor ik heb gebouwd, tools waarmee ik bouw', 'st_p' => 'In loondienst bij bureaus en productbedrijven vóór 2024, en sindsdien als freelancer.',
     'ct_h' => 'Klaar om de ruis weg te snijden?', 'ct_p' => 'Ik ben beschikbaar voor architectuurconsultaties en moderniseringsprojecten. Wil je iemand die eigenaarschap neemt over de gezondheid van je systeem in plaats van tickets te verschuiven, laten we praten.', 'ct_b1' => 'Gebruik het contactformulier', 'ct_b2' => 'Mail stplotnikov@gmail.com',
 ];

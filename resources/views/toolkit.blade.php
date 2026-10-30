@@ -10,7 +10,7 @@
     <div>
       <span class="lbl dot" data-i="tkp_lbl">Toolkit</span>
       <h1 data-i="tkp_h1" data-dec>Technologies and practices</h1>
-      <p class="lead" data-i="tkp_lead">Six groups, the tools in daily use, not a wish list. Each line says what I do with it. The three on the home page are the ones people ask about first.</p>
+      <p class="lead" data-i="tkp_lead">Seven groups, the same as the expertise on my CV: the tools in daily use, not a wish list. Each line says what I do with it. The three on the home page are the ones people ask about first.</p>
     </div>
   </header>
 
@@ -38,7 +38,7 @@
 $nl = [
     'tkp_lbl' => 'Gereedschap',
     'tkp_h1' => 'Technologieën en werkwijze',
-    'tkp_lead' => 'Zes groepen, de tools van dagelijks gebruik, geen wensenlijst. Elke regel zegt wat ik ermee doe. De drie op de homepage zijn die waar mensen het eerst naar vragen.',
+    'tkp_lead' => 'Zeven groepen, dezelfde als de expertise op mijn CV: de tools van dagelijks gebruik, geen wensenlijst. Elke regel zegt wat ik ermee doe. De drie op de homepage zijn die waar mensen het eerst naar vragen.',
     'tkp_cta_h' => 'Mis je die ene die jij gebruikt?',
     'tkp_cta_p' => 'Een stack wordt gekozen op de mensen die hem kunnen draaien en de totale kosten, niet op deze lijst. Vertel me wat je draait en ik zeg eerlijk of ik de juiste persoon ervoor ben.',
     'tkp_cta_b1' => 'Neem contact op',

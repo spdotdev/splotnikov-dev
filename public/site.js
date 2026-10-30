@@ -161,7 +161,7 @@
         ['', '6 passed (11.4 s) · light and dark · phone and desktop', 'ok']
       ], [
         ['Migrations without downtime', 'Expand first, backfill, contract later: a column is never dropped in the same release that stops writing it.', '/projects#cases', 'l', 'SAFE'],
-        ['312 tests before anything ships', 'PHPUnit for the rules, Playwright for the real pages; the suite runs on every push and nothing merges red.', '/toolkit#devops', 'l', 'TESTS'],
+        ['312 tests before anything ships', 'PHPUnit for the rules, Playwright for the real pages; the suite runs on every push and nothing merges red.', '/toolkit#automation', 'l', 'TESTS'],
         ['Phalcon to Laravel, in daily use', 'The same commands run on a platform that started on Phalcon 3.4 and PHP 7.4 and was migrated while hotels used it.', '/projects#cases', 'l', 'CASE'],
         ['Read the case', 'Sixty percent lower latency, PHP back in support, the hotels kept working.', '/projects#cases', 'l', '→']
       ]), { title: '312 tests green before anything ships · Laravel, PHPUnit, Playwright', done: 'done · 312 tests · 41 s' }),
@@ -177,8 +177,8 @@
         ['', '✓ built in 1.84 s', 'ok'],
         ['', 'found 0 vulnerabilities', 'ok']
       ], [
-        ['1.84 s build, 46 kB of JS', 'A front end the size the page needs; no framework for a page that does not need one.', '/toolkit#backend', 'l', 'VITE'],
-        ['Audit on every build', 'Production dependencies audited before the release; a known vulnerability blocks it.', '/toolkit#devops', 'l', 'AUDIT'],
+        ['1.84 s build, 46 kB of JS', 'A front end the size the page needs; no framework for a page that does not need one.', '/toolkit#frameworks', 'l', 'VITE'],
+        ['Audit on every build', 'Production dependencies audited before the release; a known vulnerability blocks it.', '/toolkit#automation', 'l', 'AUDIT'],
         ['This site, the same way', 'One stylesheet, one script, tested in the pipeline, deployed from main.', '/blog/one-stylesheet-one-script-a-live-terminal', 'l', '→']
       ]), { title: 'A front end that builds in two seconds · Vite', done: 'done · 1.84 s' }),
       'ansible': Object.assign(run([
@@ -214,9 +214,9 @@
         ['', '✓ deploy · staging smoke 200 → production · rollback image kept', 'ok'],
         ['', 'done · 9 min from push to production · nobody touched a server', 'ac']
       ], [
-        ['Rebase, not merge commits', 'A branch is rewritten into one intent per commit before it merges; the history reads like a changelog.', '/toolkit#devops', 'l', 'REBASE'],
-        ['Nothing merges red', 'A failing test or a leaked secret stops the release before a person has to notice.', '/toolkit#devops', 'l', 'GATE'],
-        ['Rollback in one command', 'The previous image stays tagged; undoing a release takes a minute, not a night.', '/toolkit#devops', 'l', 'SAFE'],
+        ['Rebase, not merge commits', 'A branch is rewritten into one intent per commit before it merges; the history reads like a changelog.', '/toolkit#automation', 'l', 'REBASE'],
+        ['Nothing merges red', 'A failing test or a leaked secret stops the release before a person has to notice.', '/toolkit#automation', 'l', 'GATE'],
+        ['Rollback in one command', 'The previous image stays tagged; undoing a release takes a minute, not a night.', '/toolkit#automation', 'l', 'SAFE'],
         ['Strangler Fig, release by release', 'Every module moved off the old framework shipped like this: small and reversible.', '/blog/strangler-fig-what-the-bridge-taught-me', 'l', '→']
       ]), { title: 'From rebase to production in nine minutes · Git, GitHub Actions', done: 'done · 9 min' }),
       'nmap': Object.assign(run([
