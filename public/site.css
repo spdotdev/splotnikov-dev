@@ -60,7 +60,6 @@ nav.top .wrap{display:flex;align-items:center;gap:12px}
 .right{display:flex;gap:8px;align-items:center}
 /* the bar must not move when the language changes: the button keeps the width of its longest label, the links keep their slot */
 nav.top .cta{min-width:150px;justify-content:center}
-.links>a{display:inline-block;text-align:center;min-width:var(--w,auto)}
 .seg{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;font:500 11px "Geist Mono",monospace}
 .seg button{border:0;background:none;color:var(--muted);padding:9px 10px;cursor:pointer;font:inherit}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
@@ -85,6 +84,7 @@ nav.top .cta{min-width:150px;justify-content:center}
 .hero .cta{display:flex;gap:10px;justify-content:center;margin-top:38px;flex-wrap:wrap}
 .cmd{margin:26px auto 0;display:inline-flex;align-items:center;gap:14px;background:var(--plate);border-radius:4px;padding:9px 12px 9px 14px;font:400 13px "Geist Mono",monospace;color:var(--ink2);max-width:100%}
 .cmd b{font-weight:400;color:var(--acc)}
+.cmd b span+span::before{content:" · "}
 .cmd button{border:0;background:none;color:var(--muted);cursor:pointer;display:grid;place-items:center}
 @keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes shotin{from{opacity:0;transform:translateY(60px) scale(.985)}to{opacity:1;transform:none}}
@@ -93,7 +93,7 @@ nav.top .cta{min-width:150px;justify-content:center}
 .in3{animation:up .7s .8s cubic-bezier(.2,.8,.2,1) both}
 .in4{animation:shotin .9s .6s cubic-bezier(.2,.8,.2,1) both}
 h1[data-dec]{font-variant-numeric:tabular-nums}
-@media (max-width:600px){.hero{padding:56px 0 40px}.cmd{font-size:11.5px;gap:8px}}
+@media (max-width:600px){.hero{padding:56px 0 40px}.cmd{font-size:11.5px;gap:6px;display:grid;width:100%;text-align:left;padding:10px 12px}.cmd>span{display:grid;gap:2px}.cmd b span{display:block}.cmd b span+span::before{content:"· "}}
 
 /* report panel */
 .demo-wrap{position:relative}
@@ -125,6 +125,8 @@ h1[data-dec]{font-variant-numeric:tabular-nums}
 .log div.in{opacity:1;transform:none}
 .log .t{color:#5f5f5f;flex:none;width:58px}
 .log .ok{color:#7fd3a3}.log .bad{color:#ff8b82}.log .warn{color:#f0c35a}.log .ac{color:var(--acc2)}
+/* Phone terminal output: a 10 px indent instead of the 58 px time column when it is empty, wrapping lines, 12 px font. */
+@media (max-width:600px){.log{font-size:12px;line-height:1.65}.log div{gap:8px}.log .t:empty{width:10px}.log span{min-width:0;overflow-wrap:anywhere}}
 .find{display:grid;gap:8px;margin-top:6px}
 .find a.row:hover{border-color:var(--acc2);transform:translateX(2px)}
 .find .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center;background:#131313;border:1px solid var(--dark-line);border-radius:6px;padding:12px 14px;opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s}

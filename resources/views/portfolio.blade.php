@@ -31,7 +31,7 @@
   <div class="sub in2" data-i="sub">Legacy modernization · Automation with AI · Security</div>
   <p class="hero-q in2" data-i="hq">I turn legacy technical debt into infrastructure that scales and keeps running, by putting return on investment before industry trends.</p>
   <div class="cta in3"><a class="btn" href="{{ route('splotnikov.cv') }}" title="Curriculum vitae" data-i="cta1">View the CV <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn o" href="{{ route('splotnikov.contact.page') }}" data-i="cta2">Contact me</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a></div>
-  <div class="cmd in3"><span>&gt; whoami&nbsp;&nbsp;<span>stas</span>&nbsp;&nbsp;<b data-i="cmd_b">senior developer · PHP since 2008, Linux and networks since 2005 · modernization · automation · AI · security · freelance since 2024</b></span></div>
+  <div class="cmd in3"><span>&gt; whoami&nbsp;&nbsp;<span>stas</span>&nbsp;&nbsp;<b data-i="cmd_b"><span>senior developer</span><span>PHP since 2008, Linux and networks since 2005</span><span>modernization</span><span>automation</span><span>AI</span><span>security</span><span>freelance since 2024</span></b></span></div>
 </header>
 
 <div class="wrap demo-wrap">
@@ -118,7 +118,7 @@ $nl = [
     'sub' => 'Modernisering van legacy · Automatisering met AI · Beveiliging',
     'hq' => 'Ik maak van technische schuld in legacy software infrastructuur die schaalt en blijft draaien, door rendement boven trends te zetten.',
     'cta1' => 'Bekijk het CV', 'cta2' => 'Neem contact op',
-    'cmd_b' => 'senior developer · PHP sinds 2008, Linux en netwerken sinds 2005 · modernisering · automatisering · AI · beveiliging · freelance sinds 2024',
+    'cmd_b' => '<span>senior developer</span><span>PHP sinds 2008, Linux en netwerken sinds 2005</span><span>modernisering</span><span>automatisering</span><span>AI</span><span>beveiliging</span><span>freelance sinds 2024</span>',
     'hint' => 'Een live terminal, geen plaatje. Klik erdoorheen, of laat het lopen.', 'sd_t' => 'Terminal', 'now' => 'nu', 'sd_c' => 'Code', 'sd_a' => 'Agents',
     'shot_note' => 'Sessies zijn nagespeeld uit mijn eigen lab en projecten, met verzonnen hosts en namen; er draait niets in je browser. Securitytools draaien alleen op netwerken en machines die van mij zijn of die ik mag testen.',
     'mf_l' => '01 · Het manifest', 'mf_h' => 'Engineering voor rendement, niet voor trends',
