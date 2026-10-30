@@ -16,21 +16,21 @@
 - PHP floor **`^8.3`**; framework constraint **`illuminate/support: ^13.0`** (must match the host app's resolved Laravel major — verify in Task 6, repin if different).
 - Distribution is **GitHub VCS + git tags only — no Packagist**. First tag **`v0.1.0`**.
 - The new repo is **public**, owner `spdotdev`.
-- **Host has no PHP/Composer.** Never run `php`/`composer`/`artisan` on the host. Use either the host app's container (`make composer cmd="..."`, `make art cmd="..."`, `docker compose exec app ...` from `/home/dev/<host-app>`) or a one-off image: `docker run --rm -v /home/dev/splotnikov-dev:/app -w /app composer:2 <cmd>`.
-- The existing static repo **`/home/dev/splotnikov` is never modified or committed to** by this plan.
+- **Host has no PHP/Composer.** Never run `php`/`composer`/`artisan` on the host. Use either the host app's container (`make composer cmd="..."`, `make art cmd="..."`, `docker compose exec app ...` from `~/<host-app>`) or a one-off image: `docker run --rm -v ~/splotnikov-dev:/app -w /app composer:2 <cmd>`.
+- The existing static repo **`~/splotnikov` is never modified or committed to** by this plan.
 - Route/view marker string for assertions: **`Stanislav Plotnikov`**.
 - Domain is config-driven: `config('splotnikov-dev.domain')` ← `env('SPLOTNIKOV_DOMAIN', 'splotnikov.dev')`.
-- Package working directory: **`/home/dev/splotnikov-dev`** (already exists; contains only `docs/`).
+- Package working directory: **`~/splotnikov-dev`** (already exists; contains only `docs/`).
 
 ---
 
 ### Task 1: Package skeleton + composer.json
 
 **Files:**
-- Create: `/home/dev/splotnikov-dev/composer.json`
-- Create: `/home/dev/splotnikov-dev/.gitignore`
-- Create: `/home/dev/splotnikov-dev/pint.json`
-- Create: `/home/dev/splotnikov-dev/phpstan.neon`
+- Create: `~/splotnikov-dev/composer.json`
+- Create: `~/splotnikov-dev/.gitignore`
+- Create: `~/splotnikov-dev/pint.json`
+- Create: `~/splotnikov-dev/phpstan.neon`
 
 **Interfaces:**
 - Produces: package name `spdotdev/splotnikov-dev`, autoload `Spdotdev\SplotnikovDev\` → `src/`, auto-discovered provider `Spdotdev\SplotnikovDev\SplotnikovDevServiceProvider` (class created in Task 3).
@@ -104,13 +104,13 @@ parameters:
 
 - [ ] **Step 5: Validate the manifest**
 
-Run: `docker run --rm -v /home/dev/splotnikov-dev:/app -w /app composer:2 validate --no-check-publish`
+Run: `docker run --rm -v ~/splotnikov-dev:/app -w /app composer:2 validate --no-check-publish`
 Expected: `./composer.json is valid` (a warning that `composer.lock` is missing is fine — there are no deps installed yet).
 
 - [ ] **Step 6: Initialise git and commit**
 
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 git init -q
 git add composer.json .gitignore pint.json phpstan.neon docs
 git commit -q -m "chore: package skeleton and tooling config"
@@ -121,10 +121,10 @@ git commit -q -m "chore: package skeleton and tooling config"
 ### Task 2: Port portfolio + CV content as views and assets
 
 **Files:**
-- Create: `/home/dev/splotnikov-dev/resources/views/portfolio.blade.php` (copied from `/home/dev/splotnikov/index.html`)
-- Create: `/home/dev/splotnikov-dev/resources/views/cv.blade.php` (copied from `/home/dev/splotnikov/cv.html`)
-- Create: `/home/dev/splotnikov-dev/public/profile.png` (copied)
-- Create: `/home/dev/splotnikov-dev/public/robots.txt`, `sitemap.xml`, `site.webmanifest` (copied)
+- Create: `~/splotnikov-dev/resources/views/portfolio.blade.php` (copied from `~/splotnikov/index.html`)
+- Create: `~/splotnikov-dev/resources/views/cv.blade.php` (copied from `~/splotnikov/cv.html`)
+- Create: `~/splotnikov-dev/public/profile.png` (copied)
+- Create: `~/splotnikov-dev/public/robots.txt`, `sitemap.xml`, `site.webmanifest` (copied)
 
 **Interfaces:**
 - Produces: Blade views `splotnikov::portfolio` and `splotnikov::cv` (view namespace registered in Task 3); both reference the image via `{{ asset('vendor/splotnikov/profile.png') }}`.
@@ -132,16 +132,16 @@ git commit -q -m "chore: package skeleton and tooling config"
 - [ ] **Step 1: Copy the two pages into the views directory**
 
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 mkdir -p resources/views public
-cp /home/dev/splotnikov/index.html resources/views/portfolio.blade.php
-cp /home/dev/splotnikov/cv.html    resources/views/cv.blade.php
+cp ~/splotnikov/index.html resources/views/portfolio.blade.php
+cp ~/splotnikov/cv.html    resources/views/cv.blade.php
 ```
 
 - [ ] **Step 2: Rewrite the local image reference to the published asset path**
 
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 sed -i "s|profile\.png|{{ asset('vendor/splotnikov/profile.png') }}|g" resources/views/portfolio.blade.php resources/views/cv.blade.php
 ```
 
@@ -149,7 +149,7 @@ sed -i "s|profile\.png|{{ asset('vendor/splotnikov/profile.png') }}|g" resources
 
 Run:
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 grep -c "asset('vendor/splotnikov/profile.png')" resources/views/portfolio.blade.php resources/views/cv.blade.php
 grep -c "Stanislav Plotnikov" resources/views/portfolio.blade.php resources/views/cv.blade.php
 ```
@@ -158,11 +158,11 @@ Expected: first command reports `1` for portfolio and `≥1` for cv; second repo
 - [ ] **Step 4: Copy the static assets**
 
 ```bash
-cd /home/dev/splotnikov-dev
-cp /home/dev/splotnikov/public/profile.png        public/profile.png
-cp /home/dev/splotnikov/public/robots.txt         public/robots.txt
-cp /home/dev/splotnikov/public/sitemap.xml        public/sitemap.xml
-cp /home/dev/splotnikov/public/site.webmanifest   public/site.webmanifest
+cd ~/splotnikov-dev
+cp ~/splotnikov/public/profile.png        public/profile.png
+cp ~/splotnikov/public/robots.txt         public/robots.txt
+cp ~/splotnikov/public/sitemap.xml        public/sitemap.xml
+cp ~/splotnikov/public/site.webmanifest   public/site.webmanifest
 ```
 
 > Note: `CNAME` and `.nojekyll` are GitHub-Pages-only and are intentionally NOT copied. `robots.txt`/`sitemap.xml` are carried for completeness but serving them at the host root is a cutover concern (see runbook), not wired here.
@@ -170,7 +170,7 @@ cp /home/dev/splotnikov/public/site.webmanifest   public/site.webmanifest
 - [ ] **Step 5: Commit**
 
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 git add resources public
 git commit -q -m "feat: port portfolio and CV pages and assets"
 ```
@@ -180,10 +180,10 @@ git commit -q -m "feat: port portfolio and CV pages and assets"
 ### Task 3: Service provider, config, routes, controller
 
 **Files:**
-- Create: `/home/dev/splotnikov-dev/config/splotnikov-dev.php`
-- Create: `/home/dev/splotnikov-dev/src/Http/Controllers/SiteController.php`
-- Create: `/home/dev/splotnikov-dev/routes/web.php`
-- Create: `/home/dev/splotnikov-dev/src/SplotnikovDevServiceProvider.php`
+- Create: `~/splotnikov-dev/config/splotnikov-dev.php`
+- Create: `~/splotnikov-dev/src/Http/Controllers/SiteController.php`
+- Create: `~/splotnikov-dev/routes/web.php`
+- Create: `~/splotnikov-dev/src/SplotnikovDevServiceProvider.php`
 
 **Interfaces:**
 - Consumes: views `splotnikov::portfolio`, `splotnikov::cv` (Task 2); config key `splotnikov-dev.domain`.
@@ -274,13 +274,13 @@ class SplotnikovDevServiceProvider extends ServiceProvider
 
 - [ ] **Step 5: Lint all PHP for syntax errors**
 
-Run: `docker run --rm -v /home/dev/splotnikov-dev:/app -w /app composer:2 sh -c "find src config routes -name '*.php' -print0 | xargs -0 -n1 php -l"`
+Run: `docker run --rm -v ~/splotnikov-dev:/app -w /app composer:2 sh -c "find src config routes -name '*.php' -print0 | xargs -0 -n1 php -l"`
 Expected: `No syntax errors detected` for every file.
 
 - [ ] **Step 6: Commit**
 
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 git add src config routes
 git commit -q -m "feat: service provider, config, domain routes, controller"
 ```
@@ -290,10 +290,10 @@ git commit -q -m "feat: service provider, config, domain routes, controller"
 ### Task 4: Package CI, README, CLAUDE.md, cutover runbook
 
 **Files:**
-- Create: `/home/dev/splotnikov-dev/.github/workflows/ci.yml`
-- Create: `/home/dev/splotnikov-dev/README.md`
-- Create: `/home/dev/splotnikov-dev/CLAUDE.md`
-- Create: `/home/dev/splotnikov-dev/docs/cutover-runbook.md`
+- Create: `~/splotnikov-dev/.github/workflows/ci.yml`
+- Create: `~/splotnikov-dev/README.md`
+- Create: `~/splotnikov-dev/CLAUDE.md`
+- Create: `~/splotnikov-dev/docs/cutover-runbook.md`
 
 **Interfaces:**
 - Consumes: `pint.json`, `phpstan.neon` (Task 1).
@@ -437,7 +437,7 @@ app on the DigitalOcean server. Nothing here is automated yet.
 - [ ] **Step 5: Commit**
 
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 git add .github README.md CLAUDE.md docs/cutover-runbook.md
 git commit -q -m "docs: CI, README, CLAUDE.md, cutover runbook"
 ```
@@ -454,7 +454,7 @@ git commit -q -m "docs: CI, README, CLAUDE.md, cutover runbook"
 - [ ] **Step 1: Create the public GitHub repo and push `main`**
 
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 gh repo create spdotdev/splotnikov-dev --public --source=. --remote=origin --push
 ```
 Expected: repo created; `main` pushed. Verify: `gh repo view spdotdev/splotnikov-dev --json visibility,name`.
@@ -462,7 +462,7 @@ Expected: repo created; `main` pushed. Verify: `gh repo view spdotdev/splotnikov
 - [ ] **Step 2: Tag and push the release**
 
 ```bash
-cd /home/dev/splotnikov-dev
+cd ~/splotnikov-dev
 git tag v0.1.0
 git push origin v0.1.0
 ```
@@ -476,7 +476,7 @@ Expected: `refs/tags/v0.1.0` listed on the remote.
 
 ### Task 6: Wire into the host app and verify routing (integration TDD)
 
-**Files (all under `/home/dev/<host-app>`):**
+**Files (all under `~/<host-app>`):**
 - Create: `tests/Feature/SplotnikovSiteTest.php`
 - Modify: `composer.json` (add `repositories` + `require`)
 - Modify: `routes/web.php` (host-scope the existing landing route)
@@ -488,7 +488,7 @@ Expected: `refs/tags/v0.1.0` listed on the remote.
 
 - [ ] **Step 1: Write the failing feature test**
 
-Create `/home/dev/<host-app>/tests/Feature/SplotnikovSiteTest.php`:
+Create `~/<host-app>/tests/Feature/SplotnikovSiteTest.php`:
 ```php
 <?php
 
@@ -526,18 +526,18 @@ class SplotnikovSiteTest extends TestCase
 
 - [ ] **Step 2: Run it and confirm it fails (package not installed yet)**
 
-Run (from `/home/dev/<host-app>`): `make art cmd="test --filter=SplotnikovSiteTest"`
+Run (from `~/<host-app>`): `make art cmd="test --filter=SplotnikovSiteTest"`
 Expected: FAIL — the two splotnikov tests 404 (no route for that host); the landing test may pass.
 
 - [ ] **Step 3: Add the VCS repository and require the package**
 
-Edit `/home/dev/<host-app>/composer.json`: add a top-level `repositories` array and the require line.
+Edit `~/<host-app>/composer.json`: add a top-level `repositories` array and the require line.
 ```jsonc
 "repositories": [
     { "type": "vcs", "url": "https://github.com/spdotdev/splotnikov-dev" }
 ],
 ```
-Then, from `/home/dev/<host-app>`:
+Then, from `~/<host-app>`:
 ```bash
 make composer cmd="require spdotdev/splotnikov-dev:^0.1"
 ```
@@ -547,12 +547,12 @@ Expected: Composer resolves `v0.1.0` from GitHub and installs it.
 
 - [ ] **Step 4: Publish the package assets**
 
-Run (from `/home/dev/<host-app>`): `make art cmd="vendor:publish --tag=splotnikov-dev-assets --force"`
+Run (from `~/<host-app>`): `make art cmd="vendor:publish --tag=splotnikov-dev-assets --force"`
 Expected: `profile.png` (and the other files) copied to `public/vendor/splotnikov/`.
 
 - [ ] **Step 5: Host-scope the host app's landing route so it cannot shadow the package**
 
-Edit `/home/dev/<host-app>/routes/web.php` to:
+Edit `~/<host-app>/routes/web.php` to:
 ```php
 <?php
 
@@ -569,31 +569,31 @@ Route::domain(parse_url((string) config('app.url'), PHP_URL_HOST) ?: 'localhost'
 
 - [ ] **Step 6: Point the dev environment at the splotnikov host**
 
-Append to `/home/dev/<host-app>/.env.example`:
+Append to `~/<host-app>/.env.example`:
 ```dotenv
 
 # Host that the splotnikov-dev site package answers on.
 SPLOTNIKOV_DOMAIN=splotnikov.dev
 ```
-And ensure the same line exists in `/home/dev/<host-app>/.env`. Then clear config cache:
+And ensure the same line exists in `~/<host-app>/.env`. Then clear config cache:
 ```bash
 make art cmd="config:clear"
 ```
 
 - [ ] **Step 7: Run the splotnikov tests — expect green**
 
-Run (from `/home/dev/<host-app>`): `make art cmd="test --filter=SplotnikovSiteTest"`
+Run (from `~/<host-app>`): `make art cmd="test --filter=SplotnikovSiteTest"`
 Expected: PASS (3 tests). If a splotnikov route returns 500, it is almost certainly a Blade-compile error from a CSS at-rule in the ported view — escape the offending `@rule` (`@@rule`) or wrap it in `@verbatim ... @endverbatim` in the package view, re-tag (`v0.1.1`), `make composer cmd="update spdotdev/splotnikov-dev"`, and re-run.
 
 - [ ] **Step 8: Run the host app's full suite to confirm no regression**
 
-Run (from `/home/dev/<host-app>`): `make art cmd="test"`
+Run (from `~/<host-app>`): `make art cmd="test"`
 Expected: PASS — in particular `LandingPageTest` still green (its requests use the default `localhost` host, which the scoped landing route still matches).
 
 - [ ] **Step 9: Keep Pint/Larastan green and commit the host app**
 
 ```bash
-cd /home/dev/<host-app>
+cd ~/<host-app>
 docker compose exec app ./vendor/bin/pint
 docker compose exec app ./vendor/bin/phpstan analyse --memory-limit=512M
 git add composer.json composer.lock routes/web.php tests/Feature/SplotnikovSiteTest.php .env.example
@@ -613,7 +613,7 @@ Expected: pre-commit hook (Pint + Larastan) passes; commit succeeds. Do not comm
 - Upgrade by version bump → README (Task 4), runbook references. ✓
 - Wire into the host app + verify splotnikov.dev routes to template (local) → Task 6. ✓
 - Route precedence resolution (host-scope landing) → Task 6 Step 5, regression check Step 8. ✓
-- Static repo untouched → Global Constraints; no task writes to `/home/dev/splotnikov`. ✓
+- Static repo untouched → Global Constraints; no task writes to `~/splotnikov`. ✓
 - Deferred (server, deploy, DNS, Packagist, shared packages) → cutover-runbook (Task 4), not implemented. ✓
 
 **Placeholder scan:** No TBD/TODO; every code/command step shows concrete content. View porting is a concrete `cp` + `sed` (not a placeholder). ✓

@@ -46,7 +46,7 @@ this spec.
   (`src/main.js` is empty). Assets in `public/` (`profile.png`, `robots.txt`, `sitemap.xml`,
   `site.webmanifest`, plus Pages-only `CNAME` + `.nojekyll`). Auto-deploys to GitHub Pages
   on push to `main`; DNS points `splotnikov.dev` at GitHub Pages.
-- **`the host app` (`<private host-app repo>`, local at `/home/dev/<host-app>`)**: Laravel 13 + Filament
+- **`the host app` (`<private host-app repo>`, local at `~/<host-app>`)**: Laravel 13 + Filament
   v5, **Docker-first** (host has no PHP/Composer; everything runs in the `app` service —
   `make art`, `make composer`, `make sh`). Laravel 12-style bootstrap:
   `bootstrap/app.php` `withRouting(web: routes/web.php)`, providers in `bootstrap/providers.php`.
