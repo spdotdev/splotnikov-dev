@@ -512,6 +512,8 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .find .row b{text-wrap:balance}
 .cta-box .lg{margin-bottom:10px}
 @media (max-width:600px){.hero .portrait{width:96px;height:96px}}
+/* Desktop: the portrait sits left of the name block and the hero has less air, so the terminal starts at 571 px and its first lines are in the first screen of a 1366x768 laptop. */
+@media (min-width:981px){.hero{padding:72px 0 48px}.hero .portrait{display:inline-block;vertical-align:middle;width:96px;height:96px;margin:0 22px 0 0}.hero h1.name{vertical-align:middle}.hero .cta{margin-top:30px}.cmd{margin-top:22px}}
 
 /* cv */
 .ph>div.cv-head{max-width:none;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
