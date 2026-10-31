@@ -108,7 +108,7 @@
     @include('splotnikov::partials.logo', ['id' => 'cta', 'w' => 40, 'h' => 40])
     <h2 data-i="ct_h">Ready to cut the noise?</h2>
     <p data-i="ct_p">I am available for architecture consultations and modernization projects. If you want someone who takes ownership of your system's health instead of moving tickets, let's talk.</p>
-    <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="ct_b1">Use the contact form</a><a class="btn o" href="mailto:stplotnikov@gmail.com" data-i="ct_b2">Email stplotnikov@gmail.com</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a><a class="btn o" href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a></div>
+    <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="ct_b1">Use the contact form</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a><a class="btn o" href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a></div>
   </div>
 </div></section>
 @endsection
@@ -130,7 +130,7 @@ $nl = [
     'pj_l' => '02 · Projecten', 'pj_h' => 'Open source, en wat ik voor mezelf bouw', 'pj_p' => 'Tools die ik nodig had en publiceerde, producten die ik thuis draai, een spel omgebouwd tot engineeringproject. <span class="desk">Scroll opzij.</span>', 'pj_all' => 'Alle projecten →',
     'tk_l' => '03 · Het gereedschap', 'tk_h' => 'Technologieën en werkwijze', 'tk_p' => 'De tools van dagelijks gebruik, geen wensenlijst. Drie groepen hier, zeven op de gereedschapspagina.', 'tk_all' => 'Bekijk het hele gereedschap →',
     'st_l' => 'Gewerkt met', 'st_h' => 'Merken waarvoor ik heb gebouwd, tools waarmee ik bouw', 'st_p' => 'In loondienst bij bureaus en productbedrijven vóór 2024, en sindsdien als freelancer.',
-    'ct_h' => 'Klaar om de ruis weg te snijden?', 'ct_p' => 'Ik ben beschikbaar voor architectuurconsultaties en moderniseringsprojecten. Wil je iemand die eigenaarschap neemt over de gezondheid van je systeem in plaats van tickets te verschuiven, laten we praten.', 'ct_b1' => 'Gebruik het contactformulier', 'ct_b2' => 'Mail stplotnikov@gmail.com',
+    'ct_h' => 'Klaar om de ruis weg te snijden?', 'ct_p' => 'Ik ben beschikbaar voor architectuurconsultaties en moderniseringsprojecten. Wil je iemand die eigenaarschap neemt over de gezondheid van je systeem in plaats van tickets te verschuiven, laten we praten.', 'ct_b1' => 'Gebruik het contactformulier',
 ];
 foreach (array_values(\Spdotdev\SplotnikovDev\Projects::all()) as $i => $pr) {
     $nl['pj_'.$i.'_k'] = $pr['nl']['kind'];
