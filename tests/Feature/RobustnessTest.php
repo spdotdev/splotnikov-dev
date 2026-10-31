@@ -398,4 +398,14 @@ class RobustnessTest extends TestCase
         // The language buttons of a page without a Dutch twin do nothing without a script: hidden then.
         $this->assertStringContainsString('class="seg js-only"', (string) $this->get(self::HOST.'/blog')->getContent());
     }
+
+    public function test_every_page_ends_with_its_own_address_for_the_print(): void
+    {
+        foreach (['/', '/cv', '/projects', '/toolkit', '/blog', '/contact', '/privacy', '/nl', '/nl/cv'] as $path) {
+            $html = (string) $this->get(self::HOST.$path)->assertOk()->getContent();
+            $this->assertMatchesRegularExpression('#<p class="print-url">https://splotnikov\.dev[^<]*</p>#', $html, $path);
+        }
+        $css = (string) file_get_contents(__DIR__.'/../../public/site.css');
+        $this->assertStringNotContainsString('.ph,.rv{display:none', $css, 'the print sheet must not hide page headings or content');
+    }
 }

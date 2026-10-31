@@ -106,6 +106,7 @@
 
   <main id="top">
     @yield('content')
+    <p class="print-url">{{ $canon }}</p>
   </main>
 
   <div class="wrap no-print"><footer>

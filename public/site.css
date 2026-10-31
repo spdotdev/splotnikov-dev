@@ -566,7 +566,7 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .cv.pdf .fold{border:0}.cv.pdf .fold summary{padding:0;cursor:default;display:block}.cv.pdf .fold summary::after,.cv.pdf .fold[open] summary::after{content:none}.cv.pdf .fold summary small{margin-bottom:8px}.cv.pdf .fold .fold-body{padding:0}
 @media print{
   @page{size:A4;margin:12mm 12mm 14mm}
-  nav.top,footer,.no-print,.cta-end,.ph,.rv{display:none!important}
+  nav.top,footer,.no-print,.cta-end,.cv-page .ph{display:none!important}
   html,body{background:#fff!important;color:#000}
   .wrap{width:100%}
   .cv{--panel:#fff;--bg:#fff;--ink:#000;--ink2:#222;--muted:#555;--line:#ddd;--acc:#0f766e;border:0;border-radius:0;padding:0;grid-template-columns:minmax(0,1fr) 200px;gap:24px;color:#000}
@@ -700,3 +700,20 @@ nav.top{background:color-mix(in srgb,var(--bg) 94%,transparent)}
 /* A one-line offer under the lead of the long index pages, so the first button is in the first screen (round 11) */
 .lead-cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:16px;font-weight:600;color:var(--ink)}
 @media (max-width:600px){.lead-cta{flex-direction:column;align-items:stretch;gap:10px}.lead-cta .btn{width:100%;justify-content:center;text-align:center}}
+
+/* Print for every page (round 11): content visible, no buttons, no dark panels, light cards, the page address at the end */
+.print-url{display:none}
+@media print{
+  .rv{opacity:1!important;transform:none!important}
+  .btn,.lead-cta,.demo-wrap,.shot-hint,.belts,.pj-all,.hero .cta,.seg{display:none!important}
+  .cv-page .btn{display:none!important}
+  .hero{padding:12px 0}
+  .hero h1.name{background:none!important;color:#000!important;padding:0}
+  .hero-q,.hero .sub,.ph .lead{color:#222}
+  .scroller{display:grid;grid-template-columns:1fr 1fr;overflow:visible;scroll-snap-type:none;-webkit-mask-image:none;mask-image:none;padding:0}
+  .c,.cg,.plate,.post-card,.tg{background:#fff!important;box-shadow:none!important;border:1px solid #bbb;break-inside:avoid}
+  main a[href^="http"]:not(.c):not(.cv a)::after{content:" (" attr(href) ")";font-size:9pt;color:#444;word-break:break-all}
+  .cv a::after{content:none!important}
+  .print-url{display:block;margin-top:18px;padding-top:8px;border-top:1px solid #bbb;font:9pt "Geist Mono",monospace;color:#222}
+  .cv-side .blk,.cv-side .blk span,.cv-side .blk a{overflow-wrap:anywhere;min-width:0}
+}
