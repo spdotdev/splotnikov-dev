@@ -260,7 +260,7 @@ class SiteTest extends TestCase
             $this->assertSame(3, substr_count($html, 'data-th="'), $path.': three-way theme control, system, light, dark');
             $this->assertStringContainsString('href="http://splotnikov.dev/contact"', $html, $path.' links the contact page');
             $this->assertStringNotContainsString('profile.png', $html, $path.' uses the new portrait');
-            $this->assertStringNotContainsString('—', $html, $path.' has no long dashes');
+            $this->assertStringNotContainsString("\u{2014}", $html, $path.' has no long dashes');
             if ($path !== '/cv') {
                 $this->assertStringNotContainsString('96040947', $html, $path.' carries no Chamber of Commerce number');
                 $this->assertStringNotContainsString('NL005184584B85', $html, $path.' carries no VAT number');
@@ -640,5 +640,39 @@ class SiteTest extends TestCase
         $contact = (string) $this->get('http://splotnikov.dev/contact')->assertOk()->getContent();
         $this->assertStringContainsString('href="mailto:stplotnikov@gmail.com"', $contact);
         $this->assertStringContainsString('href="tel:+31634500328"', $contact);
+    }
+
+    public function test_no_tracked_text_file_holds_a_long_dash(): void
+    {
+        $root = dirname(__DIR__, 2);
+        $skipDirs = ['.git', 'vendor', 'node_modules', 'public/fonts', 'public/og'];
+        $skipExt = ['pdf', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'ico', 'woff', 'woff2', 'ttf', 'svg', 'zip', 'lock'];
+        $found = [];
+        $walk = function (string $dir) use (&$walk, $root, $skipDirs, $skipExt, &$found): void {
+            foreach (scandir($dir) ?: [] as $name) {
+                if ($name === '.' || $name === '..') {
+                    continue;
+                }
+                $path = $dir.'/'.$name;
+                $rel = ltrim(substr($path, strlen($root)), '/');
+                if (is_dir($path)) {
+                    if (! in_array($rel, $skipDirs, true)) {
+                        $walk($path);
+                    }
+
+                    continue;
+                }
+                if (in_array(strtolower(pathinfo($name, PATHINFO_EXTENSION)), $skipExt, true)) {
+                    continue;
+                }
+                foreach (file($path) ?: [] as $n => $line) {
+                    if (str_contains($line, "\u{2014}") || str_contains($line, "\u{2013}")) {
+                        $found[] = $rel.':'.($n + 1);
+                    }
+                }
+            }
+        };
+        $walk($root);
+        $this->assertSame([], $found, 'long dash in: '.implode(', ', $found));
     }
 }

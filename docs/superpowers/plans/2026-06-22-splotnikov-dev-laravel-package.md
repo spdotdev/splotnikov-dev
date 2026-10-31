@@ -13,8 +13,8 @@
 ## Global Constraints
 
 - The package is **`spdotdev/splotnikov-dev`**, `type: library`, namespace **`Spdotdev\SplotnikovDev\`**, PSR-4 root `src/`.
-- PHP floor **`^8.3`**; framework constraint **`illuminate/support: ^13.0`** (must match the host app's resolved Laravel major — verify in Task 6, repin if different).
-- Distribution is **GitHub VCS + git tags only — no Packagist**. First tag **`v0.1.0`**.
+- PHP floor **`^8.3`**; framework constraint **`illuminate/support: ^13.0`** (must match the host app's resolved Laravel major, verify in Task 6, repin if different).
+- Distribution is **GitHub VCS + git tags only, no Packagist**. First tag **`v0.1.0`**.
 - The new repo is **public**, owner `spdotdev`.
 - **Host has no PHP/Composer.** Never run `php`/`composer`/`artisan` on the host. Use either the host app's container (`make composer cmd="..."`, `make art cmd="..."`, `docker compose exec app ...` from `~/<host-app>`) or a one-off image: `docker run --rm -v ~/splotnikov-dev:/app -w /app composer:2 <cmd>`.
 - The existing static repo **`~/splotnikov` is never modified or committed to** by this plan.
@@ -105,7 +105,7 @@ parameters:
 - [ ] **Step 5: Validate the manifest**
 
 Run: `docker run --rm -v ~/splotnikov-dev:/app -w /app composer:2 validate --no-check-publish`
-Expected: `./composer.json is valid` (a warning that `composer.lock` is missing is fine — there are no deps installed yet).
+Expected: `./composer.json is valid` (a warning that `composer.lock` is missing is fine, there are no deps installed yet).
 
 - [ ] **Step 6: Initialise git and commit**
 
@@ -153,7 +153,7 @@ cd ~/splotnikov-dev
 grep -c "asset('vendor/splotnikov/profile.png')" resources/views/portfolio.blade.php resources/views/cv.blade.php
 grep -c "Stanislav Plotnikov" resources/views/portfolio.blade.php resources/views/cv.blade.php
 ```
-Expected: first command reports `1` for portfolio and `≥1` for cv; second reports `≥1` for each. (If a view shows `0` for the marker, stop — the wrong source file was copied.)
+Expected: first command reports `1` for portfolio and `≥1` for cv; second reports `≥1` for each. (If a view shows `0` for the marker, stop, the wrong source file was copied.)
 
 - [ ] **Step 4: Copy the static assets**
 
@@ -379,13 +379,13 @@ make composer cmd="update spdotdev/splotnikov-dev"
 To edit this package live from a sibling checkout instead of re-tagging,
 mount it into the the host app container and point Composer at a path
 repository (`{ "type": "path", "url": "../splotnikov-dev", "options": { "symlink": true } }`).
-Keep this out of committed config — it is a dev-only convenience.
+Keep this out of committed config, it is a dev-only convenience.
 ````
 
 - [ ] **Step 3: Write `CLAUDE.md`**
 
 ```markdown
-# CLAUDE.md — splotnikov-dev
+# CLAUDE.md: splotnikov-dev
 
 ## What this is
 A Laravel **library package** (not an app) that serves the splotnikov.dev
@@ -399,11 +399,11 @@ portfolio + CV inside the `the host app` host app via host-based routing.
 - Versioned: change behaviour → bump tag (`vX.Y.Z`) → `composer update` in the host app.
 
 ## Layout
-- `src/SplotnikovDevServiceProvider.php` — auto-discovered; loads routes + views, publishes config/assets.
-- `routes/web.php` — `Route::domain(config('splotnikov-dev.domain'))` group: `/` and `/cv`.
-- `resources/views/{portfolio,cv}.blade.php` — ported near-verbatim from the static site (mostly static HTML).
-- `config/splotnikov-dev.php` — `domain` via `SPLOTNIKOV_DOMAIN`.
-- `public/` — assets published to the host's `public/vendor/splotnikov`.
+- `src/SplotnikovDevServiceProvider.php`: auto-discovered; loads routes + views, publishes config/assets.
+- `routes/web.php`: `Route::domain(config('splotnikov-dev.domain'))` group: `/` and `/cv`.
+- `resources/views/{portfolio,cv}.blade.php`: ported near-verbatim from the static site (mostly static HTML).
+- `config/splotnikov-dev.php`: `domain` via `SPLOTNIKOV_DOMAIN`.
+- `public/`: assets published to the host's `public/vendor/splotnikov`.
 
 ## Integration / route precedence
 the host app's landing route must be host-scoped so it does not shadow this
@@ -527,7 +527,7 @@ class SplotnikovSiteTest extends TestCase
 - [ ] **Step 2: Run it and confirm it fails (package not installed yet)**
 
 Run (from `~/<host-app>`): `make art cmd="test --filter=SplotnikovSiteTest"`
-Expected: FAIL — the two splotnikov tests 404 (no route for that host); the landing test may pass.
+Expected: FAIL, the two splotnikov tests 404 (no route for that host); the landing test may pass.
 
 - [ ] **Step 3: Add the VCS repository and require the package**
 
@@ -580,15 +580,15 @@ And ensure the same line exists in `~/<host-app>/.env`. Then clear config cache:
 make art cmd="config:clear"
 ```
 
-- [ ] **Step 7: Run the splotnikov tests — expect green**
+- [ ] **Step 7: Run the splotnikov tests, expect green**
 
 Run (from `~/<host-app>`): `make art cmd="test --filter=SplotnikovSiteTest"`
-Expected: PASS (3 tests). If a splotnikov route returns 500, it is almost certainly a Blade-compile error from a CSS at-rule in the ported view — escape the offending `@rule` (`@@rule`) or wrap it in `@verbatim ... @endverbatim` in the package view, re-tag (`v0.1.1`), `make composer cmd="update spdotdev/splotnikov-dev"`, and re-run.
+Expected: PASS (3 tests). If a splotnikov route returns 500, it is almost certainly a Blade-compile error from a CSS at-rule in the ported view, escape the offending `@rule` (`@@rule`) or wrap it in `@verbatim ... @endverbatim` in the package view, re-tag (`v0.1.1`), `make composer cmd="update spdotdev/splotnikov-dev"`, and re-run.
 
 - [ ] **Step 8: Run the host app's full suite to confirm no regression**
 
 Run (from `~/<host-app>`): `make art cmd="test"`
-Expected: PASS — in particular `LandingPageTest` still green (its requests use the default `localhost` host, which the scoped landing route still matches).
+Expected: PASS, in particular `LandingPageTest` still green (its requests use the default `localhost` host, which the scoped landing route still matches).
 
 - [ ] **Step 9: Keep Pint/Larastan green and commit the host app**
 
@@ -618,4 +618,4 @@ Expected: pre-commit hook (Pint + Larastan) passes; commit succeeds. Do not comm
 
 **Placeholder scan:** No TBD/TODO; every code/command step shows concrete content. View porting is a concrete `cp` + `sed` (not a placeholder). ✓
 
-**Type/name consistency:** Provider `Spdotdev\SplotnikovDev\SplotnikovDevServiceProvider`, controller `Spdotdev\SplotnikovDev\Http\Controllers\SiteController` with `index()`/`cv()`, view namespace `splotnikov::`, config key `splotnikov-dev.domain`, publish tags `splotnikov-dev-config`/`splotnikov-dev-assets`, asset path `vendor/splotnikov/profile.png`, package name `spdotdev/splotnikov-dev` — all consistent across Tasks 1–6. ✓
+**Type/name consistency:** Provider `Spdotdev\SplotnikovDev\SplotnikovDevServiceProvider`, controller `Spdotdev\SplotnikovDev\Http\Controllers\SiteController` with `index()`/`cv()`, view namespace `splotnikov::`, config key `splotnikov-dev.domain`, publish tags `splotnikov-dev-config`/`splotnikov-dev-assets`, asset path `vendor/splotnikov/profile.png`, package name `spdotdev/splotnikov-dev`: all consistent across Tasks 1 to 6. ✓

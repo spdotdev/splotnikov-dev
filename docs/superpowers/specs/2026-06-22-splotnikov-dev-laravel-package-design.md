@@ -1,7 +1,7 @@
-# Design: `spdotdev/splotnikov-dev` — versioned Laravel package mounted into the host app
+# Design: `spdotdev/splotnikov-dev`: versioned Laravel package mounted into the host app
 
 **Date:** 2026-06-22
-**Status:** Approved (brainstorming) — pending implementation plan
+**Status:** Approved (brainstorming): pending implementation plan
 **Author:** S Plotnikov (with Claude)
 
 ## Summary
@@ -34,7 +34,7 @@ this spec.
 - Provisioning the DigitalOcean server.
 - Live deployment of the host app and the package.
 - The real DNS A-record cutover from GitHub Pages to the DO droplet.
-- Publishing to Packagist (using GitHub VCS + tags only — this is private to the owner).
+- Publishing to Packagist (using GitHub VCS + tags only, this is private to the owner).
 - Extracting shared `spdotdev` packages (auth/theme/components) out of the host app. The
   package is standalone; sharing is a later, separate effort.
 - Any change to the existing static `spdotdev/splotnikov` repo or its GitHub Pages deploy.
@@ -47,7 +47,7 @@ this spec.
   `site.webmanifest`, plus Pages-only `CNAME` + `.nojekyll`). Auto-deploys to GitHub Pages
   on push to `main`; DNS points `splotnikov.dev` at GitHub Pages.
 - **`the host app` (`<private host-app repo>`, local at `~/<host-app>`)**: Laravel 13 + Filament
-  v5, **Docker-first** (host has no PHP/Composer; everything runs in the `app` service —
+  v5, **Docker-first** (host has no PHP/Composer; everything runs in the `app` service)
   `make art`, `make composer`, `make sh`). Laravel 12-style bootstrap:
   `bootstrap/app.php` `withRouting(web: routes/web.php)`, providers in `bootstrap/providers.php`.
   `routes/web.php` currently has a single **unconstrained** `Route::get('/', [LandingController::class, 'index'])`.
@@ -59,7 +59,7 @@ this spec.
 
 ### The package (`spdotdev/splotnikov-dev`)
 
-A Laravel package consumed by a host Laravel app. No app skeleton, no Docker of its own —
+A Laravel package consumed by a host Laravel app. No app skeleton, no Docker of its own, 
 it is exercised through the host app.
 
 ```

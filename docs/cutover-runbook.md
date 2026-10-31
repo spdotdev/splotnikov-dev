@@ -4,7 +4,7 @@
 > package. The steps below are kept as the record of how the cutover was done.
 
 > This file is the splotnikov.dev-specific slice of the cutover to the
-> Laravel-served version of the site. Nothing is live yet — DNS still points
+> Laravel-served version of the site. Nothing is live yet, DNS still points
 > at GitHub Pages.
 
 ## Site facts
@@ -17,7 +17,7 @@
 | Domain env var (host app `.env`) | `SPLOTNIKOV_DOMAIN=splotnikov.dev` |
 | Assets path | `/vendor/splotnikov/` |
 | Publish tag | `splotnikov-dev-assets` |
-| Current DNS apex `A` | GitHub Pages `185.199.108–111.153` → change to `<DROPLET_IP>` |
+| Current DNS apex `A` | GitHub Pages `185.199.108 to 111.153` → change to `<DROPLET_IP>` |
 
 ## Cutover checklist (after the server + host app are up)
 
@@ -31,4 +31,4 @@
 6. Let TLS issue (Caddy auto / certbot), then verify `https://splotnikov.dev/` in the open.
 7. Once stable, archive [`spdotdev/splotnikov`](https://github.com/spdotdev/splotnikov).
 
-**Rollback:** revert the apex `A` to `185.199.108–111.153` and re-add the custom domain in Pages settings; the static repo is untouched and resumes within one TTL.
+**Rollback:** revert the apex `A` to `185.199.108 to 111.153` and re-add the custom domain in Pages settings; the static repo is untouched and resumes within one TTL.

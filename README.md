@@ -39,7 +39,7 @@ package's `/` route.
 ## Configuration
 
 This package is a library, not a standalone app, so it ships no `.env` of
-its own — it reads config from whatever app installs it. See
+its own, it reads config from whatever app installs it. See
 [`.env.example`](.env.example) for the full list of variables it supports
 and their defaults; copy the ones you want to override into the **host
 application's** `.env`.
@@ -52,7 +52,7 @@ application's** `.env`.
 | `SPLOTNIKOV_TURNSTILE_SITE_KEY`, `SPLOTNIKOV_TURNSTILE_SECRET` | empty | Cloudflare Turnstile on the contact form; empty means honeypot plus a signed 3-second minimum only. |
 
 Every variable has a safe default baked into `config/splotnikov-dev.php`,
-so the package works out of the box even if none of these are set —
+so the package works out of the box even if none of these are set.
 `.env.example` only documents the overrides available to you. If you want
 the config file itself editable in the host app, publish it:
 
@@ -89,4 +89,4 @@ CI runs the same three checks on PHP 8.3 for pushes to `main` and pull requests.
 To edit this package live from a sibling checkout instead of re-tagging,
 mount it into the host app's container and point Composer at a path
 repository (`{ "type": "path", "url": "../splotnikov-dev", "options": { "symlink": true } }`).
-Keep this out of committed config — it is a dev-only convenience.
+Keep this out of committed config, it is a dev-only convenience.
