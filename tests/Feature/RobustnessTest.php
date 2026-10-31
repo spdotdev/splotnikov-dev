@@ -111,7 +111,7 @@ class RobustnessTest extends TestCase
         $this->assertLessThan((int) strpos($page, 'name="name"'), (int) strpos($page, 'class="sent"'), 'the confirmation is above the first field');
         $this->assertStringContainsString('Sent. I reply within one working day.', $page);
         $this->assertStringNotContainsString('value="Test Person"', $page, 'the form is cleared after a send');
-        $this->assertStringContainsString("scrollIntoView({block:'start'})", $page, 'the message is scrolled into view');
+        $this->assertStringContainsString("scrollIntoView({block:'start',behavior:'instant'})", $page, 'the message is scrolled into view');
         $this->assertStringContainsString('#cform .sent,#cform .err', $page);
     }
 

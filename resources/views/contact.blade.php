@@ -1,7 +1,7 @@
 @extends('splotnikov::layout')
 
-@section('title', 'Contact')
-@section('description', 'Contact Stanislav Plotnikov in Eindhoven: the form, stplotnikov@gmail.com, LinkedIn and GitHub. I reply within one working day.')
+@section('title', 'Contact, I reply within one working day')
+@section('description', 'Write to Stanislav Plotnikov in Eindhoven through the form. I reply within one working day with a first opinion, free. LinkedIn and GitHub are there too.')
 @section('canonical', 'https://splotnikov.dev/contact')
 
 @section('content')
@@ -76,7 +76,7 @@
 @push('nl')
 <script>
 // After a send or a validation error the message sits at the top of the form: bring it into view first.
-document.addEventListener('DOMContentLoaded',function(){var m=document.querySelector('#cform .sent,#cform .err');if(m)m.scrollIntoView({block:'start'})});
+addEventListener('load',function(){var m=document.querySelector('#cform .sent,#cform .err');if(m)m.scrollIntoView({block:'start',behavior:'instant'})});
 </script>
 <?php
 $nl = [
