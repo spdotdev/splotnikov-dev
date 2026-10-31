@@ -501,7 +501,7 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .cookie .row{display:flex;gap:8px;flex:none}
 @media (max-width:700px){.cookie{flex-direction:column;align-items:stretch}.cookie .row{justify-content:flex-end}}
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}.rv.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
 
 /* splotnikov.dev: the prompt mark, the hero portrait, the terminal log and the CV */
 .brand .lg{width:26px;height:26px}

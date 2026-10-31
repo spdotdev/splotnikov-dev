@@ -381,9 +381,10 @@
   // Modals: QR code, photo, map (the map iframe is created only when opened).
   function modal(id, openBtn) {
     var m = $(id); if (!m) return;
-    var close = function () { m.classList.remove('active'); m.setAttribute('aria-hidden', 'true'); };
+    var close = function () { m.classList.remove('active'); m.setAttribute('aria-hidden', 'true'); if (openBtn && openBtn.focus) openBtn.focus(); };
     var open = function () {
       m.classList.add('active'); m.setAttribute('aria-hidden', 'false');
+      var cb = m.querySelector('button.x, button[data-close]'); if (cb && cb.focus) cb.focus();
       var f = m.querySelector('.frame[data-src]');
       if (f && !f.firstChild) { var i = document.createElement('iframe'); i.src = f.dataset.src; i.loading = 'lazy'; i.referrerPolicy = 'no-referrer-when-downgrade'; i.setAttribute('allowfullscreen', ''); i.title = 'Map'; f.appendChild(i); }
     };
