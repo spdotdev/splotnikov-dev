@@ -74,7 +74,43 @@ for url, frm in sorted(seen.items()):
     if st not in (200, 301):
         problems.append(f'{url} (linked from {frm}) answers {st}')
 
-print(f'{len(locs)} sitemap addresses, {len(seen)} internal links checked, {len(problems)} problems')
+# Outbound links: HEAD, then GET when HEAD is refused, 15 s each, redirects followed; 200 expected. Sites that refuse bots
+# on purpose (LinkedIn answers 999, some hosts 403 or 429) are reported as a note, not a problem.
+BOT_WALLS = ('linkedin.com',)
+
+
+def status_of(url):
+    last = 0
+    for method in ('HEAD', 'GET'):
+        try:
+            req = urllib.request.Request(url, method=method, headers={'User-Agent': 'Mozilla/5.0 live-link-check'})
+            return urllib.request.urlopen(req, timeout=15).status
+        except urllib.error.HTTPError as e:
+            last = e.code
+        except Exception:
+            last = 0
+    return last
+
+
+outbound = {}
+host = re.sub(r'^https?://', '', base)
+for loc, html in htmls.items():
+    for href in re.findall(r'<a\b[^>]*\shref="(https?://[^"#]+)', html):
+        if host not in href:
+            outbound.setdefault(href, loc)
+notes = []
+for url, frm in sorted(outbound.items()):
+    st = status_of(url)
+    if st == 200:
+        continue
+    if st in (999, 403, 429) and any(w in url for w in BOT_WALLS):
+        notes.append(f'{url} answers {st} to bots (expected, not counted)')
+    else:
+        problems.append(f'outbound {url} (linked from {frm}) answers {st}')
+
+print(f'{len(locs)} sitemap addresses, {len(seen)} internal and {len(outbound)} outbound links checked, {len(problems)} problems')
+for n in notes:
+    print(' note:', n)
 for p in problems:
     print(' -', p)
 sys.exit(1 if problems else 0)
