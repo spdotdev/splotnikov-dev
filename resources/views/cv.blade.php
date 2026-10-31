@@ -69,8 +69,8 @@
 
       <div class="cv-side">
         <img class="cv-photo" src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="160" height="160">
-        <div class="blk"><small data-i="cv_b_contact">Contact</small><span data-i="cv_b_where">Eindhoven, the Netherlands</span><a href="tel:+31634500328">+31 (0) 6 345 00 328</a><a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a><a href="https://splotnikov.dev">splotnikov.dev</a></div>
-        <details class="blk fold" id="cv-biz" open><summary><small data-i="cv_b_biz">Business details</small></summary><div class="fold-body"><span>Scuttle Development</span><a href="tel:+31618233175">+31 (0) 6 182 33 175</a><a href="mailto:info@scuttle.dev">info@scuttle.dev</a><span>KvK 96040947</span><span>BTW NL005184584B85</span><a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a></div></details>
+        <div class="blk"><small data-i="cv_b_contact">Contact</small><span data-i="cv_b_where">Eindhoven, the Netherlands</span><span>+31 (0) 6 345 00 328</span><span>stplotnikov@gmail.com</span><a href="https://splotnikov.dev">splotnikov.dev</a></div>
+        <details class="blk fold" id="cv-biz" open><summary><small data-i="cv_b_biz">Business details</small></summary><div class="fold-body"><span>Scuttle Development</span><span>+31 (0) 6 182 33 175</span><span>info@scuttle.dev</span><span>KvK 96040947</span><span>BTW NL005184584B85</span><a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a></div></details>
         <details class="blk fold" open><summary><small data-i="cv_b_links">Links</small></summary><div class="fold-body"><a href="https://www.linkedin.com/in/stanislavplotnikov/">linkedin.com/in/stanislavplotnikov</a><a href="https://github.com/spdotdev">github.com/spdotdev</a><a href="https://scuttle.dev" title="Scuttle Development, my company">scuttle.dev</a></div></details>
         <details class="blk fold" open><summary><small data-i="cv_b_exp">Expertise</small></summary><div class="fold-body">
           @foreach($cv['expertise'] as $ek => $eg)

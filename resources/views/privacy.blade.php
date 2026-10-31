@@ -10,7 +10,7 @@
     <p class="updated" data-i="pv_upd">Last updated: 31 October 2026</p>
 
     <h2 data-i="pv_h_who">Who I am</h2>
-    <p data-i="pv_who">This is the personal site of Stanislav Plotnikov, freelance developer and software architect in Eindhoven, the Netherlands. For anything about your data, email me at <a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a>.</p>
+    <p data-i="pv_who">This is the personal site of Stanislav Plotnikov, freelance developer and software architect in Eindhoven, the Netherlands. For anything about your data, use the <a href="{{ route('splotnikov.contact.page') }}">contact form</a>.</p>
 
     <h2 data-i="pv_h_contact">The contact form</h2>
     <p data-i="pv_contact">If you write through the contact form, I store your name, email address, subject and message on my own server, so a message is not lost when email fails, together with a keyed hash of your IP address (not the address itself) to keep abuse in check. I use it only to answer you. The form page sets one technically necessary session cookie, which protects the form against forged requests and is gone after two hours.</p>
@@ -26,7 +26,7 @@
     <p data-i="pv_share">I sell no data. The site runs on a server of DigitalOcean in Amsterdam. Email goes through Google.</p>
 
     <h2 data-i="pv_h_rights">Your rights</h2>
-    <p data-i="pv_rights">You can view, correct or remove your data, and object to its use. Email <a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a>; you get an answer within a month. If you disagree with how I handle your data, you can complain to the Dutch Data Protection Authority, the <a href="https://autoriteitpersoonsgegevens.nl" rel="noopener">Autoriteit Persoonsgegevens</a>.</p>
+    <p data-i="pv_rights">You can view, correct or remove your data, and object to its use. Use the <a href="{{ route('splotnikov.contact.page') }}">contact form</a>; you get an answer within a month. If you disagree with how I handle your data, you can complain to the Dutch Data Protection Authority, the <a href="https://autoriteitpersoonsgegevens.nl" rel="noopener">Autoriteit Persoonsgegevens</a>.</p>
 </article>
 @endsection
 
@@ -37,7 +37,7 @@ $nl = [
     'pv_h1' => 'Privacyverklaring',
     'pv_upd' => 'Laatst bijgewerkt: 31 oktober 2026',
     'pv_h_who' => 'Wie ik ben',
-    'pv_who' => 'Dit is de persoonlijke site van Stanislav Plotnikov, freelance developer en software architect in Eindhoven. Voor alles over je gegevens kun je me mailen op <a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a>.',
+    'pv_who' => 'Dit is de persoonlijke site van Stanislav Plotnikov, freelance developer en software architect in Eindhoven. Voor alles over je gegevens gebruik je het <a href="'.route('splotnikov.contact.page').'">contactformulier</a>.',
     'pv_h_contact' => 'Het contactformulier',
     'pv_contact' => 'Als je via het contactformulier schrijft, sla ik je naam, e-mailadres, onderwerp en bericht op mijn eigen server op, zodat een bericht niet verloren gaat als e-mail faalt, samen met een gesleutelde hash van je IP-adres (niet het adres zelf) om misbruik tegen te gaan. Ik gebruik het alleen om je te antwoorden. De formulierpagina zet één technisch noodzakelijke sessiecookie, die het formulier beschermt tegen vervalste verzoeken en na twee uur verdwijnt.',
     'pv_h_stats' => 'Cookies en statistieken',
@@ -47,7 +47,7 @@ $nl = [
     'pv_h_share' => 'Wie gegevens ziet',
     'pv_share' => 'Ik verkoop geen gegevens. De site draait op een server van DigitalOcean in Amsterdam. E-mail loopt via Google.',
     'pv_h_rights' => 'Je rechten',
-    'pv_rights' => 'Je kunt je gegevens inzien, laten corrigeren of laten verwijderen, en bezwaar maken tegen het gebruik ervan. Mail daarvoor naar <a href="mailto:stplotnikov@gmail.com">stplotnikov@gmail.com</a>; je krijgt binnen een maand antwoord. Ben je het niet eens met hoe ik met je gegevens omga, dan kun je klagen bij de Autoriteit Persoonsgegevens.',
+    'pv_rights' => 'Je kunt je gegevens inzien, laten corrigeren of laten verwijderen, en bezwaar maken tegen het gebruik ervan. Gebruik daarvoor het <a href="'.route('splotnikov.contact.page').'">contactformulier</a>; je krijgt binnen een maand antwoord. Ben je het niet eens met hoe ik met je gegevens omga, dan kun je klagen bij de Autoriteit Persoonsgegevens.',
 ];
 ?>
 <script>
