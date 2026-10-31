@@ -69,6 +69,12 @@
   <link rel="preload" href="{{ secure_asset('vendor/splotnikov/fonts/geist-mono-latin.woff2') }}" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="{{ secure_asset('vendor/splotnikov/site.css') }}" />
   <script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+  <noscript><style>
+    /* Without JavaScript: reveal everything, show the menu, hide the controls that need a script. */
+    .rv{opacity:1!important;transform:none!important}
+    .js-only,.seg.th,#burger,.demo-wrap{display:none!important}
+    @media (max-width:980px){nav.top{height:auto}nav.top .wrap{flex-wrap:wrap;padding-top:8px;padding-bottom:8px}nav.top .links{display:flex!important;position:static;flex-direction:row;flex-wrap:wrap;gap:0 18px;padding:0;border:0;order:3;width:100%}nav.top .links>a{padding:8px 0;font-size:15px}}
+  </style></noscript>
   @yield('head')
 </head>
 
@@ -90,7 +96,7 @@
       @if($paired)
       <div class="seg" role="group" aria-label="Language"><a id="en" href="{{ \Spdotdev\SplotnikovDev\Dutch::enUrl($enPath) }}" hreflang="en" lang="en" @if(! $isNl) aria-current="true" @endif>EN</a><a id="nl" href="{{ \Spdotdev\SplotnikovDev\Dutch::nlUrl($enPath) }}" hreflang="nl" lang="nl" @if($isNl) aria-current="true" @endif>NL</a></div>
       @else
-      <div class="seg" role="group" aria-label="Language"><button id="en" aria-pressed="true" type="button">EN</button><button id="nl" aria-pressed="false" type="button">NL</button></div>
+      <div class="seg js-only" role="group" aria-label="Language"><button id="en" aria-pressed="true" type="button">EN</button><button id="nl" aria-pressed="false" type="button">NL</button></div>
       @endif
       <div class="seg th" role="group" aria-label="Theme"><button type="button" data-th="system" aria-pressed="true" title="System"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button><button type="button" data-th="light" aria-pressed="false" title="Light"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" data-th="dark" aria-pressed="false" title="Dark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div>
       <a class="btn cta" href="{{ route('splotnikov.contact.page') }}" data-i="n_hire">Contact me</a>

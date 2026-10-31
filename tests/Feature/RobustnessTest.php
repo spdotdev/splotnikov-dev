@@ -388,4 +388,14 @@ class RobustnessTest extends TestCase
         ])->assertStatus(429);
         $this->assertSame(0, ContactLead::query()->count());
     }
+
+    public function test_without_javascript_the_page_is_readable_and_the_menu_is_reachable(): void
+    {
+        foreach (['/', '/cv', '/projects', '/toolkit', '/blog', '/contact', '/nl'] as $path) {
+            $html = (string) $this->get(self::HOST.$path)->assertOk()->getContent();
+            $this->assertMatchesRegularExpression('/<noscript><style>[^<]*\.rv\{opacity:1!important[^<]*#burger[^<]*<\/style><\/noscript>/s', $html, $path);
+        }
+        // The language buttons of a page without a Dutch twin do nothing without a script: hidden then.
+        $this->assertStringContainsString('class="seg js-only"', (string) $this->get(self::HOST.'/blog')->getContent());
+    }
 }
