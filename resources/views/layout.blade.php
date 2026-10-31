@@ -81,7 +81,6 @@
     <a class="brand" href="{{ route('splotnikov.home') }}" aria-label="splotnikov.dev home">@include('splotnikov::partials.logo', ['id' => 'nav'])<span data-scr="splotnikov">splotnikov</span></a>
     <div class="links" id="links">
       <a href="{{ route('splotnikov.home') }}" data-i="n_home"{!! $cur('splotnikov.home') !!}>Home</a>
-      <a href="{{ $home ? '' : route('splotnikov.home') }}#manifesto" data-i="n_manifesto">Manifesto</a>
       <a href="{{ route('splotnikov.projects') }}" data-i="n_projects"{!! $cur('splotnikov.projects') !!}>Projects</a>
       <a href="{{ route('splotnikov.toolkit') }}" data-i="n_toolkit"{!! $cur('splotnikov.toolkit') !!}>Toolkit</a>
       <a href="{{ route('splotnikov.blog') }}" data-i="n_blog"{!! $cur('splotnikov.blog') !!}>Blog</a>
