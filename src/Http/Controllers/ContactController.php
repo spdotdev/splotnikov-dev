@@ -89,7 +89,11 @@ class ContactController
         return back()->with('contact_sent', 'mailed');
     }
 
-    /** The validation rules; the text of the hand-written rule depends on the language. @return array<string, array<int, mixed>> */
+    /**
+     * The validation rules; the text of the hand-written rule depends on the language.
+     *
+     * @return array<string, array<int, mixed>>
+     */
     private function rules(bool $nl): array
     {
         return [

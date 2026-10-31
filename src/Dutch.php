@@ -108,7 +108,11 @@ final class Dutch
         return rtrim((string) preg_replace('/\s+\S*$/u', '', mb_substr($d, 0, 157)), ' ,.:;-').'…';
     }
 
-    /** The Dutch strings the page pushes for the JS switch, read from the rendered HTML. */
+    /**
+     * The Dutch strings the page pushes for the JS switch, read from the rendered HTML.
+     *
+     * @return array<string, string>
+     */
     public static function strings(string $html): array
     {
         $map = [];
@@ -130,7 +134,11 @@ final class Dutch
         return $map;
     }
 
-    /** Replace the inside of every element with data-i="key" by its Dutch string, like the JS switch does. */
+    /**
+     * Replace the inside of every element with data-i="key" by its Dutch string, like the JS switch does.
+     *
+     * @param  array<string, string>  $map
+     */
     public static function translate(string $html, array $map): string
     {
         $void = ['input', 'img', 'br', 'hr', 'meta', 'link'];
