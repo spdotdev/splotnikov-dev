@@ -1,7 +1,7 @@
 {{-- A month in the archive card: Monday first, the days with posts are links, every row's week number filters that week.
      Variables: $base, $tree, $period, $prefix. The month shown is $month (Y-m), chosen by ?m= or from the filter. --}}
 @php($month = preg_match('/^\d{4}-\d{2}$/', (string) request('m')) ? (string) request('m') : $A::calendarMonth($tree, $period))
-@php($cur = \Carbon\Carbon::createFromFormat('Y-m', $month)->startOfMonth())
+@php($cur = \Carbon\Carbon::createFromFormat('!Y-m', $month)->startOfMonth())
 @php($q = $period !== '' ? '&p='.$period : '')
 <div class="cal">
   <div class="cal-h">
