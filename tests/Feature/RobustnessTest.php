@@ -414,4 +414,25 @@ class RobustnessTest extends TestCase
         $text = (string) file_get_contents(__DIR__.'/../../src/Cases.php').(string) file_get_contents(__DIR__.'/../../public/site.js');
         $this->assertStringNotContainsStringIgnoringCase('hotel', $text, 'marketing rule: nothing that points at a client');
     }
+
+    public function test_the_blog_has_an_atom_feed_with_every_post_and_no_html_in_the_titles(): void
+    {
+        $res = $this->get(self::HOST.'/feed.xml')->assertOk();
+        $this->assertStringContainsString('application/atom+xml', (string) $res->headers->get('Content-Type'));
+        $this->assertEmpty($res->headers->getCookies(), 'the feed sets no cookie');
+        $xml = simplexml_load_string((string) $res->getContent());
+        $this->assertNotFalse($xml, 'the feed parses as XML');
+        $xml->registerXPathNamespace('a', 'http://www.w3.org/2005/Atom');
+        $links = array_map('strval', $xml->xpath('//a:entry/a:id') ?: []);
+        foreach (Posts::all() as $post) {
+            $this->assertContains('https://splotnikov.dev/blog/'.$post['slug'], $links, $post['slug']);
+        }
+        foreach ($xml->xpath('//a:entry/a:title') ?: [] as $t) {
+            $this->assertStringNotContainsString('<', (string) $t);
+        }
+        foreach (['/blog', '/blog/strangler-fig-what-the-bridge-taught-me'] as $path) {
+            $this->assertStringContainsString('rel="alternate" type="application/atom+xml"', (string) $this->get(self::HOST.$path)->getContent(), $path);
+        }
+        $this->assertStringNotContainsString('application/atom+xml', (string) $this->get(self::HOST.'/cv')->getContent());
+    }
 }

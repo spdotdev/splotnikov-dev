@@ -62,6 +62,23 @@ class SiteController
         return $this->staticFile('robots.txt', 'text/plain');
     }
 
+    /** Atom feed of the blog: every post, titles and summaries as plain text, `updated` from the post date. */
+    public function feed(): Response
+    {
+        $clean = fn (string $t): string => (string) preg_replace('/[^\x{9}\x{A}\x{D}\x{20}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '', strip_tags($t));
+        $entries = [];
+        foreach (Posts::all() as $post) {
+            if (! preg_match('/^[a-z0-9-]+$/', $post['slug']) || ! preg_match('/^\d{4}-\d{2}-\d{2}$/', $post['date'])) {
+                continue;
+            }
+            $entries[] = ['url' => 'https://splotnikov.dev/blog/'.$post['slug'], 'title' => $clean($post['title']), 'summary' => $clean($post['summary']), 'updated' => $post['date'].'T00:00:00Z'];
+        }
+        $updated = $entries ? max(array_column($entries, 'updated')) : '2026-01-01T00:00:00Z';
+
+        // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom)
+        return response(view('splotnikov::feed', ['entries' => $entries, 'updated' => $updated])->render(), 200, ['Content-Type' => 'application/atom+xml; charset=UTF-8']);
+    }
+
     public function sitemap(): Response
     {
         // The static file plus every article that only exists in sd-cms.

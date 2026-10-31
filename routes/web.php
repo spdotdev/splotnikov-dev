@@ -41,6 +41,7 @@ Route::domain(config('splotnikov-dev.domain'))
             Route::get('/toolkit', [SiteController::class, 'toolkit'])->name('splotnikov.toolkit');
             Route::get('/privacy', [SiteController::class, 'privacy'])->name('splotnikov.privacy');
             Route::get('/blog', [SiteController::class, 'blog'])->name('splotnikov.blog');
+            Route::get('/feed.xml', [SiteController::class, 'feed'])->name('splotnikov.feed');
             Route::get('/blog/{slug}', [SiteController::class, 'post'])->where('slug', '[a-z0-9-]+')->name('splotnikov.post');
 
             // The Dutch version of the pages that exist in full in both languages (see Dutch.php).

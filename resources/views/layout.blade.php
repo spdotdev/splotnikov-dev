@@ -75,6 +75,9 @@
     .js-only,.seg.th,#burger,.demo-wrap{display:none!important}
     @media (max-width:980px){nav.top{height:auto}nav.top .wrap{flex-wrap:wrap;padding-top:8px;padding-bottom:8px}nav.top .links{display:flex!important;position:static;flex-direction:row;flex-wrap:wrap;gap:0 18px;padding:0;border:0;order:3;width:100%}nav.top .links>a{padding:8px 0;font-size:15px}}
   </style></noscript>
+  @if(request()->routeIs('splotnikov.blog', 'splotnikov.post'))
+  <link rel="alternate" type="application/atom+xml" title="Notes from my own desk" href="{{ route('splotnikov.feed') }}" />
+  @endif
   @yield('head')
 </head>
 
