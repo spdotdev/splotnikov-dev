@@ -627,6 +627,7 @@ class SiteTest extends TestCase
         config(['splotnikov-dev.analytics_key' => 'abcDEF123456']);
         $this->withSession(['contact_sent' => 'mailed'])->get('http://splotnikov.dev/contact')->assertSee("sda('Contact form sent')", false);
     }
+
     /** Stas, 2026-10-31: mail and phone links live on the contact page only; the CV keeps the addresses as plain text. */
     public function test_only_the_contact_page_carries_mail_and_phone_links(): void
     {
@@ -640,5 +641,4 @@ class SiteTest extends TestCase
         $this->assertStringContainsString('href="mailto:stplotnikov@gmail.com"', $contact);
         $this->assertStringContainsString('href="tel:+31634500328"', $contact);
     }
-
 }
