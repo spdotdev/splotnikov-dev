@@ -165,8 +165,8 @@
       ], [
         ['Migrations without downtime', 'Expand first, backfill, contract later: a column is never dropped in the same release that stops writing it.', '/projects#cases', 'l', 'SAFE'],
         ['312 tests before anything ships', 'PHPUnit for the rules, Playwright for the real pages; the suite runs on every push and nothing merges red.', '/toolkit#automation', 'l', 'TESTS'],
-        ['Phalcon to Laravel, in daily use', 'The same commands run on a platform that started on Phalcon 3.4 and PHP 7.4 and was migrated while hotels used it.', '/projects#cases', 'l', 'CASE'],
-        ['Read the case', 'Sixty percent lower latency, PHP back in support, the hotels kept working.', '/projects#cases', 'l', '→']
+        ['Phalcon to Laravel, in daily use', 'The same commands run on a platform that started on Phalcon 3.4 and PHP 7.4 and was migrated while customers used it.', '/projects#cases', 'l', 'CASE'],
+        ['Read the case', 'Sixty percent lower latency, PHP back in support, the customers kept working.', '/projects#cases', 'l', '→']
       ]), { title: '312 tests green before anything ships · Laravel, PHPUnit, Playwright', done: 'done · 312 tests · 41 s' }),
       'npm-build': Object.assign(run([
         ['$', 'npm run build && npm audit --omit=dev', 'ac'],

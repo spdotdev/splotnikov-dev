@@ -408,4 +408,10 @@ class RobustnessTest extends TestCase
         $css = (string) file_get_contents(__DIR__.'/../../public/site.css');
         $this->assertStringNotContainsString('.ph,.rv{display:none', $css, 'the print sheet must not hide page headings or content');
     }
+
+    public function test_the_anonymized_cases_and_terminal_scenes_name_no_sector(): void
+    {
+        $text = (string) file_get_contents(__DIR__.'/../../src/Cases.php').(string) file_get_contents(__DIR__.'/../../public/site.js');
+        $this->assertStringNotContainsStringIgnoringCase('hotel', $text, 'marketing rule: nothing that points at a client');
+    }
 }
