@@ -1,8 +1,8 @@
 @extends('splotnikov::layout')
 @php($cv = \Spdotdev\SplotnikovDev\Cv::all())
 
-@section('title', 'CV')
-@section('description', 'Curriculum vitae of Stanislav Plotnikov: senior developer and solution architect in Eindhoven, PHP since 2008, Laravel, Python, AI agents and Linux. Printable, and downloadable as PDF.')
+@section('title', 'CV: senior developer and architect')
+@section('description', 'CV of Stanislav Plotnikov, senior developer and solution architect in Eindhoven: PHP since 2008, Laravel, AI agents. Printable, and as PDF.')
 @section('canonical', 'https://splotnikov.dev/cv')
 
 @section('head')
@@ -27,9 +27,9 @@
     <div class="plate rv glance-cv">
       <span class="lbl dot" data-i="cv_g_l">At a glance</span>
       <dl>
-        <div><dt data-i="cv_g1t">Work I do</dt><dd data-i="cv_g1d">Legacy modernization, automation with AI agents, security hardening. PHP and Laravel first, Python and Linux next to it.</dd></div>
+        <div><dt data-i="cv_g1t">Work I do</dt><dd data-i="cv_g1d">Automation with AI agents, legacy modernization, security hardening. PHP and Laravel first, Python and Linux next to it.</dd></div>
         <div><dt data-i="cv_g2t">Form</dt><dd data-i="cv_g2d">Freelance and contract, through my company Scuttle Development. EUR 90 per hour excl. VAT, written down on <a href="https://scuttle.dev/pricing" rel="noopener">scuttle.dev/pricing</a>.</dd></div>
-        <div><dt data-i="cv_g3t">Where</dt><dd data-i="cv_g3d">Eindhoven. On site in Brabant, remote for the rest of the Netherlands and Europe.</dd></div>
+        <div><dt data-i="cv_g3t">Where</dt><dd data-i="cv_g3d">Eindhoven. On site in the Eindhoven region, remote everywhere else.</dd></div>
         <div><dt data-i="cv_g4t">Languages</dt><dd data-i="cv_g4d">Dutch, English, Russian. I write documents in Dutch or English.</dd></div>
         <div><dt data-i="cv_g5t">Look before you call</dt><dd data-i="cv_g5d">Sixteen public repositories on <a href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a>, the <a href="{{ route('splotnikov.projects') }}">projects page</a> and the <a href="{{ route('splotnikov.blog') }}">blog</a>.</dd></div>
       </dl>
@@ -87,7 +87,7 @@
       @include('splotnikov::partials.logo', ['id' => 'cta', 'w' => 40, 'h' => 40])
       <h2 data-i="cv_cta_h">Want this on paper, or in your inbox?</h2>
       <p data-i="cv_cta_p">Download the PDF above, or write me and I send it with a short note on what I could do for your system.</p>
-      <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="cv_cta_b1">Use the contact form</a><a class="btn o" href="{{ route('splotnikov.projects') }}" data-i="cv_cta_b2">See the projects</a></div>
+      <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page', ['about' => 'Freelance or contract role']) }}" data-i="cv_cta_b1">Use the contact form</a><a class="btn o" href="{{ route('splotnikov.projects') }}" data-i="cv_cta_b2">See the projects</a></div>
     </div>
   </div></section>
 </article>

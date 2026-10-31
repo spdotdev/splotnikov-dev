@@ -58,11 +58,11 @@ final class Dutch
         $p = '/'.trim($enPath, '/');
         $fixed = [
             '/' => ['Senior developer en architect, Eindhoven', 'Stanislav Plotnikov: automatisering met AI-agents, modernisering van legacy en security. PHP sinds 2008. Beschikbaar als freelancer, Eindhoven of remote.'],
-            '/cv' => ['CV', 'Curriculum vitae van Stanislav Plotnikov: senior developer en solution architect in Eindhoven, PHP sinds 2008, Laravel, Python, AI-agents en Linux. Printbaar en als PDF.'],
-            '/contact' => ['Contact', 'Neem contact op met Stanislav Plotnikov in Eindhoven: het formulier, stplotnikov@gmail.com, LinkedIn en GitHub. Ik reageer binnen één werkdag.'],
-            '/projects' => ['Projecten', 'Open source projecten van Stanislav Plotnikov: een WhatsApp MCP-server, een Claude Code-skill voor handboeken, een Telegram-relay, een voorraadproduct en deze site.'],
+            '/cv' => ['CV: senior developer en architect', 'CV van Stanislav Plotnikov, senior developer en solution architect in Eindhoven: PHP sinds 2008, Laravel, AI-agents. Printbaar en als PDF.'],
+            '/contact' => ['Contact, antwoord binnen één werkdag', 'Schrijf naar Stanislav Plotnikov in Eindhoven via het formulier. Ik reageer binnen één werkdag met een eerste mening, gratis. LinkedIn en GitHub staan er ook.'],
+            '/projects' => ['Open source projecten', 'Open source projecten van Stanislav Plotnikov: een WhatsApp MCP-server, een Claude Code-skill, een Telegram-relay, een voorraadproduct en deze site.'],
             '/privacy' => ['Privacyverklaring', 'Welke gegevens splotnikov.dev gebruikt: geen cookies bij het lezen, een eigen teller zonder IP-adres, en het contactformulier.'],
-            '/toolkit' => ['Tools', 'De tools en werkwijzen die Stanislav Plotnikov dagelijks gebruikt: PHP en Laravel, AI-agents met vangrails, security, infrastructure as code en pipelines die op rood blokkeren.'],
+            '/toolkit' => ['Toolkit: PHP, AI-agents, security', 'De tools en werkwijzen die Stanislav Plotnikov dagelijks gebruikt: PHP en Laravel, AI-agents met vangrails, security, infrastructure as code en pipelines.'],
         ];
 
         return $fixed[$p] ?? ['', ''];

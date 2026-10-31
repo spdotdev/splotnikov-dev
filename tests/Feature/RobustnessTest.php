@@ -176,6 +176,27 @@ class RobustnessTest extends TestCase
         }
     }
 
+    public function test_search_snippets_say_what_the_page_is_and_end_at_a_sentence(): void
+    {
+        foreach (['/', '/cv', '/contact', '/projects', '/toolkit', '/privacy', '/blog', '/nl', '/nl/cv', '/nl/contact', '/nl/projects', '/nl/toolkit', '/nl/privacy'] as $path) {
+            $html = (string) $this->get(self::HOST.$path)->assertOk()->getContent();
+            preg_match('#<title>(.*?)</title>#s', $html, $t);
+            preg_match('#name="description" content="(.*?)"#s', $html, $d);
+            $title = html_entity_decode($t[1]);
+            $desc = html_entity_decode($d[1]);
+            $this->assertLessThanOrEqual(70, mb_strlen($title), $path.' title');
+            $this->assertLessThanOrEqual(160, mb_strlen($desc), $path.' description');
+            $this->assertStringNotContainsString('…', $title.$desc, $path.' snippet is cut mid-sentence');
+            $this->assertMatchesRegularExpression('/[.!?]$/', $desc, $path.' description ends at a sentence end');
+            $this->assertGreaterThanOrEqual(80, mb_strlen($desc), $path.' description says enough');
+            $this->assertGreaterThan(mb_strlen('Blog | Stanislav Plotnikov'), mb_strlen($title) + 1, $path.' title says more than the bare page name');
+            preg_match('#property="og:title" content="(.*?)"#', $html, $ot);
+            preg_match('#property="og:description" content="(.*?)"#', $html, $od);
+            $this->assertSame($t[1], $ot[1], $path.' og:title follows the title');
+            $this->assertSame($d[1], $od[1], $path.' og:description follows the description');
+        }
+    }
+
     public function test_every_footer_link_answers(): void
     {
         foreach (['/', '/nl/cv'] as $path) {

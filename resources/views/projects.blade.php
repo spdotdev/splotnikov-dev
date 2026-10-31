@@ -1,7 +1,7 @@
 @extends('splotnikov::layout')
 
-@section('title', 'Projects')
-@section('description', 'Open source projects by Stanislav Plotnikov: a WhatsApp MCP server, a Claude Code skill that writes field manuals, a Telegram relay for Claude Code, an inventory product, game automation and this site. Plus two anonymized pieces of client work.')
+@section('title', 'Open source projects')
+@section('description', 'Open source projects by Stanislav Plotnikov: a WhatsApp MCP server, a Claude Code skill, a Telegram relay, an inventory product and this site.')
 @section('canonical', 'https://splotnikov.dev/projects')
 
 @section('content')
@@ -11,6 +11,7 @@
       <span class="lbl dot" data-i="pj_lbl">Projects</span>
       <h1 data-i="pj_h1" data-dec>Open source, and what I build for myself</h1>
       <p class="lead" data-i="pj_lead">The personal side: tools I needed and published, products I run at home, a game turned into an engineering project. Everything here is on GitHub under my own name. Client work stays out, except the two anonymized cases at the bottom.</p>
+      <div class="cta"><a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="pj_cta_b2">Contact me</a></div>
     </div>
   </header>
 

@@ -1,7 +1,7 @@
 @extends('splotnikov::layout')
 
-@section('title', 'Blog')
-@section('description', 'The personal blog of Stanislav Plotnikov: technology, what I am busy with, why one thing beats another, from my own experience with PHP, Laravel, AI agents, security and Linux.')
+@section('title', 'Blog: technology and what I build')
+@section('description', 'My blog on technology and what I am busy with: PHP, Laravel, AI agents, security and Linux, from my own experience.')
 @section('canonical', 'https://splotnikov.dev/blog')
 
 @section('content')

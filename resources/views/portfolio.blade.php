@@ -1,7 +1,7 @@
 @extends('splotnikov::layout')
 
 @section('title', 'Senior developer and architect, Eindhoven')
-@section('description', 'Stanislav Plotnikov: automation with AI agents, legacy modernization and security. PHP since 2008. Available for freelance and contract roles, Eindhoven or remote.')
+@section('description', 'Stanislav Plotnikov: automation with AI agents, legacy modernization and security. PHP since 2008. Available for freelance, Eindhoven or remote.')
 @section('canonical', 'https://splotnikov.dev/')
 @section('ogtype', 'website')
 

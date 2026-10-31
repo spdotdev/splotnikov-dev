@@ -1,7 +1,7 @@
 @extends('splotnikov::layout')
 
-@section('title', 'Toolkit')
-@section('description', 'The tools and practices Stanislav Plotnikov uses every day: PHP and Laravel, AI agents with guardrails, security since the BackTrack days, infrastructure as code, pipelines that block red, automation.')
+@section('title', 'Toolkit: PHP, AI agents, security')
+@section('description', 'The tools and practices Stanislav Plotnikov uses every day: PHP and Laravel, AI agents with guardrails, security, infrastructure as code and pipelines.')
 @section('canonical', 'https://splotnikov.dev/toolkit')
 
 @section('content')
