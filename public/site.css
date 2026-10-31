@@ -692,6 +692,7 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 .cform .cf-foot .btn{min-height:44px}
 #cform .sent,#cform .err{scroll-margin-top:84px}
 @media (max-width:600px){.cform .cf-foot .btn{flex:1 1 100%;justify-content:center}.cform textarea{min-height:104px}}
+@media (max-width:600px){.btn{white-space:normal;text-align:center;line-height:1.3;height:auto;min-height:44px;padding:12px 14px}}
 @media (max-width:600px){.contact-page .ph{padding:24px 0 18px}.contact-page .ph h1{margin:8px 0 10px}.contact-page .ph .lead{font-size:16px;line-height:1.5}.contact-page .cform.light{padding:16px}}
 .cform .err p{margin:0;color:inherit}.cform .err p+p{margin-top:4px}
 nav.top{background:color-mix(in srgb,var(--bg) 94%,transparent)}
