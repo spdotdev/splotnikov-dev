@@ -9,6 +9,7 @@ use Illuminate\Support\ViewErrorBag;
 use Spdotdev\SplotnikovDev\Archive;
 use Spdotdev\SplotnikovDev\Cases;
 use Spdotdev\SplotnikovDev\Cv;
+use Spdotdev\SplotnikovDev\Dutch;
 use Spdotdev\SplotnikovDev\Http\Controllers\ContactController;
 use Spdotdev\SplotnikovDev\Models\ContactLead;
 use Spdotdev\SplotnikovDev\Posts;
@@ -340,5 +341,20 @@ class RobustnessTest extends TestCase
         $bag->put('default', new MessageBag(['message' => ['Old session error.']]));
         $html = (string) $this->withSession(['errors' => $bag])->get(self::HOST.'/contact')->assertOk()->getContent();
         $this->assertStringContainsString('<p data-i="ctp_err_0">Old session error.</p>', $html);
+    }
+
+    public function test_a_long_blog_title_is_shortened_at_its_colon_and_never_ends_in_an_ellipsis(): void
+    {
+        $post = Posts::all()['strangler-fig-what-the-bridge-taught-me'];
+        $this->assertStringContainsString(': ', $post['title']);
+        $this->assertSame('Strangler Fig in practice | Stanislav Plotnikov', Dutch::fit($post['title']));
+        $this->assertSame('Short title | Stanislav Plotnikov', Dutch::fit('Short title'));
+
+        $long = 'Why a careful team still ships the same outage twice and what to change about the review habit';
+        $fit = Dutch::fit($long);
+        $this->assertLessThanOrEqual(70, mb_strlen($fit));
+        $this->assertStringNotContainsString("\u{2026}", $fit);
+        $this->assertStringStartsWith($fit, $long, 'cut at a word boundary, nothing added');
+        $this->assertStringNotContainsString(' | ', Dutch::fit('A short head: '.str_repeat('and a very long tail ', 5)), 'a head under 20 characters is not used');
     }
 }

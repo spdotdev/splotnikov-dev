@@ -70,12 +70,28 @@ final class Dutch
 
     public static function fit(string $title, string $suffix = ' | Stanislav Plotnikov'): string
     {
-        $t = mb_strlen($title.$suffix) <= 66 ? $title.$suffix : $title;
-        if (mb_strlen($t) > 70) {
-            $t = rtrim((string) preg_replace('/\s+\S*$/u', '', mb_substr($t, 0, 68)), ' ,.:;-').'…';
+        if (mb_strlen($title.$suffix) <= 66) {
+            return $title.$suffix;
+        }
+        if (mb_strlen($title) <= 70) {
+            return $title;
+        }
+        // Too long for a search title: use the part before the first colon when it is a real headline of its own.
+        $head = trim(explode(':', $title, 2)[0]);
+        if (str_contains($title, ':') && mb_strlen($head) >= 20) {
+            $title = $head;
+            if (mb_strlen($title.$suffix) <= 66) {
+                return $title.$suffix;
+            }
+        }
+        if (mb_strlen($title) <= 70) {
+            return $title;
         }
 
-        return $t;
+        // No usable head: cut at a word boundary, no ellipsis.
+        $cut = (string) preg_replace('/\s+\S*$/u', '', mb_substr($title, 0, 69));
+
+        return rtrim($cut, ' ,.:;-');
     }
 
     public static function fitDescription(string $d): string
