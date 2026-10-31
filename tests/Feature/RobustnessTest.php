@@ -377,4 +377,15 @@ class RobustnessTest extends TestCase
             $this->assertStringContainsString('"blp_cta":"Praat over je eigen systeem"', $page, $slug);
         }
     }
+
+    public function test_the_seventh_post_in_a_minute_is_throttled_and_stores_nothing(): void
+    {
+        for ($i = 0; $i < 6; $i++) {
+            $this->from(self::HOST.'/contact')->post(self::HOST.'/contact', ['name' => '']);
+        }
+        $this->from(self::HOST.'/contact')->post(self::HOST.'/contact', [
+            'name' => 'Anna', 'email' => 'anna@example.com', 'message' => 'A message that is long enough.', 't' => $this->agedToken(), 'website' => '',
+        ])->assertStatus(429);
+        $this->assertSame(0, ContactLead::query()->count());
+    }
 }
