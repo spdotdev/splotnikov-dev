@@ -27,8 +27,16 @@
       @if(session('contact_sent') && config('splotnikov-dev.analytics_key'))
         <script>document.addEventListener('DOMContentLoaded',function(){window.sda&&sda('Contact form sent')})</script>
       @endif
-      @if($errors->any())
-        <div class="err" role="alert">@foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach</div>
+      @php
+        $errorsEn = session('contact_errors_en');
+        $errorsNl = session('contact_errors_nl');
+        if (! is_array($errorsEn) || ! is_array($errorsNl) || count($errorsEn) !== count($errorsNl)) {
+            $errorsEn = $errors->all();
+            $errorsNl = $errorsEn;
+        }
+      @endphp
+      @if($errors->any() || count($errorsEn))
+        <div class="err" role="alert">@foreach($errorsEn as $i => $m)<p data-i="ctp_err_{{ $i }}">{{ $m }}</p>@endforeach</div>
       @endif
       <div class="two-f">
         <label><span data-i="ctp_name">Name</span><input type="text" name="name" required maxlength="120" value="{{ old('name') }}" autocomplete="name"></label>
@@ -93,6 +101,9 @@ $nl = [
     'ctp_stored' => 'Ontvangen en bewaard. Ik kon het nu niet per e-mail doorsturen, maar ik heb het en ik antwoord op het adres dat je opgaf. Is het dringend, mail dan stplotnikov@gmail.com.',
     'ctp_bio' => 'Stanislav Plotnikov, Stas. Senior developer en solution architect, PHP sinds 2008, Laravel en Phalcon in productie, Python voor automatisering en AI, Kotlin voor Android. Nederlands, Engels en Russisch. Eén persoon, één aanspreekpunt, van het eerste gesprek tot de overdracht.',
 ];
+foreach (($errorsNl ?? []) as $i => $m) {
+    $nl['ctp_err_'.$i] = e($m);
+}
 ?>
 <script>
 Object.assign(window.SCUTTLE_NL.t, @json($nl));

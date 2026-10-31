@@ -4,6 +4,8 @@ namespace Spdotdev\SplotnikovDev\Tests\Feature;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 use Spdotdev\SplotnikovDev\Archive;
 use Spdotdev\SplotnikovDev\Cases;
 use Spdotdev\SplotnikovDev\Cv;
@@ -261,5 +263,82 @@ class RobustnessTest extends TestCase
         $this->assertNotEmpty(Cv::nl());
         $this->expectException(NotFoundHttpException::class);
         Posts::get('no-such-post');
+    }
+
+    /** @param array<string, mixed> $over */
+    private function postFrom(string $from, array $over): string
+    {
+        $ok = ['name' => 'Test Person', 'email' => 'test@example.com', 'message' => 'A message that is long enough.', 't' => $this->agedToken(), 'website' => ''];
+
+        return (string) $this->from(self::HOST.$from)->followingRedirects()->post(self::HOST.'/contact', $over + $ok)->getContent();
+    }
+
+    /** @return array<string, string> the Dutch map the page hands to the language switch */
+    private function dutchMap(string $html): array
+    {
+        $this->assertSame(1, preg_match('#Object\.assign\(window\.SCUTTLE_NL\.t, (\{.*?\})\);#s', $html, $m), 'the page carries a Dutch map');
+
+        return json_decode($m[1], true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    public function test_validation_errors_come_in_both_languages_from_the_english_page(): void
+    {
+        $html = $this->postFrom('/contact', ['email' => 'nope', 'message' => 'short']);
+        $this->assertStringContainsString('<p data-i="ctp_err_0">That email address does not look right. Please check it.</p>', $html);
+        $this->assertStringContainsString('<p data-i="ctp_err_1">Your message is too short. Please write at least 10 characters.</p>', $html);
+        $map = $this->dutchMap($html);
+        $this->assertSame('Dit e-mailadres lijkt niet te kloppen. Controleer het even.', $map['ctp_err_0']);
+        $this->assertSame('Je bericht is te kort. Schrijf minstens 10 tekens.', $map['ctp_err_1']);
+    }
+
+    public function test_validation_errors_are_dutch_on_the_dutch_page_and_english_stays_in_the_map(): void
+    {
+        $html = $this->postFrom('/nl/contact', ['email' => 'nope', 'message' => 'short']);
+        $this->assertStringContainsString('Dit e-mailadres lijkt niet te kloppen. Controleer het even.', $html);
+        $this->assertStringContainsString('Je bericht is te kort.', $html);
+        $this->assertStringNotContainsString('That email address does not look right', $html);
+        $this->assertStringContainsString('data-i="ctp_err_0"', $html);
+    }
+
+    public function test_the_error_lists_have_the_same_length_and_order_in_both_languages(): void
+    {
+        $this->from(self::HOST.'/contact')->post(self::HOST.'/contact', ['name' => '', 'email' => 'x', 'message' => '', 't' => '']);
+        $en = session('contact_errors_en');
+        $nl = session('contact_errors_nl');
+        $this->assertIsArray($en);
+        $this->assertGreaterThanOrEqual(4, count($en));
+        $this->assertCount(count($en), $nl);
+        $this->assertSame('Please enter your name.', $en[0]);
+        $this->assertSame('Vul je naam in.', $nl[0]);
+    }
+
+    public function test_a_control_character_gets_its_sentence_in_both_languages(): void
+    {
+        $this->from(self::HOST.'/contact')->post(self::HOST.'/contact', ['name' => "Ann\x07a", 'email' => 'a@example.com', 'message' => 'A message that is long enough.', 't' => $this->agedToken(), 'website' => '']);
+        $this->assertSame(['The name contains characters that are not allowed.'], session('contact_errors_en'));
+        $this->assertSame(['Dit veld bevat tekens die niet zijn toegestaan.'], session('contact_errors_nl'));
+    }
+
+    public function test_the_bot_check_failure_appears_in_both_languages(): void
+    {
+        $html = $this->postFrom('/contact', ['t' => ContactController::token()]);
+        $this->assertStringContainsString('The bot check failed.', $html);
+        $this->assertStringContainsString('De botcontrole is mislukt.', $this->dutchMap($html)['ctp_err_0']);
+    }
+
+    public function test_the_save_failure_appears_in_both_languages(): void
+    {
+        Schema::drop('splotnikov_contact_leads');
+        $html = $this->postFrom('/contact', []);
+        $this->assertStringContainsString('could not be saved right now', $html);
+        $this->assertStringContainsString('kon nu niet worden bewaard', $this->dutchMap($html)['ctp_err_0']);
+    }
+
+    public function test_without_the_flashed_lists_the_page_falls_back_to_the_error_bag(): void
+    {
+        $bag = new ViewErrorBag;
+        $bag->put('default', new MessageBag(['message' => ['Old session error.']]));
+        $html = (string) $this->withSession(['errors' => $bag])->get(self::HOST.'/contact')->assertOk()->getContent();
+        $this->assertStringContainsString('<p data-i="ctp_err_0">Old session error.</p>', $html);
     }
 }
