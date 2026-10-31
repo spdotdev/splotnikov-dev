@@ -357,4 +357,13 @@ class RobustnessTest extends TestCase
         $this->assertStringStartsWith($fit, $long, 'cut at a word boundary, nothing added');
         $this->assertStringNotContainsString(' | ', Dutch::fit('A short head: '.str_repeat('and a very long tail ', 5)), 'a head under 20 characters is not used');
     }
+
+    public function test_the_cv_project_count_is_the_real_count_in_both_languages(): void
+    {
+        $n = count(Projects::all());
+        $this->assertGreaterThan(0, $n);
+        $this->assertStringContainsString($n.' open source projects on the', (string) $this->get(self::HOST.'/cv')->assertOk()->getContent());
+        $this->assertStringContainsString($n.' open source projecten op de', (string) $this->get(self::HOST.'/nl/cv')->assertOk()->getContent());
+        $this->assertStringNotContainsString('Sixteen', (string) $this->get(self::HOST.'/cv')->getContent());
+    }
 }

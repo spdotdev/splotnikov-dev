@@ -7,8 +7,7 @@
   @php
     // Search results cut titles near 60 characters and descriptions near 160: keep both inside, at a word boundary.
     $rawTitle = trim(preg_replace('/\s+/', ' ', $__env->yieldContent('title')));
-    $seoTitle = mb_strlen($rawTitle.' | Stanislav Plotnikov') <= 66 ? $rawTitle.' | Stanislav Plotnikov' : $rawTitle;
-    if (mb_strlen($seoTitle) > 70) { $seoTitle = rtrim(preg_replace('/\s+\S*$/u', '', mb_substr($seoTitle, 0, 68)), " ,.:;-").'…'; }
+    $seoTitle = \Spdotdev\SplotnikovDev\Dutch::fit($rawTitle);
     $rawDesc = trim(preg_replace('/\s+/', ' ', html_entity_decode($__env->yieldContent('description'))));
     $seoDesc = $rawDesc;
     if (mb_strlen($rawDesc) > 160) {

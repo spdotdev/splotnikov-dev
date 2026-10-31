@@ -31,7 +31,7 @@
         <div><dt data-i="cv_g2t">Form</dt><dd data-i="cv_g2d">Freelance and contract, through my company Scuttle Development. EUR 90 per hour excl. VAT, written down on <a href="https://scuttle.dev/pricing" rel="noopener">scuttle.dev/pricing</a>.</dd></div>
         <div><dt data-i="cv_g3t">Where</dt><dd data-i="cv_g3d">Eindhoven. On site in the Eindhoven region, remote everywhere else.</dd></div>
         <div><dt data-i="cv_g4t">Languages</dt><dd data-i="cv_g4d">Dutch, English, Russian. I write documents in Dutch or English.</dd></div>
-        <div><dt data-i="cv_g5t">Look before you call</dt><dd data-i="cv_g5d">Sixteen public repositories on <a href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a>, the <a href="{{ route('splotnikov.projects') }}">projects page</a> and the <a href="{{ route('splotnikov.blog') }}">blog</a>.</dd></div>
+        <div><dt data-i="cv_g5t">Look before you call</dt><dd data-i="cv_g5d">{{ count(\Spdotdev\SplotnikovDev\Projects::all()) }} open source projects on the <a href="{{ route('splotnikov.projects') }}">projects page</a>, the public repositories on <a href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a>, the <a href="{{ route('splotnikov.blog') }}">blog</a> and the case studies.</dd></div>
       </dl>
     </div>
   </div>
