@@ -11,6 +11,7 @@
       <span class="lbl dot" data-i="bl_lbl">Blog</span>
       <h1 data-i="bl_h1" data-dec>Notes from my own desk</h1>
       <p class="lead" data-i="bl_lead">Technology and what I am busy with: why one thing beats another, what a year of running two frameworks in one app taught me, what I build with AI and where I keep a human in the loop. My own experience, no client names.</p>
+      <p class="lead-cta"><span data-i="bl_top_p">Want the same thing in your own system?</span> <a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="bl_cta_b1">Contact me</a></p>
     </div>
   </header>
 
@@ -52,6 +53,7 @@ $nl = [
     'bl_lbl' => 'Blog',
     'bl_h1' => 'Notities van mijn eigen bureau',
     'bl_lead' => 'Technologie en waar ik mee bezig ben: waarom het ene beter is dan het andere, wat een jaar met twee frameworks in één app me leerde, wat ik met AI bouw en waar ik een mens in de lus houd. Mijn eigen ervaring, geen klantnamen.',
+    'bl_top_p' => 'Wil je hetzelfde in je eigen systeem?',
     'bl_more' => 'Lees →',
     'bl_arch' => 'Archief', 'bl_all' => 'Alle berichten', 'bl_showing' => 'Je ziet', 'bl_all2' => 'alle berichten', 'bl_none' => 'Niets op deze pagina.', 'bl_prev' => '← Nieuwer', 'bl_page' => 'Pagina', 'bl_next' => 'Ouder →',
     'bl_cta_h' => 'Wil je het over een van deze hebben?',

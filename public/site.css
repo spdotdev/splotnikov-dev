@@ -696,3 +696,7 @@ footer .bottom{grid-column:1/-1;border-top:1px solid var(--dark-line);padding-to
 @media (max-width:600px){.contact-page .ph{padding:24px 0 18px}.contact-page .ph h1{margin:8px 0 10px}.contact-page .ph .lead{font-size:16px;line-height:1.5}.contact-page .cform.light{padding:16px}}
 .cform .err p{margin:0;color:inherit}.cform .err p+p{margin-top:4px}
 nav.top{background:color-mix(in srgb,var(--bg) 94%,transparent)}
+
+/* A one-line offer under the lead of the long index pages, so the first button is in the first screen (round 11) */
+.lead-cta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:16px;font-weight:600;color:var(--ink)}
+@media (max-width:600px){.lead-cta{flex-direction:column;align-items:stretch;gap:10px}.lead-cta .btn{width:100%;justify-content:center;text-align:center}}
