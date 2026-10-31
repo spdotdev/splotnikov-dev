@@ -10,7 +10,7 @@
     <div>
       <span class="lbl dot" data-i="ctp_lbl">Contact</span>
       <h1 data-i="ctp_h1" data-dec>Tell me what you are running</h1>
-      <p class="lead" data-i="ctp_lead">A system that must not stop, a migration nobody dares to start, hours that go into work a machine could do. I reply within one working day with a first opinion, free. A hard question gets what I need to look at before I answer it, not a dodge.</p>
+      <p class="lead" data-i="ctp_lead">Stuck on a system that must not stop, a migration nobody dares to start, or work a machine could do? I reply within one working day with a first opinion, free.</p>
     </div>
   </header>
 
@@ -28,19 +28,19 @@
         <script>document.addEventListener('DOMContentLoaded',function(){window.sda&&sda('Contact form sent')})</script>
       @endif
       @if($errors->any())
-        <div class="err" role="alert">{{ $errors->first() }}</div>
+        <div class="err" role="alert">@foreach($errors->all() as $error)<p>{{ $error }}</p>@endforeach</div>
       @endif
       <div class="two-f">
         <label><span data-i="ctp_name">Name</span><input type="text" name="name" required maxlength="120" value="{{ old('name') }}" autocomplete="name"></label>
         <label><span data-i="ctp_email">Email</span><input type="email" name="email" required maxlength="160" value="{{ old('email') }}" autocomplete="email"></label>
       </div>
-      <label><span data-i="ctp_about">About</span><select name="about" id="cf-about">@foreach(['Not sure yet' => '', 'A freelance or contract role' => 'Freelance or contract role', 'Legacy modernization' => 'Legacy modernization', 'Automation with AI agents' => 'Automation with AI agents', 'Security' => 'Security', 'Architecture advice' => 'Architecture advice', 'Something else' => 'Something else'] as $label => $value)<option value="{{ $value }}" @selected(old('about', request('about')) === $value && $value !== '')>{{ $label }}</option>@endforeach</select></label>
-      <label><span data-i="ctp_msg">What are you running, and what should change?</span><textarea name="message" required minlength="10" maxlength="4000" rows="8">{{ old('message') }}</textarea></label>
+      <label><span data-i="ctp_about">About</span><select name="about" id="cf-about">@foreach([['ctp_o0', 'Not sure yet', ''], ['ctp_o1', 'A freelance or contract role', 'Freelance or contract role'], ['ctp_o2', 'Legacy modernization', 'Legacy modernization'], ['ctp_o3', 'Automation with AI agents', 'Automation with AI agents'], ['ctp_o4', 'Security', 'Security'], ['ctp_o5', 'Architecture advice', 'Architecture advice'], ['ctp_o6', 'Something else', 'Something else']] as [$key, $label, $value])<option data-i="{{ $key }}" value="{{ $value }}" @selected(old('about', request('about')) === $value && $value !== '')>{{ $label }}</option>@endforeach</select></label>
+      <label><span data-i="ctp_msg">What are you running, and what should change?</span><textarea name="message" required minlength="10" maxlength="4000" rows="6">{{ old('message') }}</textarea></label>
       @if(config('splotnikov-dev.turnstile_site_key'))
         <div class="cf-turnstile" data-sitekey="{{ config('splotnikov-dev.turnstile_site_key') }}"></div>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
       @endif
-      <div class="cf-foot"><button class="btn" type="submit" data-i="ctp_send">Send</button><a class="btn o" href="{{ config('splotnikov-dev.booking_url') }}" data-i="ctp_book">Or book a call</a><small data-i="ctp_note">No tracking cookies, no newsletter. Your message goes to stplotnikov@gmail.com and nowhere else.</small></div>
+      <div class="cf-foot"><button class="btn" type="submit" data-i="ctp_send">Send</button><a class="btn o" href="{{ config('splotnikov-dev.booking_url') }}" rel="noopener" data-i="ctp_book">Or book a call</a><small data-i="ctp_note">No tracking cookies, no newsletter. Your message goes to stplotnikov@gmail.com and nowhere else.</small></div>
     </form>
 
     <div class="side-cards">
@@ -74,11 +74,16 @@
 @endsection
 
 @push('nl')
+<script>
+// After a send or a validation error the message sits at the top of the form: bring it into view first.
+document.addEventListener('DOMContentLoaded',function(){var m=document.querySelector('#cform .sent,#cform .err');if(m)m.scrollIntoView({block:'start'})});
+</script>
 <?php
 $nl = [
     'ctp_lbl' => 'Contact',
     'ctp_h1' => 'Vertel me wat je draait',
-    'ctp_lead' => 'Een systeem dat niet mag stoppen, een migratie die niemand durft te starten, uren die in werk gaan dat een machine kan doen. Ik reageer binnen één werkdag met een eerste mening, gratis. Een moeilijke vraag krijgt wat ik moet bekijken voordat ik antwoord, geen ontwijking.',
+    'ctp_lead' => 'Vast met een systeem dat niet mag stoppen, een migratie die niemand durft te starten of werk dat een machine kan doen? Ik reageer binnen één werkdag met een eerste mening, gratis.',
+    'ctp_o0' => 'Nog niet zeker', 'ctp_o1' => 'Een freelance- of contractrol', 'ctp_o2' => 'Legacy-modernisering', 'ctp_o3' => 'Automatisering met AI-agents', 'ctp_o4' => 'Beveiliging', 'ctp_o5' => 'Architectuuradvies', 'ctp_o6' => 'Iets anders',
     'ctp_name' => 'Naam', 'ctp_email' => 'E-mail', 'ctp_about' => 'Waarover', 'ctp_msg' => 'Wat draai je, en wat moet er veranderen?',
     'ctp_send' => 'Verstuur', 'ctp_book' => 'Of plan een gesprek', 'ctp_note' => 'Geen trackingcookies, geen nieuwsbrief. Je bericht gaat naar stplotnikov@gmail.com en nergens anders heen.',
     'ctp_reach' => 'Bereik me', 'ctp_where' => 'Eindhoven, Nederland<br>Op locatie in de regio Eindhoven, op afstand overal elders.',
