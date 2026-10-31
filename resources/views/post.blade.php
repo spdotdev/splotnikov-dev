@@ -36,6 +36,18 @@
     <p data-i="blp_q">Written by Stanislav Plotnikov, senior developer and solution architect in Eindhoven. Disagree or want to talk about your own system? <a href="/contact">Write me</a>, or find me on <a href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a>.</p>
   </div>
 
+  <?php
+    $topicMap = ['Modernization' => 'Legacy modernization', 'Security' => 'Security', 'AI' => 'Automation with AI agents', 'Claude Code' => 'Automation with AI agents', 'Automation' => 'Automation with AI agents', 'Architecture' => 'Architecture advice'];
+    $topic = null;
+    foreach ($topicMap as $tag => $value) {
+        if (in_array($tag, $post['tags'] ?? [], true)) {
+            $topic = $value;
+            break;
+        }
+    }
+  ?>
+  <p style="margin-top:24px"><a class="btn" href="{{ route('splotnikov.contact.page', $topic ? ['about' => $topic] : []) }}" data-i="blp_cta">Talk about your own system</a></p>
+
   <p class="updated" style="margin-top:32px"><span data-i="blp_more">More notes:</span> @foreach(\Spdotdev\SplotnikovDev\Posts::all() as $o)@if($o['slug'] !== $post['slug'])<a href="{{ route('splotnikov.post', ['slug' => $o['slug']]) }}">{{ $o['title'] }}</a> · @endif @endforeach <a href="{{ route('splotnikov.blog') }}" data-i="blp_all">all posts</a></p>
 </article>
 @endsection
@@ -50,6 +62,7 @@ $nl = [
     'blp_q' => 'Geschreven door Stanislav Plotnikov, senior developer en solution architect in Eindhoven. Oneens, of wil je het over je eigen systeem hebben? <a href="/contact">Schrijf me</a>, of vind me op <a href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a>.',
     'blp_more' => 'Meer notities:',
     'blp_all' => 'alle berichten',
+    'blp_cta' => 'Praat over je eigen systeem',
 ];
 ?>
 <script>

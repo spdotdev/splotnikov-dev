@@ -366,4 +366,15 @@ class RobustnessTest extends TestCase
         $this->assertStringContainsString($n.' open source projecten op de', (string) $this->get(self::HOST.'/nl/cv')->assertOk()->getContent());
         $this->assertStringNotContainsString('Sixteen', (string) $this->get(self::HOST.'/cv')->getContent());
     }
+
+    public function test_every_post_ends_with_a_button_to_the_contact_form_with_a_topic_where_the_tags_say_one(): void
+    {
+        $html = (string) $this->get(self::HOST.'/blog/strangler-fig-what-the-bridge-taught-me')->assertOk()->getContent();
+        $this->assertStringContainsString('class="btn" href="http://splotnikov.dev/contact?about=Legacy%20modernization" data-i="blp_cta"', $html);
+        foreach (array_keys(Posts::all()) as $slug) {
+            $page = (string) $this->get(self::HOST.'/blog/'.$slug)->assertOk()->getContent();
+            $this->assertStringContainsString('data-i="blp_cta"', $page, $slug);
+            $this->assertStringContainsString('"blp_cta":"Praat over je eigen systeem"', $page, $slug);
+        }
+    }
 }
