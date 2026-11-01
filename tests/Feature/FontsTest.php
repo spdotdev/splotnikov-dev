@@ -38,7 +38,7 @@ class FontsTest extends TestCase
         }
     }
 
-    public function test_dutch_pages_use_no_glyph_outside_the_font_subsets(): void
+    public function test_pages_use_no_glyph_outside_the_font_subsets(): void
     {
         $set = [];
         preg_match_all('/unicode-range:([^}]*)\}/', $this->css(), $ranges);
@@ -50,9 +50,12 @@ class FontsTest extends TestCase
                 }
             }
         }
-        // The arrow on "On GitHub" style links is in neither font; the browser draws it from a system font.
-        $allowed = [0x2192 => true];
-        foreach (['/nl', '/nl/cv', '/nl/projects', '/nl/toolkit', '/nl/contact', '/nl/privacy'] as $path) {
+        // The arrows U+2190, U+2192 and U+2197 are in the latin files since round 15: no system font fallback is allowed any more.
+        foreach ([0x2190, 0x2191, 0x2192, 0x2193, 0x2197] as $arrow) {
+            $this->assertArrayHasKey($arrow, $set, 'U+'.dechex($arrow).' is not in a unicode-range');
+        }
+        $allowed = [];
+        foreach (['/', '/cv', '/projects', '/toolkit', '/contact', '/privacy', '/blog', '/nl', '/nl/cv', '/nl/projects', '/nl/toolkit', '/nl/contact', '/nl/privacy'] as $path) {
             $html = (string) $this->get('http://splotnikov.dev'.$path)->assertOk()->getContent();
             $text = html_entity_decode(strip_tags((string) preg_replace('#<(script|style)\b.*?</\1>#s', '', $html)), ENT_QUOTES, 'UTF-8');
             foreach (mb_str_split($text) as $ch) {

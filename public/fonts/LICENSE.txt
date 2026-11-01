@@ -2,3 +2,6 @@ Geist and Geist Mono
 Copyright (c) 2023 Vercel, in collaboration with basement.studio
 Licensed under the SIL Open Font License, Version 1.1
 https://github.com/vercel/geist-font/blob/main/LICENSE.TXT
+
+Files in this folder: Geist and Geist Mono version 1.9.0 (vercel/geist-font release v1.9.0, 2026-10-30), variable weight axis kept,
+cut with fontTools pyftsubset to Latin plus the arrows U+2190 to U+2193 and U+2197 (latin files) and the Latin Extended ranges (latin-ext files).
