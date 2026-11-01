@@ -20,7 +20,7 @@ class PreviewDumpTest extends TestCase
         }
         is_dir($dir) || mkdir($dir, 0755, true);
 
-        $pages = ['/' => 'index', '/cv' => 'cv', '/contact' => 'contact', '/projects' => 'projects', '/toolkit' => 'toolkit', '/blog' => 'blog', '/blog/strangler-fig-what-the-bridge-taught-me' => 'post'];
+        $pages = ['/' => 'index', '/cv' => 'cv', '/contact' => 'contact', '/projects' => 'projects', '/toolkit' => 'toolkit', '/blog' => 'blog', '/blog/strangler-fig-what-the-bridge-taught-me' => 'post', '/privacy' => 'privacy'];
         $map = [];
         foreach ($pages as $path => $file) {
             $map['href="http://splotnikov.dev'.$path.'"'] = 'href="'.$file.'.html"';
@@ -39,6 +39,18 @@ class PreviewDumpTest extends TestCase
                 file_put_contents($dir.'/nl-'.$file.'.html', strtr($html, $map));
             }
         }
+        // The states a visitor reaches after posting the form, and the 404 page.
+        $bag = new \Illuminate\Support\ViewErrorBag;
+        $bag->put('default', new \Illuminate\Support\MessageBag(['message' => ['Please write a message.']]));
+        foreach (['' => 'contact-error', '/nl' => 'nl-contact-error'] as $prefix => $file) {
+            $html = (string) $this->withSession(['errors' => $bag])->get('http://splotnikov.dev'.$prefix.'/contact')->assertOk()->getContent();
+            file_put_contents($dir.'/'.$file.'.html', strtr($html, $map));
+        }
+        foreach (['' => 'contact-sent', '/nl' => 'nl-contact-sent'] as $prefix => $file) {
+            $html = (string) $this->withSession(['contact_sent' => 'mailed'])->get('http://splotnikov.dev'.$prefix.'/contact')->assertOk()->getContent();
+            file_put_contents($dir.'/'.$file.'.html', strtr($html, $map));
+        }
+        file_put_contents($dir.'/404.html', strtr((string) $this->get('http://splotnikov.dev/nope')->assertNotFound()->getContent(), $map));
         $this->assertFileExists($dir.'/index.html');
     }
 }
