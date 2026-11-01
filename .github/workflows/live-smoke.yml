@@ -1,0 +1,20 @@
+name: Live smoke
+
+# Every six hours: fetch the addresses in scripts/smoke-urls.txt from the live site and require the expected status,
+# the marker phrase from the page and an answer under 3 seconds (three tries, 20 s apart). No browser, under a minute.
+# A failing run lists every failing address. Run it by hand with "Run workflow".
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/live-smoke.py https://splotnikov.dev scripts/smoke-urls.txt

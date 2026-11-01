@@ -1,0 +1,19 @@
+# Addresses the live smoke check fetches every six hours (.github/workflows/live-smoke.yml, scripts/live-smoke.py).
+# One per line: expected status, path, marker. The marker is a short phrase that must be in the response body.
+# A content change that moves a phrase is a one-line edit here. SmokeListTest keeps the list honest: every path is
+# in the sitemap or is a crawler file, and every marker is in the rendered page.
+200 | / | Senior developer and architect, Eindhoven
+200 | /nl | Senior developer en architect, Eindhoven
+200 | /cv | CV: senior developer and architect
+200 | /nl/cv | CV: senior developer en architect
+200 | /contact | Tell me what you are running
+200 | /nl/contact | Vertel me wat je draait
+200 | /projects | Open source, and what I build for myself
+200 | /nl/projects | Open source, en wat ik voor mezelf bouw
+200 | /blog | Notes from my own desk
+200 | /blog/strangler-fig-what-the-bridge-taught-me | Strangler Fig in practice
+200 | /feed.xml | <feed xmlns="http://www.w3.org/2005/Atom"
+200 | /sitemap.xml | <urlset
+200 | /robots.txt | Sitemap: https://splotnikov.dev/sitemap.xml
+200 | /site.webmanifest | Stanislav Plotnikov
+404 | /nl/does-not-exist | Die pagina bestaat niet
