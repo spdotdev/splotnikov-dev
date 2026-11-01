@@ -23,7 +23,7 @@ with sync_playwright() as p:
             elif r['id'] == stops[0]['id'] and r['txt'] == stops[0]['txt']: break
             stops.append(r)
         miss = [s for s in stops if not s['ring'] or not s['shown']]
-        bad += len(miss) + (0 if first and first.lower().startswith('skip') else 1)
+        bad += len(miss) + (0 if first and first.lower().startswith(('skip', 'naar de inhoud')) else 1)
         print(f'{path}: {len(stops)} stops, first "{first}", without visible focus: {[m["id"] + " " + m["txt"] for m in miss]}')
     b.close()
 sys.exit(1 if bad else 0)
