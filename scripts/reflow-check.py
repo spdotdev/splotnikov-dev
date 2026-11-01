@@ -1,7 +1,7 @@
-# Usage: python3 scripts/reflow-check.py https://example.dev paths.txt
-# WCAG 1.4.10 and 1.4.4: at 320 px wide, once as is and once with the root font size doubled, no page scrolls sideways
+# Usage: [REFLOW_WIDTHS=320,390,1366 REFLOW_SIZES=100%,125%,200%] python3 scripts/reflow-check.py https://example.dev paths.txt
+# WCAG 1.4.10 and 1.4.4: at 320 px wide (set REFLOW_WIDTHS and REFLOW_SIZES for others; the default sizes are as is and doubled), no page scrolls sideways
 # and no element with its own text is clipped by overflow:hidden or clip. Lists every finding, exit 1 on any.
-import sys
+import os, sys
 from playwright.sync_api import sync_playwright
 base = sys.argv[1].rstrip('/'); paths = [l.strip() for l in open(sys.argv[2]) if l.strip()]
 CLIP = """()=>{const out=[];for(const e of document.querySelectorAll('body *')){const cs=getComputedStyle(e);
@@ -12,14 +12,15 @@ CLIP = """()=>{const out=[];for(const e of document.querySelectorAll('body *')){
 bad = []
 with sync_playwright() as p:
     b = p.chromium.launch()
-    for fs in ('100%', '200%'):
-        pg = b.new_context(viewport={'width': 320, 'height': 700}, is_mobile=True, reduced_motion='reduce').new_page()
+    for fs in os.environ.get('REFLOW_SIZES', '100%,200%').split(','):
+      for vw in [int(x) for x in os.environ.get('REFLOW_WIDTHS', '320').split(',')]:
+        pg = b.new_context(viewport={'width': vw, 'height': 700}, is_mobile=vw < 600, reduced_motion='reduce').new_page()
         for path in paths:
             pg.goto(base + path, wait_until='load', timeout=45000)
             pg.evaluate("s=>document.documentElement.style.fontSize=s", fs); pg.wait_for_timeout(500)
             w = pg.evaluate("document.documentElement.scrollWidth"); clip = pg.evaluate(CLIP)
-            if w > 320 or clip:
-                bad.append((fs, path, w, clip))
+            if w > vw or clip:
+                bad.append((fs, vw, path, w, clip))
     b.close()
-print(len(paths), 'pages x 2 sizes,', len(bad), 'findings'); [print(x) for x in bad]
+print(len(paths), 'pages x sizes x widths,', len(bad), 'findings'); [print(x) for x in bad]
 sys.exit(1 if bad else 0)

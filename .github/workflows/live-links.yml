@@ -56,5 +56,9 @@ jobs:
         run: python3 scripts/focus-check.py "$SITE" "$(paste -sd, paths.txt)"
       - name: Touch targets and first button
         run: python3 scripts/ui-check.py "$SITE"
-      - name: Reflow at 320 px, also with the root font size doubled
-        run: python3 scripts/reflow-check.py "$SITE" paths.txt
+      - name: Reflow at 320 px, also with the root font size at 150 percent
+        run: REFLOW_SIZES=100%,150% python3 scripts/reflow-check.py "$SITE" paths.txt
+      - name: Reflow at 390 and 1366 px with the root font size at 125 percent
+        run: REFLOW_WIDTHS=390,1366 REFLOW_SIZES=125% python3 scripts/reflow-check.py "$SITE" paths.txt
+      - name: Language switch on pages without a Dutch twin
+        run: python3 scripts/switch-check.py "$SITE"
