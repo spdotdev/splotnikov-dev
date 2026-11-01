@@ -62,7 +62,7 @@
       <div class="cc rv">
         <span class="lbl" data-i="ctp_aboutl">About</span>
         <div class="about">
-          <button id="open-pic" type="button" aria-label="Show the photo larger"><img src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="96" height="96" loading="lazy"></button>
+          <button id="open-pic" type="button" aria-label="Show the photo larger"><img src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="96" height="96" loading="lazy" decoding="async"></button>
           <div><p data-i="ctp_bio">Stanislav Plotnikov, Stas. Senior developer and solution architect, PHP since 2008, Laravel and Phalcon in production, Python for automation and AI, Kotlin for Android. Dutch, English and Russian. One person, one point of contact, from the first call to the handover.</p>
             <div class="soc"><a href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a><a href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a></div></div>
         </div>
@@ -74,7 +74,7 @@
     <div class="ov" data-close="pic-modal"></div>
     <div class="box pic">
       <button class="x" data-close="pic-modal" type="button" aria-label="Close">&times;</button>
-      <img src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="480" height="480">
+      <img src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="480" height="480" loading="lazy" decoding="async">
       <div class="cap">Stanislav Plotnikov · Eindhoven</div>
     </div>
   </div>

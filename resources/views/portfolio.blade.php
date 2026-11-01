@@ -25,7 +25,7 @@
 
 @section('content')
 <header class="wrap hero">
-  <div class="portrait in1"><img src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="120" height="120"></div>
+  <div class="portrait in1"><img src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="120" height="120" decoding="async"></div>
   <h1 class="name" data-dec>Stanislav Plotnikov</h1>
   <div class="sub in2" data-i="sub">Automation with AI · Legacy modernization · Security</div>
   <p class="hero-q in2" data-i="hq">I turn legacy technical debt into infrastructure that scales and keeps running, by putting return on investment before industry trends.</p>

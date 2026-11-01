@@ -68,7 +68,7 @@
       </div>
 
       <div class="cv-side">
-        <img class="cv-photo" src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="160" height="160">
+        <img class="cv-photo" src="{{ secure_asset('vendor/splotnikov/portrait.jpg') }}" alt="Stanislav Plotnikov" width="160" height="160" decoding="async">
         <div class="blk"><small data-i="cv_b_contact">Contact</small><span data-i="cv_b_where">Eindhoven, the Netherlands</span><span>+31 (0) 6 345 00 328</span><span>stplotnikov@gmail.com</span><a href="https://splotnikov.dev">splotnikov.dev</a></div>
         <details class="blk fold" id="cv-biz" open><summary><small data-i="cv_b_biz">Business details</small></summary><div class="fold-body"><span>Scuttle Development</span><span>+31 (0) 6 18 23 31 75</span><span>info@scuttle.dev</span><span>KvK 96040947</span><span>BTW NL005184584B85</span><a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a></div></details>
         <details class="blk fold" open><summary><small data-i="cv_b_links">Links</small></summary><div class="fold-body"><a href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener">linkedin.com/in/stanislavplotnikov</a><a href="https://github.com/spdotdev" rel="noopener">github.com/spdotdev</a><a href="https://scuttle.dev" rel="noopener" title="Scuttle Development, my company">scuttle.dev</a></div></details>
