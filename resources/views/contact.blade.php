@@ -39,11 +39,11 @@
         <div class="err" role="alert">@foreach($errorsEn as $i => $m)<p data-i="ctp_err_{{ $i }}">{{ $m }}</p>@endforeach</div>
       @endif
       <div class="two-f">
-        <label><span data-i="ctp_name">Name</span><input type="text" name="name" required maxlength="120" value="{{ old('name') }}" autocomplete="name"></label>
-        <label><span data-i="ctp_email">Email</span><input type="email" name="email" required maxlength="160" value="{{ old('email') }}" autocomplete="email"></label>
+        <label><span data-i="ctp_name">Name</span><input type="text" name="name" required maxlength="120" value="{{ old('name') }}" autocomplete="name" enterkeyhint="next"></label>
+        <label><span data-i="ctp_email">Email</span><input type="email" name="email" required maxlength="160" value="{{ old('email') }}" autocomplete="email" inputmode="email" enterkeyhint="next" spellcheck="false" autocapitalize="off"></label>
       </div>
-      <label><span data-i="ctp_about">About</span><select name="about" id="cf-about">@foreach([['ctp_o0', 'Not sure yet', ''], ['ctp_o1', 'A freelance or contract role', 'Freelance or contract role'], ['ctp_o2', 'Legacy modernization', 'Legacy modernization'], ['ctp_o3', 'Automation with AI agents', 'Automation with AI agents'], ['ctp_o4', 'Security', 'Security'], ['ctp_o5', 'Architecture advice', 'Architecture advice'], ['ctp_o6', 'Something else', 'Something else']] as [$key, $label, $value])<option data-i="{{ $key }}" value="{{ $value }}" @selected(old('about', request('about')) === $value && $value !== '')>{{ $label }}</option>@endforeach</select></label>
-      <label><span data-i="ctp_msg">What are you running, and what should change?</span><textarea name="message" required minlength="10" maxlength="4000" rows="6">{{ old('message') }}</textarea></label>
+      <label><span data-i="ctp_about">About</span><select name="about" id="cf-about" autocomplete="off">@foreach([['ctp_o0', 'Not sure yet', ''], ['ctp_o1', 'A freelance or contract role', 'Freelance or contract role'], ['ctp_o2', 'Legacy modernization', 'Legacy modernization'], ['ctp_o3', 'Automation with AI agents', 'Automation with AI agents'], ['ctp_o4', 'Security', 'Security'], ['ctp_o5', 'Architecture advice', 'Architecture advice'], ['ctp_o6', 'Something else', 'Something else']] as [$key, $label, $value])<option data-i="{{ $key }}" value="{{ $value }}" @selected(old('about', request('about')) === $value && $value !== '')>{{ $label }}</option>@endforeach</select></label>
+      <label><span data-i="ctp_msg">What are you running, and what should change?</span><textarea name="message" required minlength="10" maxlength="4000" rows="6" autocomplete="off" enterkeyhint="enter">{{ old('message') }}</textarea></label>
       @if(config('splotnikov-dev.turnstile_site_key'))
         <div class="cf-turnstile" data-sitekey="{{ config('splotnikov-dev.turnstile_site_key') }}"></div>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
