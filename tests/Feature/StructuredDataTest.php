@@ -54,6 +54,26 @@ class StructuredDataTest extends TestCase
         }
     }
 
+    public function test_the_person_block_names_the_place_the_languages_the_title_and_the_company(): void
+    {
+        foreach (['/', '/cv', '/nl', '/nl/cv'] as $path) {
+            $html = (string) $this->get(self::HOST.$path)->assertOk()->getContent();
+            $person = null;
+            foreach ($this->blocks($html) as $block) {
+                $person = ($block['@type'] ?? '') === 'Person' ? $block : (($block['@type'] ?? '') === 'ProfilePage' ? $block['mainEntity'] : $person);
+            }
+            $this->assertIsArray($person, $path);
+            $this->assertSame('PostalAddress', $person['address']['@type'], $path);
+            $this->assertSame('Eindhoven', $person['address']['addressLocality'], $path);
+            $this->assertSame('NL', $person['address']['addressCountry'], $path);
+            $this->assertEqualsCanonicalizing(['en', 'nl', 'ru'], $person['knowsLanguage'], $path);
+            $this->assertNotSame('', trim((string) $person['jobTitle']), $path);
+            $this->assertSame('Organization', $person['worksFor']['@type'], $path);
+            $this->assertSame('Scuttle Development', $person['worksFor']['name'], $path);
+            $this->assertSame('https://scuttle.dev', $person['worksFor']['url'], $path);
+        }
+    }
+
     public function test_blog_posts_carry_both_dates_an_author_and_the_social_image(): void
     {
         foreach (Posts::all() as $post) {
