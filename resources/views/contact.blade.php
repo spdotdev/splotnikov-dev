@@ -48,7 +48,7 @@
         <div class="cf-turnstile" data-sitekey="{{ config('splotnikov-dev.turnstile_site_key') }}"></div>
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
       @endif
-      <div class="cf-foot"><button class="btn" type="submit" data-i="ctp_send">Send</button><a class="btn o" href="{{ config('splotnikov-dev.booking_url') }}" rel="noopener" data-i="ctp_book">Or book a call</a><small data-i="ctp_note">No tracking cookies, no newsletter. Your message goes to stplotnikov@gmail.com and nowhere else.</small></div>
+      <div class="cf-foot"><button class="btn" type="submit" data-i="ctp_send">Send</button><a class="btn o" href="{{ config('splotnikov-dev.booking_url') }}" rel="noopener" data-i="ctp_book">Or book a call</a><small data-i="ctp_note"><a href="{{ route('splotnikov.privacy') }}">No tracking cookies</a>, no newsletter. Your message goes to stplotnikov@gmail.com and nowhere else.</small></div>
     </form>
 
     <div class="side-cards">
@@ -93,7 +93,7 @@ $nl = [
     'ctp_lead' => 'Vast met een systeem dat niet mag stoppen, een migratie die niemand durft te starten of werk dat een machine kan doen? Ik reageer binnen één werkdag met een eerste mening, gratis.',
     'ctp_o0' => 'Nog niet zeker', 'ctp_o1' => 'Een freelance- of contractrol', 'ctp_o2' => 'Legacy-modernisering', 'ctp_o3' => 'Automatisering met AI-agents', 'ctp_o4' => 'Beveiliging', 'ctp_o5' => 'Architectuuradvies', 'ctp_o6' => 'Iets anders',
     'ctp_name' => 'Naam', 'ctp_email' => 'E-mail', 'ctp_about' => 'Waarover', 'ctp_msg' => 'Wat draai je, en wat moet er veranderen?',
-    'ctp_send' => 'Verstuur', 'ctp_book' => 'Of plan een gesprek', 'ctp_note' => 'Geen trackingcookies, geen nieuwsbrief. Je bericht gaat naar stplotnikov@gmail.com en nergens anders heen.',
+    'ctp_send' => 'Verstuur', 'ctp_book' => 'Of plan een gesprek', 'ctp_note' => '<a href="/privacy">Geen trackingcookies</a>, geen nieuwsbrief. Je bericht gaat naar stplotnikov@gmail.com en nergens anders heen.',
     'ctp_reach' => 'Bereik me', 'ctp_where' => 'Eindhoven, Nederland<br>Op locatie in de regio Eindhoven, op afstand overal elders.',
     'ctp_biz' => 'Voor werk aan de software van je bedrijf: <a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a>, diensten en prijzen.',
     'ctp_aboutl' => 'Over mij',
