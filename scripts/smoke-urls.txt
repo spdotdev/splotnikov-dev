@@ -1,7 +1,7 @@
 # Addresses the live smoke check fetches every six hours (.github/workflows/live-smoke.yml, scripts/live-smoke.py).
 # One per line: expected status, path, marker. The marker is a short phrase that must be in the response body.
 # A content change that moves a phrase is a one-line edit here. SmokeListTest keeps the list honest: every path is
-# in the sitemap or is a crawler file, and every marker is in the rendered page.
+# in the sitemap or is a crawler file, and every marker is in the rendered page. A path that starts with https:// is an external address (the booking page the buttons lead to) that is fetched as written.
 200 | / | Senior developer and architect, Eindhoven
 200 | /nl | Senior developer en architect, Eindhoven
 200 | /cv | CV: senior developer and architect
@@ -17,3 +17,4 @@
 200 | /robots.txt | Sitemap: https://splotnikov.dev/sitemap.xml
 200 | /site.webmanifest | Stanislav Plotnikov
 404 | /nl/does-not-exist | Die pagina bestaat niet
+200 | https://plan.scuttle.dev/book/stas | Book a call with Stas Plotnikov

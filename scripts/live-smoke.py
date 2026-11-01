@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Live smoke check: python3 scripts/live-smoke.py https://splotnikov.dev [scripts/smoke-urls.txt]
 
-For every line of the list (status | path | marker): GET with a 15 s timeout, three tries 20 s apart, and require the
+For every line of the list (status | path | marker; a path that starts with https:// is an external address that is fetched as written, for example the booking page): GET with a 15 s timeout, three tries 20 s apart, and require the
 expected status, the marker in the body and an answer under 3 s. One line per address; exit 1 and a list of every
 failing address when any fails. Standard library only."""
 import sys
@@ -29,7 +29,7 @@ def check(want, path, marker):
     problem = 'no answer'
     for attempt in range(TRIES):
         try:
-            status, body, took = fetch(base + path)
+            status, body, took = fetch(path if path.startswith('https://') else base + path)
             problems = []
             if status != want:
                 problems.append(f'status {status}, expected {want}')
