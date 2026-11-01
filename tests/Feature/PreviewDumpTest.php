@@ -2,6 +2,8 @@
 
 namespace Spdotdev\SplotnikovDev\Tests\Feature;
 
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 use Spdotdev\SplotnikovDev\Dutch;
 use Spdotdev\SplotnikovDev\Tests\TestCase;
 
@@ -40,8 +42,8 @@ class PreviewDumpTest extends TestCase
             }
         }
         // The states a visitor reaches after posting the form, and the 404 page.
-        $bag = new \Illuminate\Support\ViewErrorBag;
-        $bag->put('default', new \Illuminate\Support\MessageBag(['message' => ['Please write a message.']]));
+        $bag = new ViewErrorBag;
+        $bag->put('default', new MessageBag(['message' => ['Please write a message.']]));
         foreach (['' => 'contact-error', '/nl' => 'nl-contact-error'] as $prefix => $file) {
             $html = (string) $this->withSession(['errors' => $bag])->get('http://splotnikov.dev'.$prefix.'/contact')->assertOk()->getContent();
             file_put_contents($dir.'/'.$file.'.html', strtr($html, $map));
