@@ -644,35 +644,24 @@ class SiteTest extends TestCase
 
     public function test_no_tracked_text_file_holds_a_long_dash(): void
     {
+        // Only files git tracks: an ignored scratch folder on a laptop must not fail the suite (seen 2026-11-01).
         $root = dirname(__DIR__, 2);
-        $skipDirs = ['.git', 'vendor', 'node_modules', 'public/fonts', 'public/og'];
         $skipExt = ['pdf', 'png', 'jpg', 'jpeg', 'webp', 'gif', 'ico', 'woff', 'woff2', 'ttf', 'svg', 'zip', 'lock'];
+        exec('git -C '.escapeshellarg($root).' ls-files -z 2>/dev/null', $out, $code);
+        $files = $code === 0 ? array_filter(explode("\0", implode('', $out))) : [];
+        $this->assertNotEmpty($files, 'git ls-files gave no files; the test needs a git checkout');
         $found = [];
-        $walk = function (string $dir) use (&$walk, $root, $skipDirs, $skipExt, &$found): void {
-            foreach (scandir($dir) ?: [] as $name) {
-                if ($name === '.' || $name === '..') {
-                    continue;
-                }
-                $path = $dir.'/'.$name;
-                $rel = ltrim(substr($path, strlen($root)), '/');
-                if (is_dir($path)) {
-                    if (! in_array($rel, $skipDirs, true)) {
-                        $walk($path);
-                    }
-
-                    continue;
-                }
-                if (in_array(strtolower(pathinfo($name, PATHINFO_EXTENSION)), $skipExt, true)) {
-                    continue;
-                }
-                foreach (file($path) ?: [] as $n => $line) {
-                    if (str_contains($line, "\u{2014}") || str_contains($line, "\u{2013}")) {
-                        $found[] = $rel.':'.($n + 1);
-                    }
+        foreach ($files as $rel) {
+            if (in_array(strtolower(pathinfo($rel, PATHINFO_EXTENSION)), $skipExt, true) || str_starts_with($rel, 'public/fonts/') || str_starts_with($rel, 'public/og/') || ! is_file($root.'/'.$rel)) {
+                continue;
+            }
+            foreach (explode("\n", (string) file_get_contents($root.'/'.$rel)) as $i => $line) {
+                if (str_contains($line, "\u{2014}") || str_contains($line, "\u{2013}")) {
+                    $found[] = $rel.':'.($i + 1);
                 }
             }
-        };
-        $walk($root);
-        $this->assertSame([], $found, 'long dash in: '.implode(', ', $found));
+        }
+
+        $this->assertSame([], $found, "Long dashes found in:\n".implode("\n", $found));
     }
 }
