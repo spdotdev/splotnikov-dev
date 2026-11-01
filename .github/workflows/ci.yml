@@ -10,15 +10,27 @@ permissions:
 
 jobs:
   quality:
+    # Two jobs in parallel: the oldest PHP the package allows, and production's PHP (php:8.4-fpm, short_open_tag on),
+    # because a literal xml declaration in a view broke a production page while the suite passed on a laptop.
+    name: PHP ${{ matrix.php }}${{ matrix.short_tags && ' (short_open_tag on)' || '' }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php: '8.3'
+            short_tags: false
+          - php: '8.4'
+            short_tags: true
     steps:
       - uses: actions/checkout@v7
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: ${{ matrix.php }}
           extensions: mbstring, dom, xml
+          ini-values: short_open_tag=${{ matrix.short_tags && 'On' || 'Off' }}
           coverage: none
 
       - name: Install dependencies
