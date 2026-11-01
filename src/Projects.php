@@ -86,7 +86,7 @@ final class Projects
                 'short' => 'This website as a Laravel library: one shell, one stylesheet, one script, a terminal panel with typed scenes, a printable CV, a contact form, tests for every page, deployed from main through a host app on one small server.',
                 'stack' => ['Laravel', 'Blade', 'PHPUnit', 'GitHub Actions'],
                 'url' => 'https://github.com/spdotdev/splotnikov-dev',
-                'nl' => ['kind' => 'Deze site · Laravel-pakket', 'short' => 'Deze website als Laravel-bibliotheek: één shell, één stylesheet, één script, een terminalpaneel met getypte scènes, een printbaar CV, een contactformulier, tests voor elke pagina, uitgerold vanaf main via een hostapp op één kleine server.'],
+                'nl' => ['kind' => 'Deze website · Laravel-pakket', 'short' => 'Deze website als Laravel-bibliotheek: één shell, één stylesheet, één script, een terminalpaneel met getypte scènes, een printbaar CV, een contactformulier, tests voor elke pagina, uitgerold vanaf main via een hostapp op één kleine server.'],
             ],
         ];
     }

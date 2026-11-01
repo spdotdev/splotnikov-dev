@@ -111,7 +111,7 @@ final class Cv
             'cv_rs_5' => 'Financieel / telecom · PHP', 'cv_rd_5' => 'Digitale marketing- en telecomoplossingen binnen een financiële holding.',
             'cv_s_proj' => 'Belangrijkste projecten',
             'cv_j_proj_0' => 'Marktvalidatieplatform voor een verhuurdienst',
-            'cv_jl_proj_0_0' => '<b>Uitdaging:</b> een ondernemer wilde weten of er echte vraag is naar een nieuwe verhuurdienst voordat hij in de bouw investeert, met niets voorhanden: geen site, geen infrastructuur, geen meting, en privacyregels die vanaf dag één gelden.',
+            'cv_jl_proj_0_0' => '<b>Uitdaging:</b> een ondernemer wilde weten of er echte vraag is naar een nieuwe verhuurdienst voordat hij in de bouw investeert, met niets voorhanden: geen website, geen infrastructuur, geen meting, en privacyregels die vanaf dag één gelden.',
             'cv_jl_proj_0_1' => '<b>Oplossing:</b> een landingsplatform dat aanmeldingen per stad vastlegt, vier paginaontwerpen tegen elkaar afzet, sessies en heatmaps pas na toestemming opneemt en alles toont in een beheeromgeving met exports; opgeleverd op een geharde server met automatische TLS, getagde deploys en nachtelijke back-ups, voor een vaste prijs.',
             'cv_jl_proj_0_2' => '<b>Resultaat:</b> een live, meetbare test van de vraag per stad en ontwerp, data die de klant bezit en aan een investeerder kan laten zien, en een basis waarop de echte dienst gebouwd kan worden zonder opnieuw te beginnen.',
             'cv_j_proj_1' => 'Modernisering van legacy: Phalcon naar Laravel',

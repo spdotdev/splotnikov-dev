@@ -117,7 +117,7 @@ final class Posts
                     '## What Claude Code did',
                     'Most of the port was done with Claude Code: copying the theme from my company site, swapping the accent to the green this site had, writing the scenes, the CV print layout and the contact form, and taking screenshots in light, dark and phone width before anything deployed. I read every diff and changed what I did not like. The rule I keep: the agent proposes, the tests and I decide.',
                 ],
-                'nl' => ['title' => 'Waar ik mee bezig ben: deze site herbouwen met één stylesheet, één script en een live terminal', 'summary' => 'Geen framework, geen buildstap, geen tracking door derden. Waarom een persoonlijke site in 2026 een Laravel-pakket met twee statische bestanden is, en hoe het terminalpaneel op de homepage werkt.'],
+                'nl' => ['title' => 'Waar ik mee bezig ben: deze website herbouwen met één stylesheet, één script en een live terminal', 'summary' => 'Geen framework, geen buildstap, geen tracking door derden. Waarom een persoonlijke website in 2026 een Laravel-pakket met twee statische bestanden is, en hoe het terminalpaneel op de homepage werkt.'],
             ],
             'strangler-fig-what-the-bridge-taught-me' => [
                 'slug' => 'strangler-fig-what-the-bridge-taught-me',

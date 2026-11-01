@@ -60,7 +60,7 @@ final class Dutch
             '/' => ['Senior developer en architect, Eindhoven', 'Stanislav Plotnikov: automatisering met AI-agents, modernisering van legacy en security. PHP sinds 2008. Beschikbaar als freelancer, Eindhoven of remote.'],
             '/cv' => ['CV: senior developer en architect', 'CV van Stanislav Plotnikov, senior developer en solution architect in Eindhoven: PHP sinds 2008, Laravel, AI-agents. Printbaar en als PDF.'],
             '/contact' => ['Contact, antwoord binnen één werkdag', 'Schrijf naar Stanislav Plotnikov in Eindhoven via het formulier. Ik reageer binnen één werkdag met een eerste mening, gratis. LinkedIn en GitHub staan er ook.'],
-            '/projects' => ['Open source projecten', 'Open source projecten van Stanislav Plotnikov: een WhatsApp MCP-server, een Claude Code-skill, een Telegram-relay, een voorraadproduct en deze site.'],
+            '/projects' => ['Open source projecten', 'Open source projecten van Stanislav Plotnikov: een WhatsApp MCP-server, een Claude Code-skill, een Telegram-relay, een voorraadproduct en deze website.'],
             '/privacy' => ['Privacyverklaring', 'Welke gegevens splotnikov.dev gebruikt: geen cookies bij het lezen, een eigen teller zonder IP-adres, en het contactformulier.'],
             '/toolkit' => ['Toolkit: PHP, AI-agents, security', 'De tools en werkwijzen die Stanislav Plotnikov dagelijks gebruikt: PHP en Laravel, AI-agents met vangrails, security, infrastructure as code en pipelines.'],
         ];
