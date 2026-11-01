@@ -11,7 +11,7 @@
 
 @section('content')
 <article class="wrap page">
-  <span class="lbl dot"><time datetime="{{ $post['date'] }}" data-i="blp_date">{{ \Carbon\Carbon::parse($post['date'])->format('j M Y') }}</time> · {{ implode(' · ', $post['tags']) }}</span>
+  <span class="lbl dot"><time datetime="{{ $post['date'] }}" data-i="blp_date">{{ \Carbon\Carbon::parse($post['date'])->format('j M Y') }}</time> · <span data-i="blp_read">{{ $mins = \Spdotdev\SplotnikovDev\Posts::readingMinutes($post) }} min read</span> · {{ implode(' · ', $post['tags']) }}</span>
   <h1 data-i="blp_h1">{{ $post['title'] }}</h1>
   <p class="lead" data-i="blp_lead">{{ $post['summary'] }}</p>
   <span data-i="blp_note" style="display:block"></span>
@@ -57,6 +57,7 @@
 <?php
 $nl = [
     'blp_note' => 'Dit artikel is in het Engels.',
+    'blp_read' => $mins.' min lezen',
     'blp_h1' => e($post['nl']['title']),
     'blp_lead' => e($post['nl']['summary']),
     'blp_date' => \Carbon\Carbon::parse($post['date'])->locale('nl')->translatedFormat('j M Y'),

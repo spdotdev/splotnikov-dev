@@ -42,4 +42,26 @@ class AnatomyTest extends TestCase
             $this->assertOrder($card, ['class="lbl"', '<h2>', '<p ', 'class="tags"', 'class="more"'], 'project card');
         }
     }
+
+    public function test_reading_time_is_computed_at_220_words_a_minute(): void
+    {
+        $post = ['body' => []];
+        $this->assertSame(1, Posts::readingMinutes($post));
+        $post['body'] = [implode(' ', array_fill(0, 220, 'word'))];
+        $this->assertSame(1, Posts::readingMinutes($post));
+        $post['body'] = [implode(' ', array_fill(0, 221, 'word')), '- <b>bold</b> item'];
+        $this->assertSame(2, Posts::readingMinutes($post));
+        $post['body'] = [implode(' ', array_fill(0, 880, 'word'))];
+        $this->assertSame(4, Posts::readingMinutes($post));
+    }
+
+    public function test_every_post_shows_its_reading_time_in_both_languages(): void
+    {
+        foreach (Posts::all() as $slug => $post) {
+            $mins = Posts::readingMinutes($post);
+            $html = (string) $this->get('http://splotnikov.dev/blog/'.$slug)->assertOk()->getContent();
+            $this->assertStringContainsString('<span data-i="blp_read">'.$mins.' min read</span>', $html, $slug);
+            $this->assertStringContainsString('"blp_read":"'.$mins.' min lezen"', $html, $slug);
+        }
+    }
 }

@@ -17,6 +17,18 @@ use Illuminate\Support\Facades\Schema;
 final class Posts
 {
     /**
+     * Whole minutes to read an article at 220 words a minute, never less than one. Counts the body only.
+     *
+     * @param  Post  $post
+     */
+    public static function readingMinutes(array $post): int
+    {
+        $words = str_word_count(strip_tags(implode(' ', $post['body'])), 0, '0123456789');
+
+        return max(1, (int) ceil($words / 220));
+    }
+
+    /**
      * Published articles from sd-cms (written over MCP, reviewed in the host's
      * Filament panel) first, then the built-in ones; an article with the same slug
      * replaces the built-in one.
