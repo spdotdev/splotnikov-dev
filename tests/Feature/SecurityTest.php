@@ -3,6 +3,7 @@
 namespace Spdotdev\SplotnikovDev\Tests\Feature;
 
 use Illuminate\Routing\Middleware\ThrottleRequests;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Schema;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Spdotdev\SplotnikovDev\Mail\ContactMessage;
 use Spdotdev\SplotnikovDev\Models\ContactLead;
+use Spdotdev\SplotnikovDev\Posts;
 use Spdotdev\SplotnikovDev\Tests\TestCase;
 
 /**
@@ -242,5 +244,45 @@ class SecurityTest extends TestCase
     {
         $page = (string) $this->get(self::HOST.'/blog?p='.rawurlencode('"><script>alert(1)</script>').'&page='.rawurlencode('<b>'))->assertOk()->getContent();
         $this->assertStringNotContainsString('<script>alert(1)', $page);
+    }
+
+    private function breakTheDatabase(): void
+    {
+        $this->cms();
+        config(['database.connections.testing' => ['driver' => 'sqlite', 'database' => '/nonexistent-dir/none.sqlite', 'prefix' => '']]);
+        DB::purge('testing');
+    }
+
+    public function test_every_content_page_renders_with_the_built_in_posts_when_the_database_is_down(): void
+    {
+        $this->breakTheDatabase();
+        Log::spy();
+        $paths = ['/', '/cv', '/projects', '/toolkit', '/privacy', '/blog', '/feed.xml', '/sitemap.xml', '/robots.txt', '/site.webmanifest', '/nl', '/nl/cv', '/nl/projects', '/nl/toolkit', '/nl/privacy', '/nl/contact'];
+        foreach (Posts::builtIn() as $slug => $_) {
+            $paths[] = '/blog/'.$slug;
+        }
+        foreach ($paths as $path) {
+            $this->get(self::HOST.$path)->assertOk();
+        }
+        $this->get(self::HOST.'/blog/does-not-exist')->assertNotFound();
+        $this->assertStringContainsString('strangler-fig-what-the-bridge-taught-me', (string) $this->get(self::HOST.'/sitemap.xml')->getContent());
+        Log::shouldHaveReceived('warning')->withArgs(fn ($m, $ctx) => str_contains($m, 'sd-cms') && ! str_contains((string) json_encode($ctx), 'nonexistent'))->atLeast()->once();
+    }
+
+    public function test_the_contact_page_renders_when_the_database_is_down_and_the_post_says_so_instead_of_failing(): void
+    {
+        Mail::fake();
+        $this->get(self::HOST.'/contact')->assertOk();
+        $this->breakTheDatabase();
+        $this->get(self::HOST.'/contact')->assertOk()->assertSee('Tell me what you are running');
+        $this->post(self::HOST.'/contact', $this->valid())->assertSessionHasErrors('message');
+    }
+
+    public function test_the_contact_page_renders_with_the_database_session_driver_and_the_database_down(): void
+    {
+        config(['session.driver' => 'database']);
+        $this->breakTheDatabase();
+        $this->get(self::HOST.'/contact')->assertOk()->assertSee('Tell me what you are running');
+        $this->get(self::HOST.'/nl/contact')->assertOk();
     }
 }

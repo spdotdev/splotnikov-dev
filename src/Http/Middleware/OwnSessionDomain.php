@@ -4,6 +4,7 @@ namespace Spdotdev\SplotnikovDev\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -16,6 +17,17 @@ final class OwnSessionDomain
     public function handle(Request $request, Closure $next): Response
     {
         config(['session.domain' => null]);
+
+        // With the database session driver and the database down, the form page would answer 500 and the visitor would
+        // see nothing. The page itself needs no stored session to render, so it falls back to a per-request one (the
+        // POST needs the database for the lead and says so on the page).
+        if (config('session.driver') === 'database') {
+            try {
+                DB::connection(config('session.connection'))->getPdo();
+            } catch (\Throwable) {
+                config(['session.driver' => 'array']);
+            }
+        }
 
         return $next($request);
     }

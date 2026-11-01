@@ -2,6 +2,8 @@
 
 namespace Spdotdev\SplotnikovDev;
 
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 
 /**
@@ -35,6 +37,12 @@ final class Posts
         if (! class_exists($class)) {
             return [];
         }
+        // One failed attempt per request: when the database is down, the page must not wait for the connection again
+        // on every call, and the log gets one line.
+        $attrs = request()->attributes;
+        if ($attrs->get('splotnikov.cms_down') === true) {
+            return [];
+        }
         try {
             if (! Schema::hasTable('cms_articles')) {
                 return [];
@@ -47,7 +55,16 @@ final class Posts
             }
 
             return $posts;
-        } catch (\Throwable) {
+        } catch (\Throwable $e) {
+            // The CMS is optional: the built-in posts still render. Log the kind of failure, never its message (it can
+            // hold the SQL, the host name or a bound value).
+            $attrs->set('splotnikov.cms_down', true);
+            $ctx = ['exception' => get_class($e)];
+            if ($e instanceof QueryException) {
+                $ctx['sqlstate'] = (string) ($e->errorInfo[0] ?? $e->getCode());
+            }
+            Log::warning('splotnikov.dev blog: the sd-cms articles could not be read, showing the built-in posts', $ctx);
+
             return [];
         }
     }
