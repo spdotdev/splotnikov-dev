@@ -1,8 +1,20 @@
 {
     "name": "spdotdev/splotnikov-dev",
     "description": "splotnikov.dev portfolio site, packaged as a Laravel library for a host app.",
+    "keywords": [
+        "laravel",
+        "portfolio",
+        "cv",
+        "blog",
+        "contact-form"
+    ],
+    "homepage": "https://splotnikov.dev",
     "type": "library",
     "license": "proprietary",
+    "support": {
+        "issues": "https://github.com/spdotdev/splotnikov-dev/issues",
+        "source": "https://github.com/spdotdev/splotnikov-dev"
+    },
     "require": {
         "php": "^8.3",
         "illuminate/support": "^13.0"

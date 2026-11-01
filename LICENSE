@@ -1,0 +1,8 @@
+Copyright (c) 2026 Stanislav Plotnikov. All rights reserved.
+
+This repository is public so that its code can be read and its security can be checked.
+It is proprietary software (the "license" field of composer.json says "proprietary"):
+you may read it and run it to review it, but you may not copy, modify, redistribute or
+reuse it, in whole or in part, without written permission from the author.
+
+The software is provided as is, without warranty of any kind.
