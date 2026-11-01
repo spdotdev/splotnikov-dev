@@ -44,6 +44,9 @@ class DutchConsistencyTest extends TestCase
             'e-mail with a hyphen' => '/\b[Ee]mail(?:adres|en)?\b/',
             'gesprek, not call' => '/\b[Cc]alls?\b/',
             'EUR with the Dutch thousands dot' => '/EUR\s?\d{4,}\b|EUR\s?\d{1,3},\d{3}\b/',
+            'no calque: eigenaarschap, mens in de lus, opgeschreven op, van welke soort ook, geklokt, aan gaat' => '/eigenaarschap|in de lus|opgeschreven op|van welke soort ook|geklokt|aan gaat|klagen bij/',
+            'opensource is one word' => '/\b[Oo]pen source (projecten|software|code)\b/',
+            'je, not the stressed jouw, for the unstressed possessive' => '/\bjouw (systeem|bedrijf|team|data|stack)\b/',
             'Dutch month names' => '/\b\d{1,2} (January|February|March|April|June|July|August|September|October|November|December)\b/',
         ];
         foreach ($rules as $what => $pattern) {

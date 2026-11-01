@@ -94,7 +94,7 @@ $nl = [
     'ctp_o0' => 'Nog niet zeker', 'ctp_o1' => 'Een freelance- of contractrol', 'ctp_o2' => 'Legacy-modernisering', 'ctp_o3' => 'Automatisering met AI-agents', 'ctp_o4' => 'Beveiliging', 'ctp_o5' => 'Architectuuradvies', 'ctp_o6' => 'Iets anders',
     'ctp_name' => 'Naam', 'ctp_email' => 'E-mail', 'ctp_about' => 'Waarover', 'ctp_msg' => 'Wat draai je, en wat moet er veranderen?',
     'ctp_send' => 'Verstuur', 'ctp_book' => 'Of plan een gesprek', 'ctp_note' => '<a href="/privacy">Geen trackingcookies</a>, geen nieuwsbrief. Je bericht gaat naar stplotnikov@gmail.com en nergens anders heen.',
-    'ctp_reach' => 'Bereik me', 'ctp_where' => 'Eindhoven, Nederland<br>Op locatie in de regio Eindhoven, op afstand overal elders.',
+    'ctp_reach' => 'Zo bereik je me', 'ctp_where' => 'Eindhoven, Nederland<br>Op locatie in de regio Eindhoven, op afstand overal elders.',
     'ctp_biz' => 'Voor werk aan de software van je bedrijf: <a href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a>, diensten en prijzen.',
     'ctp_aboutl' => 'Over mij',
     'ctp_sent' => 'Verstuurd. Ik reageer binnen één werkdag.',

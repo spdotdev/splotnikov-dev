@@ -52,7 +52,7 @@
 $nl = [
     'bl_lbl' => 'Blog',
     'bl_h1' => 'Notities van mijn eigen bureau',
-    'bl_lead' => 'Technologie en waar ik mee bezig ben: waarom het ene beter is dan het andere, wat een jaar met twee frameworks in één app me leerde, wat ik met AI bouw en waar ik een mens in de lus houd. Mijn eigen ervaring, geen klantnamen.',
+    'bl_lead' => 'Technologie en waar ik mee bezig ben: waarom het ene beter is dan het andere, wat een jaar met twee frameworks in één app me leerde, wat ik met AI bouw en waar ik een mens laat meekijken. Mijn eigen ervaring, geen klantnamen.',
     'bl_top_p' => 'Wil je hetzelfde in je eigen systeem?',
     'bl_more' => 'Lees →',
     'bl_arch' => 'Archief', 'bl_all' => 'Alle berichten', 'bl_showing' => 'Je ziet', 'bl_all2' => 'alle berichten', 'bl_none' => 'Niets op deze pagina.', 'bl_prev' => '← Nieuwer', 'bl_page' => 'Pagina', 'bl_next' => 'Ouder →',

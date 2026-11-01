@@ -80,7 +80,7 @@ final class Toolkit
                     ['name' => 'Docker, DigitalOcean, Proxmox', 'note' => 'Small cloud boxes and a home lab', 'nl' => 'Kleine cloudservers en een thuislab'],
                     ['name' => 'Caddy, nginx', 'note' => 'TLS by default, one proxy in front of many sites', 'nl' => 'TLS standaard, één proxy voor veel sites'],
                     ['name' => 'MySQL, PostgreSQL, Redis', 'note' => 'Migrations without downtime, queues and caches', 'nl' => 'Migraties zonder downtime, queues en caches'],
-                    ['name' => 'Disaster recovery', 'note' => 'Backups off-site, restores tested and timed, monitoring to one phone', 'nl' => 'Back-ups off-site, herstel getest en geklokt, monitoring naar één telefoon'],
+                    ['name' => 'Disaster recovery', 'note' => 'Backups off-site, restores tested and timed, monitoring to one phone', 'nl' => 'Back-ups off-site, herstel getest en hersteltijd gemeten, monitoring naar één telefoon'],
                 ],
             ],
             [
@@ -102,9 +102,9 @@ final class Toolkit
                 'nl' => ['label' => 'Beveiliging', 'title' => 'Hardening, testen, bewijs, sinds de BackTrack-tijd'],
                 'tools' => [
                     ['name' => 'Server hardening', 'note' => 'SSH, firewall, fail2ban, unattended updates, secrets out of the code', 'nl' => 'SSH, firewall, fail2ban, automatische updates, secrets uit de code'],
-                    ['name' => 'DevSecOps pipelines', 'note' => 'Dependency audit, secret scan and static analysis before anything merges', 'nl' => 'Dependency-audit, secret-scan en statische analyse voordat er iets samengaat'],
+                    ['name' => 'DevSecOps pipelines', 'note' => 'Dependency audit, secret scan and static analysis before anything merges', 'nl' => 'Dependency-audit, secret-scan en statische analyse voordat iets wordt gemerged'],
                     ['name' => 'Web application testing', 'note' => 'Authorization, sessions, injection, known-vulnerable dependencies; written authorization first', 'nl' => 'Autorisatie, sessies, injectie, afhankelijkheden met bekende lekken; eerst schriftelijke toestemming'],
-                    ['name' => 'Backups and recovery', 'note' => 'A backup counts after it has been restored on a scratch box and timed', 'nl' => 'Een back-up telt pas nadat hij op een testmachine hersteld en geklokt is'],
+                    ['name' => 'Backups and recovery', 'note' => 'A backup counts after it has been restored on a scratch box and timed', 'nl' => 'Een back-up telt pas nadat hij op een testmachine hersteld is en de hersteltijd gemeten is'],
                     ['name' => 'NIS2-aligned practices', 'note' => 'Gap analysis, remediation and evidence a customer or auditor can read', 'nl' => 'Gap-analyse, herstel en bewijs dat een klant of auditor kan lezen'],
                 ],
             ],

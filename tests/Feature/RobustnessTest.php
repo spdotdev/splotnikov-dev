@@ -363,7 +363,7 @@ class RobustnessTest extends TestCase
         $n = count(Projects::all());
         $this->assertGreaterThan(0, $n);
         $this->assertStringContainsString($n.' open source projects on the', (string) $this->get(self::HOST.'/cv')->assertOk()->getContent());
-        $this->assertStringContainsString($n.' open source projecten op de', (string) $this->get(self::HOST.'/nl/cv')->assertOk()->getContent());
+        $this->assertStringContainsString($n.' opensourceprojecten op de', (string) $this->get(self::HOST.'/nl/cv')->assertOk()->getContent());
         $this->assertStringNotContainsString('Sixteen', (string) $this->get(self::HOST.'/cv')->getContent());
     }
 

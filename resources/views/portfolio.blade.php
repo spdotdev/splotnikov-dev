@@ -124,13 +124,13 @@ $nl = [
     'shot_note' => 'Sessies zijn nagespeeld uit mijn eigen lab en projecten, met verzonnen hosts en namen; er draait niets in je browser. Securitytools draaien alleen op netwerken en machines die van mij zijn of die ik mag testen.',
     'mf_l' => '01 · Het manifest', 'mf_h' => 'Engineering voor rendement, niet voor trends',
     'mf_p' => 'Senior developer en solution architect in Eindhoven, sinds 2008 in de code. De duurste regel code is de regel die nooit geschreven had moeten worden. Ik volg geen cargo-cult-architectuur: waar anderen over-engineeren met microservices die ze niet kunnen beheren, pleit ik voor modulaire monolieten en pragmatisch schalen.',
-    'mf1' => 'Pragmatisme boven hype', 'mf1s' => 'Een stack wordt gekozen op de mensen die hem kunnen draaien en de totale kosten, niet op GitHub-sterren.',
+    'mf1' => 'Pragmatisme boven hype', 'mf1s' => 'Een stack kies je op basis van de mensen die hem kunnen draaien en de totale kosten, niet op basis van GitHub-sterren.',
     'mf2' => 'De Strangler Fig-strategie', 'mf2s' => 'Geen grote herbouw. Legacy-schuld wordt stuk voor stuk vervangen terwijl het bedrijf doordraait, elke release met een rollback.',
-    'mf3' => 'Systeemdenken', 'mf3s' => 'Een ticketdeveloper sluit taken af. Een architect voorziet de afweging van elke structurele keuze over 24 maanden.',
+    'mf3' => 'Systeemdenken', 'mf3s' => 'Een ticketdeveloper sluit taken af. Een architect ziet vooruit wat elke structurele keuze over 24 maanden kost.',
     'pj_l' => '02 · Projecten', 'pj_h' => 'Open source, en wat ik voor mezelf bouw', 'pj_p' => 'Tools die ik nodig had en publiceerde, producten die ik thuis draai, een spel omgebouwd tot engineeringproject. <span class="desk">Scroll opzij.</span>', 'pj_all' => 'Alle projecten →',
     'tk_l' => '03 · Het gereedschap', 'tk_h' => 'Technologieën en werkwijze', 'tk_p' => 'De tools van dagelijks gebruik, geen wensenlijst. Drie groepen hier, zeven op de gereedschapspagina.', 'tk_all' => 'Bekijk het hele gereedschap →',
     'st_l' => 'Gewerkt met', 'st_h' => 'Merken waarvoor ik heb gebouwd, tools waarmee ik bouw', 'st_p' => 'In loondienst bij bureaus en productbedrijven vóór 2024, en sindsdien als freelancer.',
-    'ct_h' => 'Klaar om de ruis weg te snijden?', 'ct_p' => 'Ik ben beschikbaar voor architectuurconsultaties en moderniseringsprojecten. Wil je iemand die eigenaarschap neemt over de gezondheid van je systeem in plaats van tickets te verschuiven, laten we praten.', 'ct_b1' => 'Gebruik het contactformulier',
+    'ct_h' => 'Klaar om de ruis eruit te halen?', 'ct_p' => 'Ik ben beschikbaar voor architectuurconsultaties en moderniseringsprojecten. Wil je iemand die verantwoordelijkheid neemt voor de gezondheid van je systeem in plaats van tickets heen en weer te schuiven? Laten we praten.', 'ct_b1' => 'Gebruik het contactformulier',
 ];
 foreach (array_values(\Spdotdev\SplotnikovDev\Projects::all()) as $i => $pr) {
     $nl['pj_'.$i.'_k'] = $pr['nl']['kind'];

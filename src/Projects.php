@@ -41,7 +41,7 @@ final class Projects
                 'short' => 'The smallest honest way to run Claude Code as an always-on Telegram bot: one daemon, one chat, the full tool set, with the setup for Linux, macOS and Windows. The pattern behind my own manager agent.',
                 'stack' => ['TypeScript', 'Claude Code', 'Telegram'],
                 'url' => 'https://github.com/spdotdev/claude-telegram-relay',
-                'nl' => ['kind' => 'Referentiepatroon · TypeScript', 'short' => 'De kleinste eerlijke manier om Claude Code als altijd-aan Telegram-bot te draaien: één daemon, één chat, de volledige toolset, met de installatie voor Linux, macOS en Windows. Het patroon achter mijn eigen manager-agent.'],
+                'nl' => ['kind' => 'Referentiepatroon · TypeScript', 'short' => 'De kleinste manier die echt werkt om Claude Code als altijd-aan Telegram-bot te draaien: één daemon, één chat, de volledige toolset, met de installatie voor Linux, macOS en Windows. Het patroon achter mijn eigen manager-agent.'],
             ],
             'inventory' => [
                 'slug' => 'inventory',

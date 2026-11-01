@@ -43,7 +43,7 @@ $nl = [
     'tkp_top_p' => 'Draait er bij jou iets dat hier niet staat?',
     'tkp_top_b' => 'Vertel me wat je draait',
     'tkp_cta_h' => 'Mis je die ene die jij gebruikt?',
-    'tkp_cta_p' => 'Een stack wordt gekozen op de mensen die hem kunnen draaien en de totale kosten, niet op deze lijst. Vertel me wat je draait en ik zeg eerlijk of ik de juiste persoon ervoor ben.',
+    'tkp_cta_p' => 'Een stack kies je op basis van de mensen die hem kunnen draaien en de totale kosten, niet op basis van deze lijst. Vertel me wat je draait en ik zeg eerlijk of ik de juiste persoon ervoor ben.',
     'tkp_cta_b1' => 'Neem contact op',
     'tkp_cta_b2' => 'Bekijk het CV',
 ];

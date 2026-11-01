@@ -26,7 +26,7 @@ final class Cases
                 'nl' => [
                     'label' => 'Modernisering van legacy',
                     'title' => 'Een monoliet moderniseren: Phalcon naar Laravel',
-                    'mess' => 'Een klant zat vast in een legacy Phalcon-systeem op een PHP zonder support, kon niet schalen en vond geen specialisten.',
+                    'mess' => 'Een klant zat vast in een legacy Phalcon-systeem op een PHP-versie zonder support, kon niet schalen en vond geen specialisten.',
                     'solution' => 'Een eigen PHP-middlewarelaag waarmee beide frameworks naast elkaar draaien, daarna een stapsgewijze migratie (het Strangler Fig-patroon), module voor module.',
                     'impact' => '60 procent lagere latency, PHP 7.4 naar 8.4 weer in support, en de klanten op het platform bleven de hele migratie door werken.',
                     'facts' => [['60%', 'lagere latency'], ['7.4 → 8.4', 'PHP, weer in support'], ['in gebruik', 'tijdens de hele migratie']],
