@@ -59,7 +59,7 @@ class SiteController
 
     public function robots(): Response
     {
-        return $this->staticFile('robots.txt', 'text/plain');
+        return $this->staticFile('robots.txt', 'text/plain; charset=UTF-8');
     }
 
     /** Atom feed of the blog: every post, titles and summaries as plain text, `updated` from the post date. */
@@ -76,7 +76,7 @@ class SiteController
         $updated = $entries ? max(array_column($entries, 'updated')) : '2026-01-01T00:00:00Z';
 
         // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom)
-        return response(view('splotnikov::feed', ['entries' => $entries, 'updated' => $updated])->render(), 200, ['Content-Type' => 'application/atom+xml; charset=UTF-8']);
+        return response(view('splotnikov::feed', ['entries' => $entries, 'updated' => $updated])->render(), 200, self::headers('application/atom+xml; charset=UTF-8'));
     }
 
     public function sitemap(): Response
@@ -96,6 +96,12 @@ class SiteController
         }
         $xml = str_replace('</urlset>', $extra.'</urlset>', $xml);
 
+        // The blog index changes when its newest post does: the lastmod is that post's date, never older than the file's.
+        $dates = array_filter(array_column(Posts::all(), 'date'), fn (string $d): bool => preg_match('/^\d{4}-\d{2}-\d{2}$/', $d) === 1);
+        if ($dates) {
+            $xml = (string) preg_replace('#(<loc>https://splotnikov\.dev/blog</loc>\s*<lastmod>)[^<]*(</lastmod>)#', '${1}'.max($dates).'${2}', $xml, 1);
+        }
+
         // Pages that exist in both languages: every address lists both twins, and the Dutch one is a url of its own.
         $xml = str_replace('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"', '<urlset xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"', $xml);
         $xml = (string) preg_replace_callback('#<url>\s*<loc>(https://splotnikov\.dev(/[^<]*))</loc>(.*?)</url>#s', function (array $m): string {
@@ -110,12 +116,22 @@ class SiteController
             return "<url>\n    <loc>$en</loc>".$m[3].$alt."\n  </url>\n  <url>\n    <loc>$nl</loc>".$m[3].$alt."\n  </url>";
         }, $xml);
 
-        return response($xml, 200, ['Content-Type' => 'application/xml']);
+        return response($xml, 200, self::headers('application/xml; charset=UTF-8'));
     }
 
     public function webmanifest(): Response
     {
-        return $this->staticFile('site.webmanifest', 'application/manifest+json');
+        return $this->staticFile('site.webmanifest', 'application/manifest+json; charset=UTF-8');
+    }
+
+    /**
+     * Crawler and feed files change a few times a month: an hour in any cache is safe and spares the server.
+     *
+     * @return array<string, string>
+     */
+    private static function headers(string $contentType): array
+    {
+        return ['Content-Type' => $contentType, 'Cache-Control' => 'public, max-age=3600'];
     }
 
     /**
@@ -128,6 +144,6 @@ class SiteController
         $path = __DIR__.'/../../../public/'.$name;
         abort_unless(is_file($path), 404);
 
-        return response((string) file_get_contents($path), 200, ['Content-Type' => $contentType]);
+        return response((string) file_get_contents($path), 200, self::headers($contentType));
     }
 }

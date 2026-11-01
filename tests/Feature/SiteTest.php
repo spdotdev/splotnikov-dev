@@ -132,9 +132,9 @@ class SiteTest extends TestCase
 
     public function test_missing_pages_get_the_site_own_404(): void
     {
-        foreach (['/nope', '/blog/nope', '/nl/blog'] as $path) {
+        foreach (['/nope' => 'That page does not exist', '/blog/nope' => 'That page does not exist', '/nl/blog' => 'Die pagina bestaat niet'] as $path => $text) {
             $r = $this->get('http://splotnikov.dev'.$path)->assertNotFound();
-            $r->assertSee('That page does not exist', false);
+            $r->assertSee($text, false);
             $r->assertSee('noindex', false);
         }
     }

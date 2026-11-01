@@ -34,7 +34,14 @@ class SplotnikovDevServiceProvider extends ServiceProvider
                     return null;
                 }
 
-                return response()->view('splotnikov::404', [], 404);
+                // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom)
+                $html = view('splotnikov::404')->render();
+                if ($request->is('nl') || $request->is('nl/*')) {
+                    // The Dutch twin of a missing page is Dutch, like the pages it stands next to.
+                    $html = (string) preg_replace('#<html lang="en"#', '<html lang="nl"', Dutch::links(Dutch::translate($html, Dutch::strings($html))), 1);
+                }
+
+                return response($html, 404);
             });
         }
 

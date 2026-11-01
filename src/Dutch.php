@@ -177,13 +177,12 @@ final class Dutch
         return $out.substr($html, $pos);
     }
 
-    public static function transform(string $html, string $enPath): string
+    /** Links to paired pages stay in Dutch, whether written as a full address or as a plain path. */
+    public static function links(string $html): string
     {
-        $map = self::strings($html);
-        $html = self::translate($html, $map);
+        $html = str_replace('href="'.self::HOST.'"', 'href="'.self::HOST.'/"', $html);
 
-        // links to paired pages stay in Dutch, whether written as a full address or as a plain path
-        $html = (string) preg_replace_callback('#<a\b[^>]*>#', function (array $a): string {
+        return (string) preg_replace_callback('#<a\b[^>]*>#', function (array $a): string {
             if (str_contains($a[0], 'hreflang=')) {
                 return $a[0];
             }
@@ -196,6 +195,14 @@ final class Dutch
                 return 'href="'.self::nlUrl($m[1]).($m[2] ?? '').'"';
             }, $a[0]);
         }, $html);
+    }
+
+    public static function transform(string $html, string $enPath): string
+    {
+        $map = self::strings($html);
+        $html = self::translate($html, $map);
+
+        $html = self::links($html);
 
         [$title, $desc] = self::meta($enPath);
         if ($title !== '') {
