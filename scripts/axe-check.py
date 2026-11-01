@@ -26,3 +26,4 @@ bad = {k: v for k, v in res.items() if v}
 print(len(res), 'page runs,', len(bad), 'with findings')
 for k, v in bad.items():
     for x in v: print(k, x['id'], x['impact'], x['n'], x['ex'][:1])
+sys.exit(1 if bad else 0)

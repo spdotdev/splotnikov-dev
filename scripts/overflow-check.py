@@ -13,3 +13,4 @@ with sync_playwright() as p:
             bad.append((path,w,el))
     b.close()
 print(len(paths),'pages,',len(bad),'overflow'); [print(x) for x in bad]
+sys.exit(1 if bad else 0)

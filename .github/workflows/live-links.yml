@@ -18,3 +18,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/check-live.py https://splotnikov.dev
+
+  ui:
+    # The browser checks that were run by hand: axe (WCAG 2.2 AA), sideways scroll at 360 px, keyboard focus, touch
+    # targets and first button on a phone. Any finding fails the run. Run it by hand with "Run workflow".
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SITE: https://splotnikov.dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install Playwright and Chromium
+        run: |
+          pip install playwright==1.64.0
+          playwright install --with-deps chromium
+      - name: Install axe-core
+        run: |
+          npm pack axe-core@4.10.2
+          tar xzf axe-core-4.10.2.tgz
+      - name: Page list from the sitemap
+        run: |
+          python3 - <<'PY' > paths.txt
+          import re, urllib.request
+          xml = urllib.request.urlopen('${{ env.SITE }}/sitemap.xml', timeout=30).read().decode()
+          for u in re.findall(r'<loc>([^<]+)</loc>', xml):
+              print(u.replace('${{ env.SITE }}', '') or '/')
+          PY
+          cat paths.txt
+      - name: Axe, light and dark
+        run: AXE_JS=package/axe.min.js python3 scripts/axe-check.py "$SITE" paths.txt
+      - name: Sideways scroll at 360 px
+        run: python3 scripts/overflow-check.py "$SITE" paths.txt
+      - name: Keyboard focus
+        run: python3 scripts/focus-check.py "$SITE" "$(paste -sd, paths.txt)"
+      - name: Touch targets and first button
+        run: python3 scripts/ui-check.py "$SITE"
