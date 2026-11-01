@@ -48,7 +48,7 @@
         }
     }
   ?>
-  <p style="margin-top:24px"><a class="btn" href="{{ route('splotnikov.contact.page', $topic ? ['about' => $topic] : []) }}" data-i="blp_cta">Talk about your own system</a></p>
+  <p style="margin-top:24px"><a class="btn" href="{{ route('splotnikov.contact.page', $topic ? ['about' => $topic] : []) }}"@sda('Contact button click') data-i="blp_cta">Talk about your own system</a></p>
 
 </article>
 @endsection

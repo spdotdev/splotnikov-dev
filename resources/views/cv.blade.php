@@ -19,7 +19,7 @@
         <h1 data-dec>Stanislav Plotnikov</h1>
         <p class="lead" data-i="cv_lead">{{ $cv['lead'] }}</p>
       </div>
-      <div class="cv-actions"><div class="seg biz" role="group" aria-label="With or without company details" title="With or without the company details, on the page, in the PDF and in the print"><button type="button" data-biz="1" aria-pressed="true" data-i="cv_biz_on">Company</button><button type="button" data-biz="0" aria-pressed="false" data-i="cv_biz_off">Personal</button></div><button type="button" class="btn" id="btn-pdf" data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div>
+      <div class="cv-actions"><div class="seg biz" role="group" aria-label="With or without company details" title="With or without the company details, on the page, in the PDF and in the print"><button type="button" data-biz="1" aria-pressed="true" data-i="cv_biz_on">Company</button><button type="button" data-biz="0" aria-pressed="false" data-i="cv_biz_off">Personal</button></div><button type="button" class="btn" id="btn-pdf"@sda('CV PDF download') data-i="cv_pdf">Download PDF</button><button type="button" class="btn o" id="btn-print" data-i="cv_print">Print</button></div>
     </div>
   </header>
 
@@ -87,7 +87,7 @@
       @include('splotnikov::partials.logo', ['id' => 'cta', 'w' => 40, 'h' => 40])
       <h2 data-i="cv_cta_h">Want this on paper, or in your inbox?</h2>
       <p data-i="cv_cta_p">Download the PDF above, or write me and I send it with a short note on what I could do for your system.</p>
-      <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page', ['about' => 'Freelance or contract role']) }}" data-i="cv_cta_b1">Use the contact form</a><a class="btn o" href="{{ route('splotnikov.projects') }}" data-i="cv_cta_b2">See the projects</a></div>
+      <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page', ['about' => 'Freelance or contract role']) }}"@sda('Contact button click') data-i="cv_cta_b1">Use the contact form</a><a class="btn o" href="{{ route('splotnikov.projects') }}" data-i="cv_cta_b2">See the projects</a></div>
     </div>
   </div></section>
 </article>

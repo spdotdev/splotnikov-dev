@@ -4,6 +4,7 @@ namespace Spdotdev\SplotnikovDev;
 
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -19,6 +20,10 @@ class SplotnikovDevServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'splotnikov');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        // @sda('Event name') writes the attribute the sd-analytics script reads on a click, and only when a site key
+        // is set: without the key the markup carries nothing and nothing is sent.
+        Blade::directive('sda', fn (string $event): string => "<?php echo config('splotnikov-dev.analytics_key') ? ' data-sda-event=\"'.e($event).'\"' : ''; ?>");
 
         if ($this->app->runningInConsole()) {
             $this->commands([Console\ContactLeadsCommand::class]);

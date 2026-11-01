@@ -14,7 +14,7 @@
     <a class="btn" href="{{ route('splotnikov.home') }}" data-i="e4_b0">Go to the home page</a>
     <a class="btn o" href="{{ route('splotnikov.projects') }}" data-i="e4_b1">See the projects</a>
     <a class="btn o" href="{{ route('splotnikov.cv') }}" data-i="e4_b2">Read the CV</a>
-    <a class="btn o" href="{{ route('splotnikov.contact.page') }}" data-i="e4_b3">Get in touch</a>
+    <a class="btn o" href="{{ route('splotnikov.contact.page') }}"@sda('Contact button click') data-i="e4_b3">Get in touch</a>
   </div>
 </article>
 @endsection

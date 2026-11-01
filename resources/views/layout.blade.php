@@ -99,12 +99,12 @@
     </div>
     <div class="right">
       @if($paired)
-      <div class="seg" role="group" aria-label="Language"><a id="en" href="{{ \Spdotdev\SplotnikovDev\Dutch::enUrl($enPath) }}" hreflang="en" lang="en" @if(! $isNl) aria-current="true" @endif>EN</a><a id="nl" href="{{ \Spdotdev\SplotnikovDev\Dutch::nlUrl($enPath) }}" hreflang="nl" lang="nl" @if($isNl) aria-current="true" @endif>NL</a></div>
+      <div class="seg" role="group" aria-label="Language"><a id="en" href="{{ \Spdotdev\SplotnikovDev\Dutch::enUrl($enPath) }}" hreflang="en" lang="en"@sda('Language switch') @if(! $isNl) aria-current="true" @endif>EN</a><a id="nl" href="{{ \Spdotdev\SplotnikovDev\Dutch::nlUrl($enPath) }}" hreflang="nl" lang="nl"@sda('Language switch') @if($isNl) aria-current="true" @endif>NL</a></div>
       @else
-      <div class="seg js-only" role="group" aria-label="Language"><button id="en" aria-pressed="true" type="button">EN</button><button id="nl" aria-pressed="false" type="button">NL</button></div>
+      <div class="seg js-only" role="group" aria-label="Language"><button id="en" aria-pressed="true" type="button"@sda('Language switch')>EN</button><button id="nl" aria-pressed="false" type="button"@sda('Language switch')>NL</button></div>
       @endif
       <div class="seg th" role="group" aria-label="Theme"><button type="button" data-th="system" aria-pressed="true" title="System"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></button><button type="button" data-th="light" aria-pressed="false" title="Light"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button><button type="button" data-th="dark" aria-pressed="false" title="Dark"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button></div>
-      <a class="btn cta" href="{{ route('splotnikov.contact.page') }}" data-i="n_hire">Contact me</a>
+      <a class="btn cta" href="{{ route('splotnikov.contact.page') }}"@sda('Contact button click') data-i="n_hire">Contact me</a>
       <button class="ic" id="burger" aria-label="Menu" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div></nav>

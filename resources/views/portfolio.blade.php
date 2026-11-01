@@ -29,7 +29,7 @@
   <h1 class="name" data-dec>Stanislav Plotnikov</h1>
   <div class="sub in2" data-i="sub">Automation with AI · Legacy modernization · Security</div>
   <p class="hero-q in2" data-i="hq">I turn legacy technical debt into infrastructure that scales and keeps running, by putting return on investment before industry trends.</p>
-  <div class="cta in3"><a class="btn" href="{{ route('splotnikov.cv') }}" title="Curriculum vitae" data-i="cta1">View the CV <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn o" href="{{ route('splotnikov.contact.page') }}" data-i="cta2">Contact me</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a></div>
+  <div class="cta in3"><a class="btn" href="{{ route('splotnikov.cv') }}" title="Curriculum vitae" data-i="cta1">View the CV <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn o" href="{{ route('splotnikov.contact.page') }}"@sda('Contact button click') data-i="cta2">Contact me</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a></div>
   <div class="cmd in3"><span>&gt; whoami&nbsp;&nbsp;<span>stas</span>&nbsp;&nbsp;<b data-i="cmd_b"><span>senior developer</span><span>PHP since 2008, Linux and networks since 2005</span><span>modernization</span><span>automation</span><span>AI</span><span>security</span><span>freelance since 2024</span></b></span></div>
 </header>
 
@@ -108,7 +108,7 @@
     @include('splotnikov::partials.logo', ['id' => 'cta', 'w' => 40, 'h' => 40])
     <h2 data-i="ct_h">Ready to cut the noise?</h2>
     <p data-i="ct_p">I am available for architecture consultations and modernization projects. If you want someone who takes ownership of your system's health instead of moving tickets, let's talk.</p>
-    <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="ct_b1">Use the contact form</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a><a class="btn o" href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a></div>
+    <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}"@sda('Contact button click') data-i="ct_b1">Use the contact form</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a><a class="btn o" href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a></div>
   </div>
 </div></section>
 @endsection

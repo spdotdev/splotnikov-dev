@@ -11,7 +11,7 @@
       <span class="lbl dot" data-i="bl_lbl">Blog</span>
       <h1 data-i="bl_h1" data-dec>Notes from my own desk</h1>
       <p class="lead" data-i="bl_lead">Technology and what I am busy with: why one thing beats another, what a year of running two frameworks in one app taught me, what I build with AI and where I keep a human in the loop. My own experience, no client names.</p>
-      <p class="lead-cta"><span data-i="bl_top_p">Want the same thing in your own system?</span> <a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="bl_cta_b1">Contact me</a></p>
+      <p class="lead-cta"><span data-i="bl_top_p">Want the same thing in your own system?</span> <a class="btn" href="{{ route('splotnikov.contact.page') }}"@sda('Contact button click') data-i="bl_cta_b1">Contact me</a></p>
     </div>
   </header>
 
@@ -41,7 +41,7 @@
       @include('splotnikov::partials.logo', ['id' => 'cta', 'w' => 40, 'h' => 40])
       <h2 data-i="bl_cta_h">Want to talk about one of these?</h2>
       <p data-i="bl_cta_p">Disagree, have a better way, or want the same thing in your own system: write me. I answer every message myself.</p>
-      <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="bl_cta_b1">Contact me</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a></div>
+      <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}"@sda('Contact button click') data-i="bl_cta_b1">Contact me</a><a class="btn o" href="https://www.linkedin.com/in/stanislavplotnikov/" rel="noopener" target="_blank">LinkedIn</a></div>
     </div>
   </div></section>
 </article>

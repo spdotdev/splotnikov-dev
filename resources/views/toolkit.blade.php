@@ -11,7 +11,7 @@
       <span class="lbl dot" data-i="tkp_lbl">Toolkit</span>
       <h1 data-i="tkp_h1" data-dec>Technologies and practices</h1>
       <p class="lead" data-i="tkp_lead">Seven groups, the same as the expertise on my CV: the tools in daily use, not a wish list. Each line says what I do with it. The three on the home page are the ones people ask about first.</p>
-      <p class="lead-cta"><span data-i="tkp_top_p">Running something that is not here?</span> <a class="btn" href="{{ route('splotnikov.contact.page', ['about' => 'Architecture advice']) }}" data-i="tkp_top_b">Tell me what you run</a></p>
+      <p class="lead-cta"><span data-i="tkp_top_p">Running something that is not here?</span> <a class="btn" href="{{ route('splotnikov.contact.page', ['about' => 'Architecture advice']) }}"@sda('Contact button click') data-i="tkp_top_b">Tell me what you run</a></p>
     </div>
   </header>
 
@@ -28,7 +28,7 @@
       @include('splotnikov::partials.logo', ['id' => 'cta', 'w' => 40, 'h' => 40])
       <h2 data-i="tkp_cta_h">Missing the one you use?</h2>
       <p data-i="tkp_cta_p">A stack is chosen on the people who can run it and its total cost, not on this list. Tell me what you run and I say honestly whether I am the right person for it.</p>
-      <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}" data-i="tkp_cta_b1">Contact me</a><a class="btn o" href="{{ route('splotnikov.cv') }}" data-i="tkp_cta_b2">View the CV</a></div>
+      <div class="row"><a class="btn" href="{{ route('splotnikov.contact.page') }}"@sda('Contact button click') data-i="tkp_cta_b1">Contact me</a><a class="btn o" href="{{ route('splotnikov.cv') }}" data-i="tkp_cta_b2">View the CV</a></div>
     </div>
   </div></section>
 </article>
