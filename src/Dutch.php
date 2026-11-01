@@ -60,7 +60,7 @@ final class Dutch
             '/' => ['Senior developer en architect, Eindhoven', 'Stanislav Plotnikov: automatisering met AI-agents, modernisering van legacy en security. PHP sinds 2008. Beschikbaar als freelancer, Eindhoven of remote.'],
             '/cv' => ['CV: senior developer en architect', 'CV van Stanislav Plotnikov, senior developer en solution architect in Eindhoven: PHP sinds 2008, Laravel, AI-agents. Printbaar en als PDF.'],
             '/contact' => ['Contact, antwoord binnen één werkdag', 'Schrijf naar Stanislav Plotnikov in Eindhoven via het formulier. Ik reageer binnen één werkdag met een eerste mening, gratis. LinkedIn en GitHub staan er ook.'],
-            '/projects' => ['Open source projecten', 'Open source projecten van Stanislav Plotnikov: een WhatsApp MCP-server, een Claude Code-skill, een Telegram-relay, een voorraadproduct en deze website.'],
+            '/projects' => ['Opensourceprojecten', 'Opensourceprojecten van Stanislav Plotnikov: een WhatsApp MCP-server, een Claude Code-skill, een Telegram-relay, een voorraadproduct en deze website.'],
             '/privacy' => ['Privacyverklaring', 'Welke gegevens splotnikov.dev gebruikt: geen cookies bij het lezen, een eigen teller zonder IP-adres, en het contactformulier.'],
             '/toolkit' => ['Toolkit: PHP, AI-agents, security', 'De tools en werkwijzen die Stanislav Plotnikov dagelijks gebruikt: PHP en Laravel, AI-agents met vangrails, security, infrastructure as code en pipelines.'],
         ];
@@ -220,6 +220,16 @@ final class Dutch
         'scuttle.dev, my company website' => 'scuttle.dev, mijn bedrijfswebsite',
         'Interactive examples: terminal sessions, code and an agent run from my daily work' => 'Interactieve voorbeelden: terminalsessies, code en een agent-run uit mijn dagelijkse werk',
     ];
+
+    /**
+     * The English to Dutch map of the aria-label and title texts, written into the page for the in-place language switch (pages without a Dutch twin).
+     *
+     * @return array<string, string>
+     */
+    public static function attributeMap(): array
+    {
+        return self::ATTRIBUTES;
+    }
 
     /** Dutch text for the aria-label and title attributes the page holds in English. */
     public static function attributes(string $html): string

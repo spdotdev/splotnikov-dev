@@ -38,8 +38,23 @@
   var T = window.SCUTTLE_NL || { t: {}, ph: {} };
   var base = {};
   document.querySelectorAll('[data-i]').forEach(function (e) { base[e.dataset.i] = base[e.dataset.i] || e.innerHTML; });
+  // aria-label and title texts: the English one is remembered on the element, the Dutch one comes from the map T.a.
+  var attrEls = [].slice.call(document.querySelectorAll('[aria-label],[title]'));
+  attrEls.forEach(function (e) {
+    ['aria-label', 'title'].forEach(function (a) { if (e.hasAttribute(a)) e.setAttribute('data-en-' + a, e.getAttribute(a)); });
+  });
+  function attrs(l) {
+    attrEls.forEach(function (e) {
+      ['aria-label', 'title'].forEach(function (a) {
+        var en = e.getAttribute('data-en-' + a);
+        if (en === null) return;
+        e.setAttribute(a, (l === 'nl' && T.a && T.a[en]) ? T.a[en] : en);
+      });
+    });
+  }
   function lang(l, animate) {
     root.lang = l;
+    attrs(l);
     document.querySelectorAll('[data-i]').forEach(function (e) {
       var k = e.dataset.i;
       e.innerHTML = (l === 'nl' && T.t[k]) ? T.t[k] : base[k];

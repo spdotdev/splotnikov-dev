@@ -123,7 +123,7 @@
   </footer></div>
 
   <script>
-    window.SCUTTLE_NL = { t: { skip: "Naar de inhoud", n_home: "Home", n_manifesto: "Manifest", n_projects: "Projecten", n_toolkit: "Tools", n_blog: "Blog", n_cv: "CV", n_contact: "Contact", n_hire: "Neem contact op", ft_p: "Senior developer en solution architect in Eindhoven. Modernisering van legacy software, automatisering met AI-agents en beveiliging, door één persoon die eigenaarschap neemt over het systeem.", ft_nav: "Navigatie", ft_cv: "CV, printen of PDF", ft_connect: "Contact", ft_form: "Contactformulier", ft_privacy: "Privacy", ft_work: "Werk", ft_pricing: "Diensten en prijzen", ft_cases: "Casestudy's" }, ph: {} };
+    window.SCUTTLE_NL = { t: { skip: "Naar de inhoud", n_home: "Home", n_manifesto: "Manifest", n_projects: "Projecten", n_toolkit: "Tools", n_blog: "Blog", n_cv: "CV", n_contact: "Contact", n_hire: "Neem contact op", ft_p: "Senior developer en solution architect in Eindhoven. Modernisering van legacy software, automatisering met AI-agents en beveiliging, door één persoon die verantwoordelijkheid neemt voor het systeem.", ft_nav: "Navigatie", ft_cv: "CV, printen of PDF", ft_connect: "Contact", ft_form: "Contactformulier", ft_privacy: "Privacy", ft_work: "Werk", ft_pricing: "Diensten en prijzen", ft_cases: "Casestudy's" }, ph: {}, a: @json(\Spdotdev\SplotnikovDev\Dutch::attributeMap()) };
   </script>
   @stack('nl')
   @yield('scripts')
