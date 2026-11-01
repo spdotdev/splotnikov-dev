@@ -112,7 +112,7 @@ final class Posts
                     '- No build step means no node_modules, no lockfile drift, no "it works on my machine". The files are served as they are in the repository.',
                     '- No third-party tracking. No analytics script from anyone else, no cookie banner, nothing from a third party except, on the CV page, the PDF library. The two fonts are served from the same host since 30 October 2026, so the page makes no request to Google.',
                     '## The terminal panel',
-                    'The panel on the home page is not a video. Each scene is an array of typed lines (a prompt, a code line or a log line, with a class for the colour) and a few result rows that link to the section they belong to. The script types them with a delay, fills the progress bar, then rotates to the next scene unless you hover over it. The scenes are re-enactments from my own lab and projects with made-up hosts; nothing runs.',
+                    'The panel on the [home page](/) is not a video. Each scene is an array of typed lines (a prompt, a code line or a log line, with a class for the colour) and a few result rows that link to the section they belong to. The script types them with a delay, fills the progress bar, then rotates to the next scene unless you hover over it. The scenes are re-enactments from my own lab and projects with made-up hosts; nothing runs.',
                     'Adding a scene is adding an entry to one object and a button to one view. A test checks that every button has a scene. That is the whole content pipeline.',
                     '## What Claude Code did',
                     'Most of the port was done with Claude Code: copying the theme from my company site, swapping the accent to the green this site had, writing the scenes, the CV print layout and the contact form, and taking screenshots in light, dark and phone width before anything deployed. I read every diff and changed what I did not like. The rule I keep: the agent proposes, the tests and I decide.',
@@ -144,6 +144,16 @@ final class Posts
                 'nl' => ['title' => 'Strangler Fig in de praktijk: wat twee frameworks in één app me leerden', 'summary' => 'Op een whiteboard is het patroon simpel: route voor route, oud en nieuw naast elkaar. De moeilijke delen zijn de sessie, de database en de mensen. Notities van een migratie die in gebruik bleef.'],
             ],
         ];
+    }
+
+    /**
+     * One body line as safe HTML: everything is escaped, then `[text](/path)` becomes a link to a page of this site.
+     * Only a path that starts with one slash and holds letters, digits and `-_/#?=%` becomes a link (no scheme, no
+     * `//host`, no quote), so a CMS body can link inside the site and nowhere else.
+     */
+    public static function html(string $line): string
+    {
+        return (string) preg_replace_callback('~\[([^\[\]]{1,120})\]\((/(?!/)[A-Za-z0-9/_\-#?=%]{0,160})\)~', fn (array $m): string => '<a href="'.$m[2].'">'.$m[1].'</a>', e($line));
     }
 
     /**

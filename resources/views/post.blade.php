@@ -20,13 +20,13 @@
   @foreach($post['body'] as $line)
     @if(str_starts_with($line, '- '))
       @if(!$list)<ul>@php($list = true)@endif
-      <li>{{ substr($line, 2) }}</li>
+      <li>{!! \Spdotdev\SplotnikovDev\Posts::html(substr($line, 2)) !!}</li>
     @else
       @if($list)</ul>@php($list = false)@endif
       @if(str_starts_with($line, '## '))
         <h2>{{ substr($line, 3) }}</h2>
       @else
-        <p>{{ $line }}</p>
+        <p>{!! \Spdotdev\SplotnikovDev\Posts::html($line) !!}</p>
       @endif
     @endif
   @endforeach

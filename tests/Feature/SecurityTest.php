@@ -285,4 +285,19 @@ class SecurityTest extends TestCase
         $this->get(self::HOST.'/contact')->assertOk()->assertSee('Tell me what you are running');
         $this->get(self::HOST.'/nl/contact')->assertOk();
     }
+
+    public function test_post_body_links_only_reach_pages_of_this_site_and_everything_else_stays_escaped(): void
+    {
+        $html = Posts::html('See the [home page](/) and [the CV](/cv#top) and [a topic](/contact?about=Security).');
+        $this->assertSame('See the <a href="/">home page</a> and <a href="/cv#top">the CV</a> and <a href="/contact?about=Security">a topic</a>.', $html);
+        foreach (['[x](//evil.example)', '[x](https://evil.example)', '[x](javascript:alert(1))', '[x](/a"onmouseover="alert(1))', '[x](/a b)', "[x](/a\nb)", '[<b>x</b>](/)', '[x](/<script>)'] as $bad) {
+            $out = Posts::html($bad);
+            $this->assertStringNotContainsString('<script', $out, $bad);
+            $this->assertStringNotContainsString('<b>', $out, $bad);
+            $this->assertStringNotContainsString('href="//', $out, $bad);
+            $this->assertStringNotContainsString('href="https', $out, $bad);
+            $this->assertStringNotContainsString('href="javascript', $out, $bad);
+            $this->assertDoesNotMatchRegularExpression('/<a href="[^"]*["\s<>][^"]*"/', preg_replace('/<a href="[^"<>\s]*">/', '', $out) ?? '', $bad);
+        }
+    }
 }
