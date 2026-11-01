@@ -15,11 +15,19 @@ class ContactMessage extends Mailable
         public string $about,
         public string $text,
         public string $ip,
-    ) {}
+        public string $page = '',
+    ) {
+        // One line each, whatever the caller passes: nothing from a visitor can add a header line to the mail.
+        $line = fn (string $v): string => trim((string) preg_replace('/[\x00-\x1F\x7F]+/', ' ', $v));
+        $this->name = $line($this->name);
+        $this->email = $line($this->email);
+        $this->about = $line($this->about);
+        $this->page = $line($this->page);
+    }
 
     public function build(): static
     {
-        $body = "Name: {$this->name}\nEmail: {$this->email}\nAbout: ".($this->about !== '' ? $this->about : '-')."\n\n{$this->text}\n\n--\nSent from the splotnikov.dev contact form · visitor {$this->ip}";
+        $body = "Name: {$this->name}\nEmail: {$this->email}\nAbout: ".($this->about !== '' ? $this->about : '-')."\nPage: ".($this->page !== '' ? $this->page : '-')."\n\n{$this->text}\n\n--\nSent from the splotnikov.dev contact form · visitor {$this->ip}";
 
         $from = (string) config('splotnikov-dev.mail_from', '');
         if ($from !== '') {

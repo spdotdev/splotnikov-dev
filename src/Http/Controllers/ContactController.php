@@ -28,7 +28,7 @@ class ContactController
             $en = Validator::make($request->all(), $this->rules(false), self::messages(false))->errors()->all();
             $du = Validator::make($request->all(), $this->rules(true), self::messages(true))->errors()->all();
 
-            return back()->withInput()->withErrors($validator)
+            return $this->back($request)->withInput()->withErrors($validator)
                 ->with('contact_errors_en', $en)->with('contact_errors_nl', $du);
         }
         $data = $validator->validated();
@@ -36,7 +36,7 @@ class ContactController
         $to = (string) config('splotnikov-dev.contact_to', 'stplotnikov@gmail.com');
 
         if (! $this->humanEnough($request, $data)) {
-            return $this->failure($nl,
+            return $this->failure($request, $nl,
                 'The bot check failed. Please try again or email '.$to.' directly.',
                 'De botcontrole is mislukt. Probeer het opnieuw of mail direct naar '.$to.'.');
         }
@@ -57,7 +57,7 @@ class ContactController
         } catch (\Throwable $e) {
             Log::error('splotnikov.dev contact form: the message could not be stored', self::safeContext($e));
 
-            return $this->failure($nl,
+            return $this->failure($request, $nl,
                 'Your message could not be saved right now, and I do not want you to think it arrived. Please email '.$to.' directly or book a call.',
                 'Je bericht kon nu niet worden bewaard, en ik wil niet dat je denkt dat het is aangekomen. Mail direct naar '.$to.' of plan een gesprek.');
         }
@@ -72,21 +72,21 @@ class ContactController
             Log::critical('splotnikov.dev contact form: no mail transport (set SPLOTNIKOV_CONTACT_MAIL_DSN and SPLOTNIKOV_CONTACT_MAIL_FROM); lead #'.$lead->id.' is stored, no mail was sent. List: php artisan splotnikov:contact-leads --unmailed');
             $lead->update(['mail_status' => 'not_configured']);
 
-            return back()->with('contact_sent', 'stored');
+            return $this->back($request)->with('contact_sent', 'stored');
         }
 
         try {
             Mail::mailer($mailer)->to($to)
-                ->send(new ContactMessage($data['name'], $data['email'], (string) ($data['about'] ?? ''), $data['message'], (string) $lead->ip_hash));
+                ->send(new ContactMessage($data['name'], $data['email'], (string) ($data['about'] ?? ''), $data['message'], (string) $lead->ip_hash, (string) $lead->page));
             $lead->update(['mail_status' => 'sent', 'mailed_at' => now()]);
         } catch (\Throwable $e) {
             Log::critical('splotnikov.dev contact form could not send mail; lead #'.$lead->id.' is stored', self::safeContext($e));
             $lead->update(['mail_status' => 'failed']);
 
-            return back()->with('contact_sent', 'stored');
+            return $this->back($request)->with('contact_sent', 'stored');
         }
 
-        return back()->with('contact_sent', 'mailed');
+        return $this->back($request)->with('contact_sent', 'mailed');
     }
 
     /**
@@ -108,10 +108,27 @@ class ContactController
     }
 
     /** A failure the visitor must see in both languages at once. */
-    private function failure(bool $nl, string $en, string $du): RedirectResponse
+    private function failure(Request $request, bool $nl, string $en, string $du): RedirectResponse
     {
-        return back()->withInput()->withErrors(['message' => $nl ? $du : $en])
+        return $this->back($request)->withInput()->withErrors(['message' => $nl ? $du : $en])
             ->with('contact_errors_en', [$en])->with('contact_errors_nl', [$du]);
+    }
+
+    /**
+     * Back to the form the visitor came from. The Referer header is the visitor's own and not trusted: Laravel's
+     * back() redirects to whatever address it holds (an open redirect). Only the two contact pages are valid targets,
+     * on this request's own host, and only the topic survives from the query.
+     */
+    private function back(Request $request): RedirectResponse
+    {
+        $referer = (string) $request->headers->get('referer', '');
+        $path = (string) parse_url($referer, PHP_URL_PATH);
+        $path = in_array($path, ['/contact', '/nl/contact'], true) ? $path : '/contact';
+        parse_str((string) parse_url($referer, PHP_URL_QUERY), $query);
+        $about = $query['about'] ?? null;
+        $qs = is_string($about) && $about !== '' && mb_strlen($about) <= 120 && preg_match('/[\x00-\x1F\x7F]/', $about) !== 1 ? '?'.http_build_query(['about' => $about], '', '&', PHP_QUERY_RFC3986) : '';
+
+        return redirect()->to($request->getSchemeAndHttpHost().$path.$qs);
     }
 
     /** True when the form was sent from a Dutch page (/nl/...): the error messages are then Dutch too. */

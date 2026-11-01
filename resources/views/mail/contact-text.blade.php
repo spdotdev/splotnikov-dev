@@ -1,6 +1,7 @@
 Name: {{ $name }}
 Email: {{ $email }}
 About: {{ $about !== '' ? $about : '-' }}
+Page: {{ $page !== '' ? $page : '-' }}
 
 {{ $text }}
 
