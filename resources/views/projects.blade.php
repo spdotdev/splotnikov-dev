@@ -51,7 +51,7 @@
       @include('splotnikov::partials.logo', ['id' => 'cta', 'w' => 40, 'h' => 40])
       <h2 data-i="pj_cta_h">Want to build on one of these?</h2>
       <p data-i="pj_cta_p">Issues and pull requests are welcome on every repository. For work on your own system, my company site has the services and prices.</p>
-      <div class="row"><a class="btn" href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a><a class="btn o" href="{{ route('splotnikov.contact.page') }}" data-i="pj_cta_b2">Contact me</a><a class="btn o" href="https://scuttle.dev" rel="noopener" target="_blank">scuttle.dev</a></div>
+      <div class="row"><a class="btn" href="https://github.com/spdotdev" rel="noopener" target="_blank">GitHub</a><a class="btn o" href="{{ route('splotnikov.contact.page') }}" data-i="pj_cta_b2">Contact me</a><a class="btn o" href="https://scuttle.dev" aria-label="scuttle.dev, my company website" rel="noopener" target="_blank">scuttle.dev</a></div>
     </div>
   </div></section>
 </article>

@@ -197,10 +197,45 @@ final class Dutch
         }, $html);
     }
 
+    /** English accessible names and tooltips (aria-label and title attributes) and their Dutch text, for the server rendered twins. */
+    private const ATTRIBUTES = [
+        'Main navigation' => 'Hoofdnavigatie',
+        'splotnikov.dev home' => 'splotnikov.dev, startpagina',
+        'Language' => 'Taal',
+        'Theme' => 'Thema',
+        'Menu' => 'Menu',
+        'System' => 'Systeem',
+        'Light' => 'Licht',
+        'Dark' => 'Donker',
+        'Curriculum vitae' => 'Curriculum vitae',
+        'Close' => 'Sluiten',
+        'Tools' => 'Gereedschap',
+        'Projects' => 'Projecten',
+        'Companies' => 'Bedrijven',
+        'Show the photo larger' => 'Toon de foto groter',
+        'Photo of Stanislav Plotnikov' => 'Foto van Stanislav Plotnikov',
+        'With or without company details' => 'Met of zonder bedrijfsgegevens',
+        'With or without the company details, on the page, in the PDF and in the print' => 'Met of zonder de bedrijfsgegevens, op de pagina, in de PDF en in de afdruk',
+        'Scuttle Development, my company' => 'Scuttle Development, mijn bedrijf',
+        'scuttle.dev, my company website' => 'scuttle.dev, mijn bedrijfswebsite',
+        'Interactive examples: terminal sessions, code and an agent run from my daily work' => 'Interactieve voorbeelden: terminalsessies, code en een agent-run uit mijn dagelijkse werk',
+    ];
+
+    /** Dutch text for the aria-label and title attributes the page holds in English. */
+    public static function attributes(string $html): string
+    {
+        return (string) preg_replace_callback('/\b(aria-label|title)="([^"]*)"/', function (array $m): string {
+            $nl = self::ATTRIBUTES[html_entity_decode($m[2])] ?? null;
+
+            return $nl === null ? $m[0] : $m[1].'="'.e($nl).'"';
+        }, $html);
+    }
+
     public static function transform(string $html, string $enPath): string
     {
         $map = self::strings($html);
         $html = self::translate($html, $map);
+        $html = self::attributes($html);
 
         $html = self::links($html);
 

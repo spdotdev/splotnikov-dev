@@ -12,9 +12,9 @@
   <div class="cal-g">
     <i data-i="{{ $prefix }}_wk">wk</i>@foreach(['M', 'T', 'W', 'T', 'F', 'S', 'S'] as $i => $wd)<i data-i="{{ $prefix }}_wd{{ $i }}">{{ $wd }}</i>@endforeach
     @foreach($A::calendar($tree, $month) as $row)
-    <a class="wk{{ $period === $row['week'] ? ' cur' : '' }}" href="{{ $base }}?p={{ $row['week'] }}" title="{{ $row['week'] }}">{{ (int) substr($row['week'], -2) }}</a>
+    <a class="wk{{ $period === $row['week'] ? ' cur' : '' }}" href="{{ $base }}?p={{ $row['week'] }}" title="{{ $row['week'] }}" aria-label="Posts of week {{ $row['week'] }}">{{ (int) substr($row['week'], -2) }}</a>
     @foreach($row['days'] as $d)
-      @if($d['posts'])<a class="d on{{ $period === $d['date'] ? ' cur' : '' }}{{ $d['inMonth'] ? '' : ' out' }}" href="{{ $base }}?p={{ $d['date'] }}" title="{{ $d['posts'] }}">{{ $d['day'] }}</a>
+      @if($d['posts'])<a class="d on{{ $period === $d['date'] ? ' cur' : '' }}{{ $d['inMonth'] ? '' : ' out' }}" href="{{ $base }}?p={{ $d['date'] }}" title="{{ $d['posts'] }}" aria-label="Posts of {{ $d['date'] }}">{{ $d['day'] }}</a>
       @else<span class="d{{ $d['inMonth'] ? '' : ' out' }}">{{ $d['day'] }}</span>@endif
     @endforeach
     @endforeach
