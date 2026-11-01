@@ -56,3 +56,5 @@ jobs:
         run: python3 scripts/focus-check.py "$SITE" "$(paste -sd, paths.txt)"
       - name: Touch targets and first button
         run: python3 scripts/ui-check.py "$SITE"
+      - name: Reflow at 320 px, also with the root font size doubled
+        run: python3 scripts/reflow-check.py "$SITE" paths.txt
