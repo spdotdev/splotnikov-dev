@@ -30,7 +30,7 @@
   </div>
 
   <section class="s tight" id="cases" style="margin-top:72px"><div class="wrap">
-    <div class="gridh rv"><span class="lbl dot" data-i="pj_cs_l">Client work, anonymized</span><h2 data-i="pj_cs_h" style="margin-top:16px">Two pieces of work, told the way they went</h2><p data-i="pj_cs_p">The client names stay out; the numbers are real. The full case studies live on <a href="https://scuttle.dev/case-studies" rel="noopener" target="_blank">scuttle.dev</a>, my company site.</p></div>
+    <div class="gridh rv"><span class="lbl dot" data-i="pj_cs_l">Client work, anonymized</span><h2 data-i="pj_cs_h" style="margin-top:16px">Two pieces of work, told the way they went</h2><p data-i="pj_cs_p">The client names stay out and the figures come from my own client work. The 60 percent and the PHP versions are also in the full case study on <a href="https://scuttle.dev/case-studies" rel="noopener" target="_blank">scuttle.dev</a>, my company site.</p></div>
     <div class="case-grid">
       @foreach(\Spdotdev\SplotnikovDev\Cases::all() as $c)
       <div class="c cg rv">
@@ -66,7 +66,7 @@ $nl = [
     'pj_more' => 'Op GitHub →',
     'pj_cs_l' => 'Klantwerk, geanonimiseerd',
     'pj_cs_h' => 'Twee stukken werk, verteld zoals het ging',
-    'pj_cs_p' => 'De klantnamen blijven eruit; de cijfers zijn echt. De volledige casestudy\'s staan op <a href="https://scuttle.dev/case-studies" rel="noopener" target="_blank">scuttle.dev</a>, mijn bedrijfssite.',
+    'pj_cs_p' => 'De klantnamen blijven eruit en de cijfers komen uit mijn eigen klantwerk. De 60 procent en de PHP-versies staan ook in de volledige casestudy op <a href="https://scuttle.dev/case-studies" rel="noopener" target="_blank">scuttle.dev</a>, mijn bedrijfssite.',
     'pj_cta_h' => 'Wil je op een van deze verder bouwen?',
     'pj_cta_p' => 'Issues en pull requests zijn welkom op elke repository. Voor werk aan je eigen systeem staan de diensten en prijzen op mijn bedrijfssite.',
     'pj_cta_b2' => 'Neem contact op',
