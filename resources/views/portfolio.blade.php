@@ -51,6 +51,7 @@
       <button class="it" data-k="claude" type="button"><i class="led"></i><span>claude -p</span><small>agent</small></button>
     </div>
     <div class="main" id="main">
+      {{-- 312 tests: a fixed re-enactment of a sample project, the same figure as in site.js (FixedFiguresTest) --}}
       <div class="top"><p class="sh" id="sh-h">312 tests green before anything ships · Laravel, PHPUnit, Playwright</p><div class="st"><i id="sti"></i><span id="stt">running</span></div></div>
       <div class="prog"><i id="pb"></i></div>
       <div class="view" id="view"><div class="log" id="log"></div><div class="find" id="find"></div></div>

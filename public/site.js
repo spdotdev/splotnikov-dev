@@ -147,6 +147,9 @@
   if (main && view && side) {
     var esc = function (x) { return String(x).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
     var run = function (log, rows) { return { kind: 'run', log: log, rows: rows }; };
+    // The numbers in these scenes (312 tests, 1 048 assertions, 41.2 s, 1 min 40 s, the migration names, the hashes) are a
+    // fixed re-enactment of a sample project, not a live count and not a client's suite. They are meant to stay put; if one
+    // changes, change every '312' (portfolio.blade.php carries it too, FixedFiguresTest checks they agree).
     // Each scene: typed lines [column, text, class]. Column "$" is a prompt, a number is a code line, "" is plain output. Titles are the headline, the tool after the dot.
     var D = {
       'artisan': Object.assign(run([
