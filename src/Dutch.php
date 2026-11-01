@@ -212,6 +212,7 @@ final class Dutch
             $html = (string) preg_replace('#(<meta (?:name|property)="(?:description|og:description|twitter:description)" content=")[^"]*(")#', '${1}'.$d.'${2}', $html);
             $html = (string) preg_replace('#(<meta (?:property="og:title"|name="twitter:title") content=")[^"]*(")#', '${1}'.$t.'${2}', $html);
         }
+        $html = (string) preg_replace('#(<meta property="og:image:alt" content=")[^"]*(")#', '${1}Stanislav Plotnikov, senior developer en solution architect in Eindhoven${2}', $html, 1);
         $nl = self::nlUrl($enPath);
         $html = (string) preg_replace('#<html lang="en"#', '<html lang="nl"', $html, 1);
         $html = (string) preg_replace('#(<link rel="canonical" href=")[^"]*(")#', '${1}'.$nl.'${2}', $html, 1);

@@ -15,7 +15,6 @@
     "description": "Automation with AI agents, legacy modernization and security. PHP, Laravel, Phalcon, Python, Kotlin, Linux.",
     "url": "https://splotnikov.dev",
     "image": "{{ secure_asset('vendor/splotnikov/portrait.jpg') }}",
-    "email": "stplotnikov@gmail.com",
     "address": { "@type": "PostalAddress", "addressLocality": "Eindhoven", "addressCountry": "NL" },
     "worksFor": { "@type": "Organization", "name": "Scuttle Development", "url": "https://scuttle.dev" },
     "knowsLanguage": ["en", "nl", "ru"],

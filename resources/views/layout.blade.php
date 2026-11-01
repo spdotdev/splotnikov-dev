@@ -42,6 +42,8 @@
   <meta property="og:title" content="{{ $seoTitle }}" />
   <meta property="og:description" content="{{ $seoDesc }}" />
   <meta property="og:image" content="{{ secure_asset('vendor/splotnikov/og-image.png') }}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="Stanislav Plotnikov, senior developer and solution architect in Eindhoven" />
   <meta property="og:site_name" content="splotnikov.dev" />
   <meta property="og:locale" content="en_GB" />
