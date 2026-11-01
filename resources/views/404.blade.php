@@ -1,7 +1,7 @@
 @extends('splotnikov::layout')
 
-@section('title', 'Page not found')
-@section('description', 'This page does not exist on splotnikov.dev. The home page, the projects, the CV and the contact form are one click away.')
+@section('title', request()->is('nl') || request()->is('nl/*') ? 'Pagina niet gevonden' : 'Page not found')
+@section('description', request()->is('nl') || request()->is('nl/*') ? 'Deze pagina bestaat niet op splotnikov.dev. De homepage, de projecten, het cv en het contactformulier zijn één klik weg.' : 'This page does not exist on splotnikov.dev. The home page, the projects, the CV and the contact form are one click away.')
 @section('canonical', 'https://splotnikov.dev/404')
 @section('robots', 'noindex, follow')
 

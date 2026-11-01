@@ -79,4 +79,13 @@ class HeadersAndErrorsTest extends TestCase
             $this->assertStringContainsString($lang === 'nl' ? 'Die pagina bestaat niet' : 'That page does not exist', $html, $path);
         }
     }
+
+    public function test_the_dutch_404_has_a_dutch_title_and_description(): void
+    {
+        $html = (string) $this->get('http://splotnikov.dev/nl/does-not-exist')->assertNotFound()->getContent();
+        $this->assertStringContainsString('<title>Pagina niet gevonden', $html);
+        $this->assertStringContainsString('content="Deze pagina bestaat niet', $html);
+        $en = (string) $this->get('http://splotnikov.dev/does-not-exist')->assertNotFound()->getContent();
+        $this->assertStringContainsString('<title>Page not found', $en);
+    }
 }
