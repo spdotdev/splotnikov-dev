@@ -113,7 +113,7 @@
       </div>
     </div>
   </div>
-  <script src="{{ secure_asset('vendor/splotnikov/particles.js') }}" defer></script>
+  <script src="{{ secure_asset('vendor/splotnikov/particles.js') }}?v=3" defer></script>
 </section>
 @endif
 
