@@ -38,6 +38,7 @@ Route::domain(config('splotnikov-dev.domain'))
             Route::get('/', [SiteController::class, 'index'])->name('splotnikov.home');
             Route::get('/cv', [SiteController::class, 'cv'])->name('splotnikov.cv');
             Route::get('/projects', [SiteController::class, 'projects'])->name('splotnikov.projects');
+            Route::get('/skills', [SiteController::class, 'skills'])->name('splotnikov.skills');
             Route::get('/toolkit', [SiteController::class, 'toolkit'])->name('splotnikov.toolkit');
             Route::get('/privacy', [SiteController::class, 'privacy'])->name('splotnikov.privacy');
             Route::get('/blog', [SiteController::class, 'blog'])->name('splotnikov.blog');

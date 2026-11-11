@@ -27,6 +27,12 @@ class SiteController
         return view('splotnikov::projects');
     }
 
+    public function skills(): View
+    {
+        // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
+        return view('splotnikov::skills');
+    }
+
     public function toolkit(): View
     {
         // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
