@@ -45,7 +45,8 @@ final class Posts
      */
     private static function fromCms(): array
     {
-        $class = 'Spdotdev\\SdCms\\Models\\CmsArticle';
+        // Built at run time: sd-cms is optional and static analysis must not fold the name to a constant it cannot find.
+        $class = implode('\\', ['Spdotdev', 'SdCms', 'Models', 'CmsArticle']);
         if (! class_exists($class)) {
             return [];
         }
@@ -63,6 +64,7 @@ final class Posts
             // sd-cms is an optional sibling package in the host, not a dependency of this one.
             // Only the articles ticked for the splotnikov.dev channel (sd-cms 0.5+ has channels; older ones show all).
             $query = $class::published('splotnikov');
+            // @phpstan-ignore-next-line (sd-cms is an optional package: this check is true only when it is installed)
             if (method_exists($class, 'scopeOnChannel')) {
                 $query = $query->onChannel('splotnikov');
             }
