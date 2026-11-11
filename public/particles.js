@@ -13,7 +13,13 @@
 
   // Outline of each shape, drawn on a unit square (0..1) and scaled to the canvas.
   var draw = {
-    logo: function (c, s) { if (logoImg.complete && logoImg.naturalWidth) { c.drawImage(logoImg, 0, 0, s, s); } },
+    logo: function (c, s) {
+      // The mark drawn directly (a rounded frame and a chevron), so every stroke is solid and gets sampled.
+      var k = s / 48, w = 4 * k;
+      c.lineWidth = w; c.strokeStyle = '#000';
+      c.beginPath(); if (c.roundRect) { c.roundRect(6 * k, 6 * k, 36 * k, 36 * k, 10 * k); } else { c.rect(6 * k, 6 * k, 36 * k, 36 * k); } c.stroke();
+      c.beginPath(); c.moveTo(15 * k, 17 * k); c.lineTo(23 * k, 24 * k); c.lineTo(15 * k, 31 * k); c.lineWidth = w * 1.2; c.lineCap = 'round'; c.stroke();
+    },
     agents: function (c, s) {
       var pts = [[0.5, 0.2], [0.22, 0.75], [0.78, 0.75]];
       c.lineWidth = s * 0.03; c.strokeStyle = '#000';
