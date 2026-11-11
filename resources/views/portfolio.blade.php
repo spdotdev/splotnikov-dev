@@ -89,6 +89,34 @@
   <div class="more-row"><a class="btn" href="{{ route('splotnikov.toolkit') }}" data-i="tk_all">See the whole toolkit →</a></div>
 </div></section>
 
+@if(! request()->is('nl'))
+<section class="s tight" id="how">
+  <style>
+    .pt-grid{display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
+    @media (min-width:880px){.pt-grid{grid-template-columns:1.1fr 1fr}}
+    .pt-canvas{width:100%;aspect-ratio:1/1;max-width:520px;display:block;margin:0 auto}
+    .pt-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .pt-card{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--panel);cursor:default;outline:none}
+    .pt-card:hover,.pt-card:focus-visible{border-color:var(--acc)}
+    .pt-card h3{margin:0 0 6px;font-size:17px}
+    .pt-card p{margin:0;color:var(--muted);font-size:14px}
+  </style>
+  <div class="wrap">
+    <div class="gridh rv"><span class="lbl dot">04 · How I work</span><h2 style="margin-top:16px">Four kinds of work, one way of doing each</h2></div>
+    <div class="pt-grid">
+      <canvas id="pt" class="pt-canvas" aria-hidden="true" data-logo="{{ secure_asset('vendor/splotnikov/logo.svg') }}"></canvas>
+      <div class="pt-cards">
+        <div class="pt-card" tabindex="0" data-shape="agents"><h3>AI agents and skills</h3><p>Procedures Claude Code follows, with tests and a clear owner.</p></div>
+        <div class="pt-card" tabindex="0" data-shape="modern"><h3>Modernization</h3><p>Old systems moved in steps, with the service running the whole time.</p></div>
+        <div class="pt-card" tabindex="0" data-shape="security"><h3>Security</h3><p>Checks on the live system, the findings written down, the fixes made.</p></div>
+        <div class="pt-card" tabindex="0" data-shape="architecture"><h3>Architecture</h3><p>A plan with the trade-offs in writing before anything is built.</p></div>
+      </div>
+    </div>
+  </div>
+  <script src="{{ secure_asset('vendor/splotnikov/particles.js') }}" defer></script>
+</section>
+@endif
+
 <section class="s tight" id="stack"><div class="wrap">
   <div class="plate belts rv">
     <div class="bh"><span class="lbl dot" data-i="st_l">Worked with</span><h2 data-i="st_h">Brands I have built for, tools I build with</h2><p data-i="st_p">In employment at agencies and product companies before 2024, and as a freelancer since.</p></div>
