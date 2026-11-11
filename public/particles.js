@@ -44,7 +44,7 @@
     var c = off.getContext('2d'); c.clearRect(0, 0, size, size);
     draw[name](c, size);
     var d = c.getImageData(0, 0, size, size).data, pts = [];
-    for (var y = 0; y < size; y += 2) for (var x = 0; x < size; x += 2) if (d[(y * size + x) * 4 + 3] > 128) pts.push([x / size, y / size]);
+    for (var y = 0; y < size; y += 2) for (var x = 0; x < size; x += 2) if (d[(y * size + x) * 4 + 3] > 20) pts.push([x / size, y / size]);
     if (!pts.length) pts.push([0.5, 0.5]);
     var out = [];
     for (var i = 0; i < N; i++) out.push(pts[Math.floor((i * pts.length) / N)]);
