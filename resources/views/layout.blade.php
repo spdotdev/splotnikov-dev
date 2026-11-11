@@ -84,6 +84,14 @@
 </head>
 
 <body>
+@if(\Spdotdev\SplotnikovDev\LanguageOffer::shouldOffer(request(), $paired, $isNl, $paired && ! $isNl ? \Spdotdev\SplotnikovDev\LanguageOffer::countryOf(request()) : null))
+  <div class="lang-offer" id="lang-offer" role="region" aria-label="Language offer" style="position:fixed;left:16px;right:16px;bottom:16px;z-index:50;max-width:520px;margin:0 auto;padding:14px 16px;border:1px solid CanvasText;border-radius:10px;background:Canvas;color:CanvasText;font:14px/1.4 system-ui,sans-serif;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <span style="flex:1 1 220px">Deze pagina is ook in het Nederlands.</span>
+    <a href="{{ \Spdotdev\SplotnikovDev\Dutch::nlUrl($enPath) }}" data-lang-set="nl" hreflang="nl" lang="nl" style="font-weight:600">Bekijk in het Nederlands</a>
+    <button type="button" data-lang-set="en" style="background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit">Blijf in het Engels</button>
+    <a href="https://db-ip.com" rel="noopener" style="flex:1 0 100%;font-size:11px;opacity:.7;color:inherit">IP Geolocation by DB-IP</a>
+  </div>
+@endif
   @php($home = request()->routeIs('splotnikov.home') || request()->is('nl'))
   @php($cur = fn (string $r) => (request()->routeIs($r) || request()->is('nl/'.\Illuminate\Support\Str::after($r, 'splotnikov.'))) ? ' class="cur-page"' : '')
   <a class="skip no-print" href="#top" data-i="skip">Skip to content</a>
@@ -133,6 +141,7 @@
   <noscript><img src="/_sda/px/{{ config('splotnikov-dev.analytics_key') }}.gif" alt="" width="1" height="1" style="position:absolute;left:-9999px"></noscript>
   @endif
   <script src="{{ secure_asset('vendor/splotnikov/site.js') }}" defer></script>
+<script>(function(){function setLang(v){try{document.cookie='scuttle_lang='+v+'; path=/; max-age=31536000; SameSite=Lax'}catch(e){}}document.querySelectorAll('[data-lang-set]').forEach(function(el){el.addEventListener('click',function(){setLang(el.getAttribute('data-lang-set'));var o=document.getElementById('lang-offer');if(o&&el.getAttribute('data-lang-set')==='en'){o.remove()}})});['en','nl'].forEach(function(l){var a=document.getElementById(l);if(a&&a.tagName==='A'){a.addEventListener('click',function(){setLang(l)})}})})();</script>
 </body>
 
 </html>

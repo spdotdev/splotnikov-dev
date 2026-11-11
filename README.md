@@ -50,6 +50,7 @@ application's** `.env`.
 |---|---|---|
 | `SPLOTNIKOV_DOMAIN` | `splotnikov.dev` | Host this package's routes answer on (`Route::domain(...)`). |
 | `SPLOTNIKOV_BOOKING_URL` | `https://plan.scuttle.dev/book/stas` | The booking page behind "Or book a call" on the contact page. |
+| `SPLOTNIKOV_GEOIP_DB` | empty | Path to the free DB-IP Lite country file (`dbip-country-lite-YYYY-MM.mmdb`, CC BY 4.0, no account). Empty: the Dutch offer uses the browser language only. |
 | `SPLOTNIKOV_CONTACT_TO` | `stplotnikov@gmail.com` | Where the contact form delivers (sent by the host app's mailer). |
 | `SPLOTNIKOV_TURNSTILE_SITE_KEY` | empty | Cloudflare Turnstile site key on the contact form; empty means honeypot plus a signed 3-second minimum only. |
 | `SPLOTNIKOV_TURNSTILE_SECRET` | empty | Cloudflare Turnstile secret, used server side to check the answer. |

@@ -8,6 +8,9 @@ return [
     // The public booking page behind "Book a call" on the contact page.
     'booking_url' => env('SPLOTNIKOV_BOOKING_URL', 'https://plan.scuttle.dev/book/stas'),
 
+    // Free DB-IP Lite country file (mmdb). Empty means no IP country: the Dutch offer uses the browser language only.
+    'geoip_db' => env('SPLOTNIKOV_GEOIP_DB', ''),
+
     // Where the contact form delivers.
     'contact_to' => env('SPLOTNIKOV_CONTACT_TO', 'stplotnikov@gmail.com'),
 
