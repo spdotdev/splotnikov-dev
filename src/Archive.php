@@ -130,7 +130,7 @@ final class Archive
             return ($locale === 'nl' ? 'Week ' : 'Week ').(int) $w[2].', '.$w[1];
         }
         $parts = explode('-', $period);
-        $date = Carbon::create((int) $parts[0], (int) ($parts[1] ?? 1), (int) ($parts[2] ?? 1))->locale($locale);
+        $date = Carbon::create((int) $parts[0], (int) ($parts[1] ?? 1), (int) ($parts[2] ?? 1))->settings(['locale' => $locale]);
 
         return match (count($parts)) {
             1 => $parts[0],

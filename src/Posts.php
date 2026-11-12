@@ -89,8 +89,10 @@ final class Posts
     }
 
     /**
-     * Map one sd-cms article (any object with its columns) to the Post shape.
+     * Map one sd-cms article (any object with its columns) to the Post shape. The columns read here are the contract
+     * with sd-cms; the optional ones may be missing or null.
      *
+     * @param  object{body: mixed, published_at: mixed, slug: mixed, title: mixed, summary: mixed, tags: mixed, title_nl: mixed, summary_nl: mixed}  $a
      * @return Post
      */
     public static function fromArticle(object $a): array
