@@ -132,7 +132,8 @@ class RobustnessTest extends TestCase
         $this->get(self::HOST.'/projects/does-not-exist')->assertNotFound();
         $this->get(self::HOST.'/blog/'.str_repeat('a', 400))->assertNotFound();
         $this->get(self::HOST.'/?x='.str_repeat('a', 6000))->assertOk();
-        $this->get(self::HOST.'/blog?p='.str_repeat('9', 300).'&m='.str_repeat('x', 300).'&page=abc')->assertOk();
+        $this->get(self::HOST.'/blog?p='.str_repeat('9', 300).'&m='.str_repeat('x', 300).'&page=abc')->assertNotFound();
+        $this->get(self::HOST.'/blog?page=abc')->assertOk();
         foreach (['/', '/cv', '/contact', '/nl', '/nl/cv'] as $path) {
             $head = $this->call('HEAD', self::HOST.$path);
             $this->assertSame(200, $head->getStatusCode(), 'HEAD '.$path);

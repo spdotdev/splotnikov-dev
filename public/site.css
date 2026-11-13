@@ -453,6 +453,8 @@ footer .col a,footer .col p{overflow-wrap:anywhere}
 .cal-h b{font-weight:500}
 .cal-h a{width:26px;height:26px;display:grid;place-items:center;border:1px solid var(--line);border-radius:4px;color:var(--ink2)}
 .cal-h a:hover{border-color:var(--acc);color:var(--acc)}
+.cal-h a.off{opacity:.35;pointer-events:none}
+.cal-g .wk.off{pointer-events:none;opacity:.55}
 .cal-g{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;font:400 0.6875rem "Geist Mono",monospace;text-align:center}
 .cal-g i{font-style:normal;color:var(--muted);padding:2px 0 4px;font-size:0.625rem;letter-spacing:.04em}
 .cal-g .wk{height:24px;display:grid;place-items:center;color:var(--muted);border-radius:4px;font-size:0.625rem}

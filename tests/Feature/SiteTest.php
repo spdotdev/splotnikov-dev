@@ -421,11 +421,14 @@ class SiteTest extends TestCase
         $this->assertStringContainsString('class="arch"', $html);
         $this->assertStringContainsString('?p=2026-10-29', $html);
         $this->get('http://splotnikov.dev/blog?p=2026-10-29')->assertOk()->assertSee('29 October 2026');
-        $this->get('http://splotnikov.dev/blog?p=2025')->assertOk()->assertSee('Nothing on this page.');
+        $this->get('http://splotnikov.dev/blog?p=2025')->assertNotFound();   // a period without a post does not exist
         $this->get('http://splotnikov.dev/blog?page=5')->assertOk();
         $this->get('http://splotnikov.dev/blog?p=2026-W44')->assertOk()->assertSee('Week 44, 2026');
         $this->assertStringContainsString('class="cal"', $html);
-        $this->get('http://splotnikov.dev/blog?m=2026-09')->assertOk()->assertSee('September')->assertSee('?m=2026-08', false);
+        // every post is from October 2026, so the archive is that one month: no link leads out of it
+        $this->get('http://splotnikov.dev/blog?m=2026-10')->assertOk()->assertSee('October')
+            ->assertDontSee('?m=2026-09', false)->assertDontSee('?m=2026-11', false);
+        $this->get('http://splotnikov.dev/blog?m=2026-09')->assertNotFound();
     }
 
     public function test_the_contact_form_sends_mail_and_blocks_bots(): void

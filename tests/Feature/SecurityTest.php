@@ -242,7 +242,7 @@ class SecurityTest extends TestCase
 
     public function test_the_package_never_echoes_the_host_or_the_url_into_a_page_without_escaping(): void
     {
-        $page = (string) $this->get(self::HOST.'/blog?p='.rawurlencode('"><script>alert(1)</script>').'&page='.rawurlencode('<b>'))->assertOk()->getContent();
+        $page = (string) $this->get(self::HOST.'/blog?p='.rawurlencode('"><script>alert(1)</script>').'&page='.rawurlencode('<b>'))->assertNotFound()->getContent();
         $this->assertStringNotContainsString('<script>alert(1)', $page);
     }
 

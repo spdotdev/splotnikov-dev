@@ -2,8 +2,10 @@
 
 namespace Spdotdev\SplotnikovDev\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Spdotdev\SplotnikovDev\Archive;
 use Spdotdev\SplotnikovDev\Dutch;
 use Spdotdev\SplotnikovDev\Posts;
 
@@ -39,10 +41,19 @@ class SiteController
         return view('splotnikov::toolkit');
     }
 
-    public function blog(): View
+    public function blog(Request $request): View
     {
+        // The archive has an end: a month outside it, or a period without a post, does not exist (a crawler once
+        // walked the same calendar on scuttle.dev through every month from 2010 to 2036). A filtered list is not
+        // for the index.
+        $month = $request->query('m');
+        $period = $request->query('p');
+        $posts = Posts::all();
+        abort_if($month !== null && ! (is_string($month) && Archive::hasMonth(Archive::tree($posts), $month)), 404);
+        abort_if($period !== null && ! (is_string($period) && Archive::hasPeriod($posts, $period)), 404);
+
         // @phpstan-ignore argument.type (the splotnikov:: namespace is registered at runtime via loadViewsFrom, so it is not resolvable during package-only static analysis)
-        return view('splotnikov::blog');
+        return view('splotnikov::blog', ['filtered' => $month !== null || $period !== null]);
     }
 
     public function post(string $slug): View

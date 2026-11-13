@@ -3,6 +3,9 @@
 
 User-agent: *
 Allow: /
+# The blog archive filtered by month or period: the same posts as /blog, in endless combinations
+Disallow: /blog?m=
+Disallow: /blog?p=
 
 # Sitemap location
 Sitemap: https://splotnikov.dev/sitemap.xml

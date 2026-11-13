@@ -3,6 +3,9 @@
 @section('title', 'Blog: technology and what I build')
 @section('description', 'My blog on technology and what I am busy with: PHP, Laravel, AI agents, security and Linux, from my own experience.')
 @section('canonical', 'https://splotnikov.dev/blog')
+@if($filtered ?? false)
+@section('robots', 'noindex, follow')
+@endif
 
 @section('content')
 <article class="prod">

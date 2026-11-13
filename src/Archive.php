@@ -95,10 +95,58 @@ final class Archive
                 $day = $d->copy()->addDays($i);
                 $days[] = ['date' => $day->toDateString(), 'day' => $day->day, 'posts' => (int) ($tree[$day->format('Y')][$day->format('m')][$day->format('d')] ?? 0), 'inMonth' => $day->month === $m];
             }
-            $rows[] = ['week' => self::week($d->toDateString()), 'days' => $days];
+            $rows[] = ['week' => self::week($d->toDateString()), 'days' => $days, 'posts' => array_sum(array_column($days, 'posts'))];
         }
 
         return $rows;
+    }
+
+    /**
+     * The first and the last month (Y-m) that have a post; this month for both when there is none. The archive
+     * ends there: on 2026-11-13 a crawler followed "next month" from 2010 to 2036 and kept the server busy.
+     *
+     * @param  array<int|string, array<int|string, array<int|string, int>>>  $tree
+     * @return array{0: string, 1: string}
+     */
+    public static function bounds(array $tree): array
+    {
+        $months = [];
+        foreach ($tree as $y => $byMonth) {
+            foreach (array_keys($byMonth) as $m) {
+                $months[] = sprintf('%04d-%02d', (int) $y, (int) $m);
+            }
+        }
+        if ($months === []) {
+            return [date('Y-m'), date('Y-m')];
+        }
+        sort($months);
+
+        return [$months[0], $months[count($months) - 1]];
+    }
+
+    /**
+     * True for a month (Y-m) between the first and the last month with a post.
+     *
+     * @param  array<int|string, array<int|string, array<int|string, int>>>  $tree
+     */
+    public static function hasMonth(array $tree, string $month): bool
+    {
+        if (preg_match('/^\d{4}-(0[1-9]|1[0-2])$/', $month) !== 1) {
+            return false;
+        }
+        [$first, $last] = self::bounds($tree);
+
+        return $month >= $first && $month <= $last;
+    }
+
+    /**
+     * True for a period (a year, a month, a day or an ISO week) that has at least one post.
+     *
+     * @param  array<string, Row>  $posts
+     */
+    public static function hasPeriod(array $posts, string $period): bool
+    {
+        return preg_match('/^\d{4}(-\d{2}){0,2}$|^\d{4}-W\d{2}$/', $period) === 1 && self::filter($posts, $period) !== [];
     }
 
     /**
