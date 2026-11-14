@@ -260,6 +260,8 @@ final class Dutch
         $html = (string) preg_replace('#(<meta property="og:image:alt" content=")[^"]*(")#', '${1}Stanislav Plotnikov, senior developer en solution architect in Eindhoven${2}', $html, 1);
         $nl = self::nlUrl($enPath);
         $html = (string) preg_replace('#<html lang="en"#', '<html lang="nl"', $html, 1);
+        // The terminal scene (home page) stays English: mark it for screen readers (WCAG 3.1.2).
+        $html = str_replace('<div class="main" id="main">', '<div class="main" id="main" lang="en">', $html);
         $html = (string) preg_replace('#(<link rel="canonical" href=")[^"]*(")#', '${1}'.$nl.'${2}', $html, 1);
         $html = (string) preg_replace('#(<meta property="og:url" content=")[^"]*(")#', '${1}'.$nl.'${2}', $html, 1);
         $html = str_replace(['content="en_GB"', 'content="nl_NL" />'], ['content="NL_PRIMARY"', 'content="nl_NL" />'], $html);

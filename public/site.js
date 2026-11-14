@@ -55,6 +55,7 @@
   function lang(l, animate) {
     root.lang = l;
     attrs(l);
+    var sm = $('main'); if (sm) { if (l === 'nl') sm.setAttribute('lang', 'en'); else sm.removeAttribute('lang'); }
     document.querySelectorAll('[data-i]').forEach(function (e) {
       var k = e.dataset.i;
       e.innerHTML = (l === 'nl' && T.t[k]) ? T.t[k] : base[k];

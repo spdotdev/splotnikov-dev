@@ -90,6 +90,14 @@ class SemanticsTest extends TestCase
         $this->assertSame(1, $err->query('//*[contains(@class,"err")][@role="alert"]')->length);
     }
 
+    public function test_the_terminal_scene_is_marked_english_on_the_dutch_home_page_only(): void
+    {
+        $nl = $this->page('/nl')->query('//*[@id="main"]')->item(0);
+        $this->assertSame('en', $nl?->getAttribute('lang'), 'Dutch home: terminal scene needs lang="en" (WCAG 3.1.2)');
+        $en = $this->page('/')->query('//*[@id="main"]')->item(0);
+        $this->assertFalse($en?->hasAttribute('lang'), 'English home: no lang attribute on the scene');
+    }
+
     public function test_the_dutch_pages_carry_dutch_names_and_the_lang_attribute(): void
     {
         $english = ['Main navigation', 'Language', 'Theme', 'System', 'Light', 'Dark', 'Close', 'Tools', 'Projects', 'Companies', 'Show the photo larger', 'Photo of Stanislav Plotnikov', 'With or without company details', 'scuttle.dev, my company website', 'Interactive examples: terminal sessions, code and an agent run from my daily work'];
