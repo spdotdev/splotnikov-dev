@@ -458,6 +458,7 @@ footer .col a,footer .col p{overflow-wrap:anywhere}
 .cal-g{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:3px;font:400 0.6875rem "Geist Mono",monospace;text-align:center}
 .cal-g i{font-style:normal;color:var(--muted);padding:2px 0 4px;font-size:0.625rem;letter-spacing:.04em}
 .cal-g .wk{height:24px;display:grid;place-items:center;color:var(--muted);border-radius:4px;font-size:0.625rem}
+.cal-g a.wk{color:var(--ink2)}
 .cal-g .wk:hover{background:var(--plate);color:var(--acc)}
 .cal-g .d{height:24px;display:grid;place-items:center;border-radius:4px;color:var(--ink2)}
 .cal-g .d.out{color:var(--muted)}
