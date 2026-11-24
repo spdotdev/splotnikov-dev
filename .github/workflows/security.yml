@@ -1,14 +1,22 @@
 name: Security
 
+# Every push already runs `composer audit` inside CI. This workflow runs only when the dependency files change and
+# once a week (new advisories appear without any commit).
 on:
   push:
     branches: [ main ]
+    paths: [ 'composer.json', 'composer.lock' ]
   pull_request:
+    paths: [ 'composer.json', 'composer.lock' ]
   schedule:
     - cron: '0 6 * * 1'
 
 permissions:
   contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   composer-audit:

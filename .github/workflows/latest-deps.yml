@@ -1,15 +1,15 @@
-name: Latest dependencies (weekly early warning)
+name: Latest dependencies (early warning)
 
 # Runs the normal checks against the NEWEST dependency versions composer.json
 # allows, ignoring composer.lock. It changes nothing, commits nothing and blocks
 # nothing: the normal CI and deploys keep using the committed lock. If a new
 # release (for example a stricter phpstan) would break this repo, this run fails
 # and GitHub emails about the failed scheduled run, before Dependabot proposes
-# that version. Monday 04:00 UTC = 06:00 Amsterdam in summer, 05:00 in winter.
+# that version. The 1st and 15th at 04:00 UTC (was every Monday).
 
 on:
   schedule:
-    - cron: "0 4 * * 1"
+    - cron: "0 4 1,15 * *"
   workflow_dispatch:
 
 permissions:

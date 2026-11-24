@@ -8,6 +8,11 @@ on:
 permissions:
   contents: read
 
+# A newer push to the same branch or pull request makes the older run pointless. A run on main is never cancelled.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   quality:
     # Two jobs in parallel: the oldest PHP the package allows, and production's PHP (php:8.4-fpm, short_open_tag on),
@@ -35,6 +40,11 @@ jobs:
 
       - name: Install dependencies
         run: composer install --no-interaction --prefer-dist
+
+      - name: Composer audit (dependency vulnerabilities)
+        # Was its own workflow (Security) with its own setup on every push; it lives here now so one run does both.
+        if: matrix.php == '8.3'
+        run: composer audit
 
       - name: Pint (style check)
         run: ./vendor/bin/pint --test

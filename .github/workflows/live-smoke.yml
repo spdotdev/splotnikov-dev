@@ -1,11 +1,11 @@
 name: Live smoke
 
-# Every six hours: fetch the addresses in scripts/smoke-urls.txt from the live site and require the expected status,
+# Every twelve hours (was six): fetch the addresses in scripts/smoke-urls.txt from the live site and require the expected status,
 # the marker phrase from the page and an answer under 3 seconds (three tries, 20 s apart). No browser, under a minute.
 # A failing run lists every failing address. Run it by hand with "Run workflow".
 on:
   schedule:
-    - cron: '23 */6 * * *'
+    - cron: '23 3,15 * * *'
   workflow_dispatch:
 
 permissions:
