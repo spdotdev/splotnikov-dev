@@ -6,7 +6,7 @@ name: Live links
 on:
   schedule:
     - cron: '17 5 * * 1'      # weekly: the crawl (one billed minute)
-    - cron: '17 6 1,15 * *'   # 1st and 15th: also the ui job (about 20 billed minutes)
+    - cron: '17 6 1,15 * *'   # 1st and 15th: also the ui job (about 4 billed minutes)
   workflow_dispatch:
 
 permissions:
